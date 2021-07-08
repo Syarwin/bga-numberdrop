@@ -23,17 +23,117 @@ $machinestates = [
     'description' => '',
     'type' => 'manager',
     'action' => 'stGameSetup',
-    'transitions' => ['' => ST_START],
+    'transitions' => ['' => ST_PLACE_STARTING_NUMBER],
   ],
 
-  ST_START => [
-    'name' => 'playerTurn',
-    'description' => clienttranslate('${actplayer} must play a card or pass'),
-    'descriptionmyturn' => clienttranslate('${you} must play a card or pass'),
-    'type' => 'activeplayer',
-    'possibleactions' => ['playCard', 'pass'],
-    'transitions' => ['playCard' => ST_START, 'pass' => ST_START],
+  ST_PLACE_STARTING_NUMBER => [
+    'name' => 'placeStartingNumber',
+    'description' => clienttranslate('Waiting for other players to place their starting number'),
+    'descriptionmyturn' => clienttranslate('${you} must place your starting number on the bottom line'),
+    "type" => "multipleactiveplayer",
+    'possibleactions' => ['writeNumber'],
+    'transitions' => ['' => ST_NEW_TURN],
   ],
+
+  ST_NEW_TURN => [
+    "name" => "newTurn",
+    "description" => clienttranslate('A new turn is starting'),
+    "type" => "game",
+    "updateGameProgression" => true,
+    "action" => "stNewTurn",
+    "transitions" => [
+      "playerTurn" => ST_PLAYER_TURN,
+    ]
+  ],
+
+  ST_PLAYER_TURN => [
+    "name" => "playerTurn",
+    "description" => clienttranslate('Waiting for other players to end their turn.'),
+    "descriptionmyturn" => '', // Won't be displayed anyway
+    "type" => "multipleactiveplayer",
+    "parallel" => ST_CHOOSE_CARDS, // Allow to have parallel flow for each player
+    "action" => "stPlayerTurn",
+    "args" => "argPlayerTurn",
+    "possibleactions" => ["registerPlayerTurn"],
+    "transitions" => ["applyTurns" => ST_APPLY_TURNS]
+  ],
+
+
+
+/****************************
+***** PARALLEL STATES *******
+****************************/
+
+  ST_CHOOSE_CARDS => [
+    "name" => "chooseCards",
+    "descriptionmyturn" => clienttranslate('${you} must pick a pair of construction cards'),
+    "type" => "private",
+    "args" => "argChooseCards",
+    "possibleactions" => ["chooseCards", "refusal", "roundabout", "restart"],
+    "transitions" => [
+    ]
+  ],
+
+  //////////////////////////
+  ///// CONFIRM / END //////
+  //////////////////////////
+
+  // Pre-end of parallel flow
+  ST_CONFIRM_TURN => [
+    "name" => "confirmTurn",
+    "descriptionmyturn" => clienttranslate('${you} must confirm or restart your turn'),
+    "type" => "private",
+    "args" => "argPrivatePlayerTurn",
+    "possibleactions" => ["confirm", "restart"],
+    "transitions" => [
+      'confirm' => ST_WAIT_OTHERS,
+      'restart' => ST_CHOOSE_CARDS,
+    ]
+  ],
+
+  // Waiting other
+  ST_WAIT_OTHERS => [
+    "name" => "waitOthers",
+    "descriptionmyturn" => '',
+    "type" => "private",
+    "action" => "stWaitOther",
+    "args" => "argPrivatePlayerTurn",
+    "possibleactions" => ["restart"],
+    "transitions" => [
+      'restart' => ST_CHOOSE_CARDS,
+    ]
+  ],
+
+/****************************
+****************************/
+
+  ST_APPLY_TURNS => [
+    "name" => "applyTurns",
+    "description" => clienttranslate('Here is what each player has done during this turn.'),
+    "type" => "game",
+    "action" => "stApplyTurn",
+    "transitions" => [
+      "newTurn" => ST_NEW_TURN,
+      "endGame" => ST_COMPUTE_SCORES,
+    ]
+  ],
+
+
+
+/****************************
+********* END OF GAME *******
+****************************/
+
+  ST_COMPUTE_SCORES => [
+    "name" => "computeScores",
+    "description" => clienttranslate('Let\'s compute the scores and tie breakes'),
+    "type" => "game",
+    "action" => "stComputeScores",
+    "transitions" => [
+      "endGame" => ST_END_GAME
+    ]
+  ],
+
 
   // Final state.
   // Please do not modify (and do not overload action/args methods).

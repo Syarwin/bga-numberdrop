@@ -22,3 +22,10 @@ CREATE TABLE IF NOT EXISTS `user_preferences` (
   `pref_value` int(10) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- Allow to handle parallele state flows
+ALTER TABLE `player` ADD `player_state` INT(10) UNSIGNED;
+
+-- Allow to keep track of canceled notifications
+ALTER TABLE `gamelog` ADD `cancel` TINYINT(1) NOT NULL DEFAULT 0;

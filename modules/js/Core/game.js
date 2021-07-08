@@ -104,10 +104,39 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
 
       if (this._activeStates.includes(stateName) && !this.isCurrentPlayerActive()) return;
 
+      // Private state machine
+      if(args.parallel){
+        if(args.args._private)
+         this.setupPrivateState(args.args._private.state, args.args._private.args);
+        return;
+      }
+
       // Call appropriate method
       var methodName = 'onEnteringState' + stateName.charAt(0).toUpperCase() + stateName.slice(1);
       if (this[methodName] !== undefined) this[methodName](args.args);
     },
+
+
+    /*
+     * Private state
+     */
+    setupPrivateState(state, args){
+      if(this.gamedatas.gamestate.parallel)
+        delete this.gamedatas.gamestate.parallel;
+      this.gamedatas.gamestate.name = state.name;
+      this.gamedatas.gamestate.descriptionmyturn = state.descriptionmyturn;
+      this.gamedatas.gamestate.possibleactions = state.possibleactions;
+      this.gamedatas.gamestate.transitions = state.transitions;
+      this.gamedatas.gamestate.args = args;
+      this.updatePageTitle();
+      this.onEnteringState(state.name, this.gamedatas.gamestate);
+    },
+
+    notif_newPrivateState(n){
+      this.onLeavingState(this.gamedatas.gamestate.name);
+      this.setupPrivateState(n.args.state, n.args.args);
+    },
+
 
     /**
      * onLeavingState:
@@ -156,6 +185,11 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
      * setupNotifications
      */
     setupNotifications() {
+      // Private state
+      this._notifications.push(
+        ['newPrivateState', 1],
+      );
+
       this._notifications.forEach((notif) => {
         var functionName = 'notif_' + notif[0];
 

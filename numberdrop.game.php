@@ -67,7 +67,8 @@ class NumberDrop extends Table
     Stats::setupNewGame();
     Globals::setupNewGame($players, $options);
     Preferences::setupNewGame($players, $this->player_preferences);
-    self::activeNextPlayer();
+    $this->gamestate->setAllPlayersMultiactive();
+    $this->activeNextPlayer();
   }
 
   /*
