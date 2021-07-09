@@ -80,5 +80,6 @@ class Player extends \NUMDROP\Helpers\DB_Manager implements \JsonSerializable
       'color' => $this->color,
       'score' => $this->score,
     ];
+    return $data;
   }
 }

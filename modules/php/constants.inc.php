@@ -7,6 +7,9 @@
 /*
  * User preferences
  */
+define('DARK_MODE', 100);
+define('DARK_MODE_DISABLED', 1);
+define('DARK_MODE_ENABLED', 2);
 
 /*
  * State constants

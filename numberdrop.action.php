@@ -27,4 +27,13 @@ class action_numberdrop extends APP_GameAction
       self::trace('Complete reinitialization of board game');
     }
   }
+
+  public function actChangePref()
+  {
+    self::setAjaxMode();
+    $pref = self::getArg('pref', AT_posint, false);
+    $value = self::getArg('value', AT_posint, false);
+    $this->game->actChangePreference($pref, $value);
+    self::ajaxResponse();
+  }
 }

@@ -92,6 +92,12 @@ class NumberDrop extends Table
     return 50;
   }
 
+
+  function actChangePreference($pref, $value)
+  {
+    Preferences::set($this->getCurrentPId(), $pref, $value);
+  }
+
   ///////////////////////////
   //// DEBUG FUNCTIONS //////
   ///////////////////////////
