@@ -19,6 +19,11 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
       this._last_notif = null;
     },
 
+    getPlayer(pId = null){
+      pId = pId || this.player_id;
+      return this.gamedatas.players[pId];
+    },
+
     showMessage(msg, type) {
       if (type == 'error') {
         console.error(msg);

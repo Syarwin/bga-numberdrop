@@ -36,4 +36,20 @@ class action_numberdrop extends APP_GameAction
     $this->game->actChangePreference($pref, $value);
     self::ajaxResponse();
   }
+
+
+  public function actChangeStartingNumber()
+  {
+    self::setAjaxMode();
+    $this->game->actChangeStartingNumber();
+    self::ajaxResponse();
+  }
+
+  public function actPlaceStartingNumber()
+  {
+    self::setAjaxMode();
+    $col = self::getArg('col', AT_posint, false);
+    $this->game->actPlaceStartingNumber($col);
+    self::ajaxResponse();
+  }
 }

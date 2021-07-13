@@ -17,6 +17,7 @@ define('DARK_MODE_ENABLED', 2);
 define('ST_GAME_SETUP', 1);
 
 define('ST_PLACE_STARTING_NUMBER', 2);
+define('ST_FINISH_SETUP', 6);
 
 define('ST_NEW_TURN', 3);
 define('ST_PLAYER_TURN', 4);

@@ -85,7 +85,10 @@ html {
     .sheet-wrapper .grid-wrapper .nd-grid .nd-cell {
       width: 38px;
       height: 38px;
-      box-shadow: 0 0 0 1px #58bae4; }
+      box-shadow: 0 0 0 1px #58bae4;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
       .sheet-wrapper .grid-wrapper .nd-grid .nd-cell[data-row='11'] {
         box-shadow: 0 0 0 1px #cd5397; }
       .sheet-wrapper .grid-wrapper .nd-grid .nd-cell[data-row='12'] {
@@ -96,6 +99,20 @@ html {
         border-bottom: 2px solid #cd5397;
         position: relative;
         z-index: 2; }
+      .sheet-wrapper .grid-wrapper .nd-grid .nd-cell::before {
+        content: attr(data-n);
+        font-family: 'Press Start 2P';
+        font-weight: bold;
+        font-size: 20px; }
+      .sheet-wrapper .grid-wrapper .nd-grid .nd-cell.selectable {
+        cursor: pointer; }
+        .sheet-wrapper .grid-wrapper .nd-grid .nd-cell.selectable:hover {
+          background-color: rgba(255, 0, 0, 0.5); }
+        .sheet-wrapper .grid-wrapper .nd-grid .nd-cell.selectable.selected {
+          background-color: rgba(0, 253, 253, 0.68);
+          color: #cc1fa9; }
+          .sheet-wrapper .grid-wrapper .nd-grid .nd-cell.selectable.selected:hover {
+            color: black; }
 
 #darkmode-switch .checkbox {
   opacity: 0;

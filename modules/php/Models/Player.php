@@ -4,6 +4,7 @@ use NUMDROP\Core\Globals;
 use NUMDROP\Core\Notifications;
 use NUMDROP\Core\Preferences;
 use NUMDROP\Helpers\Utils;
+use NUMDROP\Managers\Scribbles;
 
 /*
  * Player: all utility functions concerning a player
@@ -81,5 +82,11 @@ class Player extends \NUMDROP\Helpers\DB_Manager implements \JsonSerializable
       'score' => $this->score,
     ];
     return $data;
+  }
+
+
+  public function addNumber($row, $col, $n, $turn)
+  {
+    Scribbles::addNumber($this->id, $row, $col, $n, $turn);
   }
 }

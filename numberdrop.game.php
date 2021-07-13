@@ -40,6 +40,8 @@ use NUMDROP\Core\Stats;
 
 class NumberDrop extends Table
 {
+  use NUMDROP\States\StartingNumberTrait;
+  
   public static $instance = null;
   function __construct()
   {

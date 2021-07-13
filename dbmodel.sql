@@ -8,6 +8,18 @@
 
 -- dbmodel.sql
 
+CREATE TABLE IF NOT EXISTS `scribbles` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `player_id` int(10) NOT NULL,
+  `row` int(10) NOT NULL,
+  `col` int(10) NOT NULL,
+  `number` int(10) NOT NULL,
+  `turn` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 
 CREATE TABLE IF NOT EXISTS `global_variables` (
   `name` varchar(255) NOT NULL,
