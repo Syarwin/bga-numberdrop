@@ -1,6 +1,7 @@
 <?php
 namespace NUMDROP\Core;
 use NUMDROP\Core\Game;
+use NUMDROP\Managers\Players;
 
 /*
  * StateMachine: a class that allows to emulate parallel game states flow when in a multiactive state

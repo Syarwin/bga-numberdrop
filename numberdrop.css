@@ -19,6 +19,47 @@
   font-weight: normal;
   font-style: normal;
   font-display: swap; }
+.nb-dice-wrap {
+  perspective: 150px;
+  perspective-origin: 50% 50%;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .nb-dice-wrap .nb-dice {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    transform-style: preserve-3d; }
+    .nb-dice-wrap .nb-dice div {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: #cd5397d9;
+      border: 1px solid black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      font-weight: bold; }
+      .nb-dice-wrap .nb-dice div.dice-back {
+        transform: translateZ(-25px) rotateY(180deg); }
+      .nb-dice-wrap .nb-dice div.dice-right {
+        transform: rotateY(-270deg) translateX(25px);
+        transform-origin: top right; }
+      .nb-dice-wrap .nb-dice div.dice-left {
+        transform: rotateY(270deg) translateX(-25px);
+        transform-origin: center left; }
+      .nb-dice-wrap .nb-dice div.dice-top {
+        transform: rotateX(-90deg) translateY(-25px);
+        transform-origin: top center; }
+      .nb-dice-wrap .nb-dice div.dice-bottom {
+        transform: rotateX(90deg) translateY(25px);
+        transform-origin: bottom center; }
+      .nb-dice-wrap .nb-dice div.dice-front {
+        transform: translateZ(25px); }
+
 html {
   background: #eee !important; }
 

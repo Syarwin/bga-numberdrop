@@ -33,6 +33,13 @@ class Notifications
     self::notify($pId, 'message', $txt, $args);
   }
 
+  public static function throwDies($dies)
+  {
+    self::notifyAll('throwDies', clienttranslate('Throwing the dies'), [
+      'dies' => $dies,
+    ]);
+  }
+
 
   /*********************
    **** UPDATE ARGS ****

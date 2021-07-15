@@ -53,7 +53,8 @@ $machinestates = [
     'updateGameProgression' => true,
     'action' => 'stNewTurn',
     'transitions' => [
-      'playerTurn' => ST_PLAYER_TURN,
+      'drop' => ST_PLAYER_TURN, // TODO
+      'play' => ST_PLAYER_TURN,
     ],
   ],
 
@@ -62,8 +63,7 @@ $machinestates = [
     'description' => clienttranslate('Waiting for other players to end their turn.'),
     'descriptionmyturn' => '', // Won't be displayed anyway
     'type' => 'multipleactiveplayer',
-    'parallel' => ST_CHOOSE_CARDS, // Allow to have parallel flow for each player
-    'action' => 'stPlayerTurn',
+    'parallel' => ST_DROP_SHAPE, // Allow to have parallel flow for each player
     'args' => 'argPlayerTurn',
     'possibleactions' => ['registerPlayerTurn'],
     'transitions' => ['applyTurns' => ST_APPLY_TURNS],
@@ -73,12 +73,12 @@ $machinestates = [
    ***** PARALLEL STATES *******
    ****************************/
 
-  ST_CHOOSE_CARDS => [
-    'name' => 'chooseCards',
-    'descriptionmyturn' => clienttranslate('${you} must pick a pair of construction cards'),
+  ST_DROP_SHAPE => [
+    'name' => 'dropShape',
+    'descriptionmyturn' => clienttranslate('${you} must construct and drop your tetromino'),
     'type' => 'private',
-    'args' => 'argChooseCards',
-    'possibleactions' => ['chooseCards', 'refusal', 'roundabout', 'restart'],
+    'args' => 'argDropShape',
+    'possibleactions' => [],
     'transitions' => [],
   ],
 
@@ -95,7 +95,7 @@ $machinestates = [
     'possibleactions' => ['confirm', 'restart'],
     'transitions' => [
       'confirm' => ST_WAIT_OTHERS,
-      'restart' => ST_CHOOSE_CARDS,
+      'restart' => ST_DROP_SHAPE,
     ],
   ],
 
@@ -108,7 +108,7 @@ $machinestates = [
     'args' => 'argPrivatePlayerTurn',
     'possibleactions' => ['restart'],
     'transitions' => [
-      'restart' => ST_CHOOSE_CARDS,
+      'restart' => ST_DROP_SHAPE,
     ],
   ],
 

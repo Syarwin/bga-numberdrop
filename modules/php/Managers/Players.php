@@ -110,4 +110,10 @@ class Players extends \NUMDROP\Helpers\DB_Manager
     return $order;
   }
   */
+
+
+  public function getNextActiveDrop()
+  {
+    return null; // TODO;
+  }
 }

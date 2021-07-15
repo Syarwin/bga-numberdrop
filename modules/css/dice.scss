@@ -1,0 +1,54 @@
+$diceSize: 50px;
+
+.nb-dice-wrap {
+  perspective: 3 * $diceSize;
+  perspective-origin: 50% 50%;
+  width: 2 * $diceSize;
+  height: 2 * $diceSize;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .nb-dice {
+    position: relative;
+    width: $diceSize;
+    height: $diceSize;
+    transform-style: preserve-3d;
+
+    div {
+      position: absolute;
+      width: $diceSize;
+      height: $diceSize;
+      background: #cd5397d9;
+      border: 1px solid black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      font-weight: bold;
+
+      &.dice-back {
+        transform: translateZ(-$diceSize/2) rotateY(180deg);
+      }
+      &.dice-right {
+        transform: rotateY(-270deg) translateX($diceSize/2);
+        transform-origin: top right;
+      }
+      &.dice-left {
+        transform: rotateY(270deg) translateX(-$diceSize/2);
+        transform-origin: center left;
+      }
+      &.dice-top {
+        transform: rotateX(-90deg) translateY(-$diceSize/2);
+        transform-origin: top center;
+      }
+      &.dice-bottom {
+        transform: rotateX(90deg) translateY($diceSize/2);
+        transform-origin: bottom center;
+      }
+      &.dice-front {
+        transform: translateZ($diceSize/2);
+      }
+    }
+  }
+}

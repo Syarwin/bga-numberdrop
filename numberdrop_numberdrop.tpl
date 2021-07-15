@@ -1,7 +1,6 @@
 {OVERALL_GAME_HEADER}
 
 <div id="test"></div>
-
 <script type="text/javascript">
 </script>
 

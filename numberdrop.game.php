@@ -41,7 +41,9 @@ use NUMDROP\Core\Stats;
 class NumberDrop extends Table
 {
   use NUMDROP\States\StartingNumberTrait;
-  
+  use NUMDROP\States\NewTurnTrait;
+  use NUMDROP\States\DropShapeTrait;
+
   public static $instance = null;
   function __construct()
   {
@@ -82,6 +84,7 @@ class NumberDrop extends Table
     return [
       'prefs' => Preferences::getUiData($pId),
       'players' => Players::getUiData($pId),
+      'dies' => Globals::getDies(),
     ];
   }
 

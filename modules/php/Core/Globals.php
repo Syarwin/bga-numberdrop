@@ -9,6 +9,7 @@ class Globals extends \NUMDROP\Helpers\DB_Manager
   protected static $initialized = false;
   protected static $variables = [
     'startingNumberChoices' => 'obj',
+    'dies' => 'obj',
     /*
     'firstPlayer' => 'int',
     'deckA' => 'bool',

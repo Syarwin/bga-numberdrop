@@ -24,7 +24,7 @@ define('ST_PLAYER_TURN', 4);
 define('ST_APPLY_TURNS', 5);
 
 // Parallel flow
-define('ST_CHOOSE_CARDS', 20);
+define('ST_DROP_SHAPE', 20);
 
 
 define('ST_CONFIRM_TURN', 40);

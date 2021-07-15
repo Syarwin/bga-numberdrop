@@ -60,6 +60,5 @@ trait StartingNumberTrait
     }
     // TODO Notifications::startingNumbers($choices);
     $this->gamestate->nextState();
-    die("test");
   }
 }

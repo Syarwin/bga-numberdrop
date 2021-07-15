@@ -58,6 +58,7 @@ define([
 
       this.place('tplScoreSheet', gamedatas.players[this.player_id], 'test');
       this.addDarkModeSwitch();
+      this.setupDices();
       this.inherited(arguments);
     },
 
@@ -172,12 +173,36 @@ define([
       }
     },
 
-    onPreferenceChange(pref, value) {
-      if (pref == DARK_MODE) this.toggleDarkMode(value == DARK_MODE_ENABLED, false);
+    /**************************************
+     *************** Dice *****************
+     **************************************/
+    setupDices() {
+      let dices = ['1*3457', '12*456', '234*67', '123567', 'IOTLS*'];
+      dices.forEach((dice, i) => {
+        this.place('tplDice', { id: i, values: dice }, 'test');
+      });
     },
 
-    toggleGrid() {
-      this.setPreferenceValue(DISPLAY_GRID, $('chk-grid').checked ? GRID_HIDDEN : GRID_VISIBLE);
+    tplDice(dice) {
+      return `
+      <div class="nb-dice-wrap" id="nb-dice-${dice.id}">
+          <div class="nb-dice">
+              <div class="dice-front">${dice.values[0]}</div>
+              <div class="dice-back">${dice.values[1]}</div>
+              <div class="dice-top">${dice.values[2]}</div>
+              <div class="dice-bottom">${dice.values[3]}</div>
+              <div class="dice-left">${dice.values[4]}</div>
+              <div class="dice-right">${dice.values[5]}</div>
+          </div>
+      </div>
+      `;
+    },
+
+    /**************************************
+     ************ Dark Mode ***************
+     **************************************/
+    onPreferenceChange(pref, value) {
+      if (pref == DARK_MODE) this.toggleDarkMode(value == DARK_MODE_ENABLED, false);
     },
 
     toggleDarkMode(enabled) {

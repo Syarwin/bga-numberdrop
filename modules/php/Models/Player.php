@@ -22,7 +22,7 @@ class Player extends \NUMDROP\Helpers\DB_Manager implements \JsonSerializable
   protected $eliminated = false;
   protected $score = 0;
   protected $zombie = false;
-  protected $board = null;
+  protected $state = null;
 
   public function __construct($row)
   {
@@ -34,6 +34,7 @@ class Player extends \NUMDROP\Helpers\DB_Manager implements \JsonSerializable
       $this->eliminated = $row['player_eliminated'] == 1;
       $this->score = $row['player_score'];
       $this->zombie = $row['player_zombie'] == 1;
+      $this->state = $row['player_state'];
     }
   }
 
@@ -64,6 +65,10 @@ class Player extends \NUMDROP\Helpers\DB_Manager implements \JsonSerializable
   {
     return $this->zombie;
   }
+  public function getState()
+  {
+    return $this->state;
+  }
 
   public function getPref($prefId)
   {
@@ -83,7 +88,6 @@ class Player extends \NUMDROP\Helpers\DB_Manager implements \JsonSerializable
     ];
     return $data;
   }
-
 
   public function addNumber($row, $col, $n, $turn)
   {
