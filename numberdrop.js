@@ -53,28 +53,73 @@ define([
      */
     setup(gamedatas) {
       debug('SETUP', gamedatas);
-      // TODO
       dojo.place("<div id='numberdrop-topbar'></div>", 'topbar', 'after');
 
-      this.place('tplScoreSheet', gamedatas.players[this.player_id], 'test');
-      this.addDarkModeSwitch();
+      this.setupScoreSheets();
       this.setupDices();
+      this.addDarkModeSwitch();
       this.inherited(arguments);
     },
 
+    /**************************************
+     **************************************
+     ************ Scoresheets *************
+     **************************************
+     **************************************/
+
+    /**
+     * Setup scoresheets
+     */
+    setupScoreSheets() {
+      this.forEachPlayer((player) => {
+        this.place('tplScoreSheet', player, 'main-holder');
+        player.scribbles.forEach(scribble => this.addScribble(scribble));
+      });
+    },
+
+    /**
+     * Add a scribble onto someone scoresheet
+     */
+    addScribble(scribble){
+      if(scribble.number){
+        let cell = this.getCell(scribble);
+        this.setCellContent(cell, scribble.number, scribble.turn);
+      }
+    },
+
+    /**
+     * ScoreSheet template
+     */
     tplScoreSheet(player) {
       let cells = '';
+      let endOfLines = '';
       for (let i = 13; i >= 0; i--) {
         for (let j = 0; j < 7; j++) {
           cells += `<div class='nd-cell' data-col='${j}' data-row='${i}' id='cell-${player.id}-${i}-${j}'></div>`;
         }
+
+        let n = i < 11? '+2' : '-5';
+        endOfLines += `<div class='nd-cell' data-col='7' data-row='${i}' id='cell-${player.id}-${i}-7' data-n='${n}'></div>`;
       }
+      let current = player.id == this.player_id ? 'current' : '';
 
       return `
-      <div class="sheet-wrapper" id='sheet-${player.id}'>
-        <div class="grid-wrapper">
-          <div class="nd-grid">
-            ${cells}
+      <div class="sheet-wrapper ${current}" id='sheet-${player.id}'>
+        <div class="sheet-top">
+          <div class="grid-wrapper">
+            <div class="nd-grid">
+              ${cells}
+            </div>
+          </div>
+
+          <div class="end-of-lines">
+            ${endOfLines}
+          </div>
+        </div>
+
+        <div class="sheet-bottom">
+          <div class="sheet-player-name" style="color:#${player.color}">
+            <span class="robot"></span> ${player.name}
           </div>
         </div>
       </div>
@@ -83,7 +128,8 @@ define([
 
     getCell(row, col = null, pId = null) {
       if (col == null) {
-        // We can also call with a single argument containing row and col
+        // We can also call with a single argument containing row and col and pId
+        pId = pId || row.pId;
         col = row.col;
         row = row.row;
       }
@@ -98,11 +144,12 @@ define([
       };
     },
 
-    setCellContent(cell, n) {
+    setCellContent(cell, n, turn = 0) {
       cell.setAttribute('data-n', n);
+      cell.setAttribute('data-turn', turn);
     },
     clearCellContent(cell) {
-      this.setCellContent(cell, '');
+      this.setCellContent(cell, '', '');
     },
 
     /**************************************
@@ -177,9 +224,10 @@ define([
      *************** Dice *****************
      **************************************/
     setupDices() {
+      dojo.place('<div id="dice-holder"></div>', 'main-holder');
       let dices = ['1*3457', '12*456', '234*67', '123567', 'IOTLS*'];
       dices.forEach((dice, i) => {
-        this.place('tplDice', { id: i, values: dice }, 'test');
+        this.place('tplDice', { id: i, values: dice }, 'dice-holder');
       });
     },
 

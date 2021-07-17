@@ -12,6 +12,9 @@ trait NewTurnTrait
    */
   public function stNewTurn()
   {
+    // Increase turn counters
+    Globals::incCurrentTurn();
+    
     // Throw the dies
     $dies = ['1*3457', '12*456', '234*67', '123567', 'IOTLS*'];
     $result = [];

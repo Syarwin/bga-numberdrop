@@ -1,0 +1,125 @@
+.sheet-wrapper {
+  width: 650px;
+  margin: 10px;
+  display: flex;
+  flex-flow: column;
+
+  .sheet-top,
+  .sheet-bottom {
+    display: flex;
+    flex-flow: row;
+  }
+
+  .sheet-top {
+    .grid-wrapper {
+      padding: 16px;
+      width: 272px;
+      background: white;
+      background-clip: padding-box;
+      border: 5px solid transparent;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+        margin: -5px;
+        border-radius: inherit;
+        background: linear-gradient(to bottom, #f2247b, #00bdd0);
+      }
+
+      .nd-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        border-collapse: collapse;
+        grid-gap: 1px;
+      }
+    }
+
+    .end-of-lines {
+      width: 40px;
+      padding: 21px 0px;
+      margin-left: 10px;
+      display: grid;
+      grid-gap: 1px;
+      border-collapse: collapse;
+
+      .nd-cell::before {
+        font-size: 13px;
+        color: #b7b7b7;
+      }
+    }
+
+    .nd-cell {
+      width: 36px;
+      height: 36px;
+      border:1px solid transparent;
+      box-shadow: 0 0 0 1px #5ac0ec;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      @for $i from 11 to 14 {
+        &[data-row='#{$i}'] {
+          box-shadow: 0 0 0 1px #f2247b;
+        }
+      }
+
+      &[data-row='11'] {
+        border-bottom: 2px solid #f2247b;
+        position: relative;
+        z-index: 2;
+      }
+
+      &::before {
+        content: attr(data-n);
+        font-family: 'Press Start 2P';
+        font-weight: bold;
+        font-size: 20px;
+      }
+
+      &.selectable {
+        cursor: pointer;
+
+        &:hover {
+          background-color: rgba(255, 0, 0, 0.5);
+        }
+
+        &.selected {
+          background-color: rgba(0, 253, 253, 0.68);
+          color: #cc1fa9;
+
+          &:hover {
+            color: black;
+          }
+        }
+      }
+    }
+  }
+
+  .sheet-bottom {
+    height: 75px;
+    align-items: center;
+
+    .sheet-player-name {
+      width: 300px;
+      text-align: center;
+      font-family: 'Press Start 2P';
+      font-weight: bold;
+      font-size: 20px;
+
+      span.robot {
+        display: inline-block;
+        background: url('img/robot.svg');
+        width: 35px;
+        height: 54px;
+        background-size: 100% 100%;
+        vertical-align: middle;
+      }
+    }
+  }
+}

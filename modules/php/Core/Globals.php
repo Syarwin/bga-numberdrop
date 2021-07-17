@@ -8,6 +8,7 @@ class Globals extends \NUMDROP\Helpers\DB_Manager
 {
   protected static $initialized = false;
   protected static $variables = [
+    'currentTurn' => 'int',
     'startingNumberChoices' => 'obj',
     'dies' => 'obj',
     /*
@@ -133,7 +134,7 @@ class Globals extends \NUMDROP\Helpers\DB_Manager
    */
   public static function setupNewGame($players, $options)
   {
+    Globals::setCurrentTurn(0);
     Globals::setStartingNumberChoices([]);
-    // TODO
   }
 }

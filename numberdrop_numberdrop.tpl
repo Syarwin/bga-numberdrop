@@ -1,6 +1,6 @@
 {OVERALL_GAME_HEADER}
 
-<div id="test"></div>
+<div id="main-holder"></div>
 <script type="text/javascript">
 </script>
 

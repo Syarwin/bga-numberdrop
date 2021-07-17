@@ -13,11 +13,13 @@ class Scribbles extends \NUMDROP\Helpers\DB_Manager
   protected static function cast($row)
   {
     $row['pId'] = $row['player_id'];
+    unset($row['player_id']);
     return $row;
   }
 
-  public function addNumber($pId, $row, $col, $n, $turn)
+  public function addNumber($pId, $row, $col, $n, $turn = null)
   {
+    $turn = $turn ?? Globals::getCurrentTurn();
     self::DB()->insert([
       'player_id' => $pId,
       'row' => $row,
@@ -25,5 +27,28 @@ class Scribbles extends \NUMDROP\Helpers\DB_Manager
       'number' => $n,
       'turn' => $turn,
     ]);
+  }
+
+  public function getOfPlayer($player)
+  {
+    $pId = is_int($player) ? $player : $player->getId();
+    $query = self::DB()->wherePlayer($player);
+
+    try {
+      // Filter out the scribbles of current turn if not current player
+      if (Players::getCurrentId() != $pId) {
+        $query = $query->where('turn', '<', Globals::getCurrentTurn());
+      }
+    } finally {
+      return $query->get()->toArray();
+    }
+  }
+
+  public function hasScribbleSomething($pId)
+  {
+    return self::DB()
+      ->wherePlayer($pId)
+      ->where('turn', Globals::getCurrentTurn())
+      ->count() > 0;
   }
 }

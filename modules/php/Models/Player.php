@@ -85,11 +85,12 @@ class Player extends \NUMDROP\Helpers\DB_Manager implements \JsonSerializable
       'name' => $this->name,
       'color' => $this->color,
       'score' => $this->score,
+      'scribbles' => Scribbles::getOfPlayer($this->id),
     ];
     return $data;
   }
 
-  public function addNumber($row, $col, $n, $turn)
+  public function addNumber($row, $col, $n, $turn = null)
   {
     Scribbles::addNumber($this->id, $row, $col, $n, $turn);
   }

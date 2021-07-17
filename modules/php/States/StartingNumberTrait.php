@@ -56,7 +56,7 @@ trait StartingNumberTrait
   {
     $choices = Globals::getStartingNumberChoices();
     foreach(Players::getAll() as $pId => $player){
-      $player->addNumber(0, $choices[$pId], $player->getNo(), 0);
+      $player->addNumber(0, $choices[$pId], $player->getNo());
     }
     // TODO Notifications::startingNumbers($choices);
     $this->gamestate->nextState();
