@@ -57,7 +57,7 @@
     .nd-cell {
       width: 36px;
       height: 36px;
-      border:1px solid transparent;
+      border: 1px solid transparent;
       box-shadow: 0 0 0 1px #5ac0ec;
       display: flex;
       justify-content: center;
@@ -95,6 +95,107 @@
 
           &:hover {
             color: black;
+          }
+        }
+      }
+    }
+
+    .sheet-right-column {
+      display: flex;
+      flex-flow: column;
+      flex-grow: 1;
+      margin-left: 10px;
+
+      .shape-constructor {
+        height: 230px;
+
+        #shape-selector {
+          display: flex;
+          justify-content: space-evenly;
+
+          div {
+            width: 40px;
+            height: 40px;
+            border: 1px solid black;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-color: white;
+
+            &.selectable {
+              cursor: pointer;
+            }
+
+            &#shape-selector-0 {
+              background-image: url('img/tetromino-I.svg');
+              background-size: 80% auto;
+            }
+            &#shape-selector-1 {
+              background-image: url('img/tetromino-L.svg');
+              background-size: auto 75%;
+            }
+            &#shape-selector-2 {
+              background-image: url('img/tetromino-O.svg');
+              background-size: 60% auto;
+            }
+            &#shape-selector-3 {
+              background-image: url('img/tetromino-S.svg');
+              background-size: auto 75%;
+            }
+            &#shape-selector-4 {
+              background-image: url('img/tetromino-T.svg');
+              background-size: 80% auto;
+            }
+          }
+        }
+
+        #shape-constructor-grid {
+          display: grid;
+          grid-template-columns: repeat(4, auto);
+          grid-template-rows: repeat(4, auto);
+          width: 154px;
+          border-collapse: collapse;
+          grid-gap: 1px;
+          margin: 10px auto;
+
+          .nd-cell {
+            box-shadow: 0 0 0 1px #b9bcbd;
+
+            &.active {
+              background: #d5d5d5;
+            }
+          }
+        }
+      }
+
+      .sheet-bonus {
+        display: flex;
+        flex-flow: row;
+        justify-content: space-around;
+
+        .sheet-bonus-identical,
+        .sheet-bonus-sequence,
+        .sheet-bonus-drop {
+          display: flex;
+          flex-flow: column;
+
+          .sheet-bonus-grid {
+            border: 1px dashed gray;
+
+            .sheet-bonus-cell {
+              width: 30px;
+              height: 30px;
+              margin: 5px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              font-family: 'Press Start 2P';
+              font-weight: bold;
+              font-size: 20px;
+              color: transparent;
+              background: linear-gradient(to bottom, #f2247b, #00bdd0);
+              background-clip: text;
+            }
           }
         }
       }

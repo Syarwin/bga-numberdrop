@@ -69,7 +69,17 @@ html.darkmode {
     }
 
     .nd-cell::before {
-      color:gray;
+      color: gray;
+    }
+
+    .sheet-right-column {
+      .shape-constructor {
+        #shape-selector {
+          div {
+            background-color: #89898a;
+          }
+        }
+      }
     }
   }
 }

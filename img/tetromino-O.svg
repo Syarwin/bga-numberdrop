@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="5.5562501mm"
+   height="5.5562501mm"
+   viewBox="0 0 5.5562503 5.5562501"
+   version="1.1"
+   id="svg860"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="tetromino-O.svg">
+  <defs
+     id="defs854" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="11.2"
+     inkscape:cx="25.867363"
+     inkscape:cy="2.4057043"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1025"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata857">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-19.508295,-22.518414)">
+    <g
+       transform="matrix(0.26458333,0,0,0.26458333,2.4426703,21.592373)"
+       id="g3197"
+       style="fill:none;fill-opacity:1">
+      <path
+         inkscape:connector-curvature="0"
+         d="M 65,3.9999994 H 85 V 24 H 65 Z"
+         id="path15"
+         style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1" />
+      <path
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccc"
+         style="fill:none;stroke:#000000;stroke-width:0.30000001;fill-opacity:1"
+         id="path3193"
+         d="M 65.00044,4.0004408 V 14 h 9.99999 L 75.00022,4.0004408 65,3.9999998" />
+      <path
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccc"
+         style="fill:none;stroke:#000000;stroke-width:0.30000001;fill-opacity:1"
+         id="path3195"
+         d="M 75.000443,14.000441 V 24 H 85.00043 L 85.00022,14.000441 75,14" />
+    </g>
+  </g>
+</svg>

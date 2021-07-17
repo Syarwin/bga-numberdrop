@@ -73,15 +73,15 @@ define([
     setupScoreSheets() {
       this.forEachPlayer((player) => {
         this.place('tplScoreSheet', player, 'main-holder');
-        player.scribbles.forEach(scribble => this.addScribble(scribble));
+        player.scribbles.forEach((scribble) => this.addScribble(scribble));
       });
     },
 
     /**
      * Add a scribble onto someone scoresheet
      */
-    addScribble(scribble){
-      if(scribble.number){
+    addScribble(scribble) {
+      if (scribble.number) {
         let cell = this.getCell(scribble);
         this.setCellContent(cell, scribble.number, scribble.turn);
       }
@@ -98,10 +98,25 @@ define([
           cells += `<div class='nd-cell' data-col='${j}' data-row='${i}' id='cell-${player.id}-${i}-${j}'></div>`;
         }
 
-        let n = i < 11? '+2' : '-5';
+        let n = i < 11 ? '+2' : '-5';
         endOfLines += `<div class='nd-cell' data-col='7' data-row='${i}' id='cell-${player.id}-${i}-7' data-n='${n}'></div>`;
       }
       let current = player.id == this.player_id ? 'current' : '';
+
+      let shapeConstructor = '';
+      if (player.id == this.player_id) {
+        shapeConstructor += "<div id='shape-selector'>";
+        for (let i = 0; i < 5; i++) {
+          shapeConstructor += `<div id='shape-selector-${i}'></div>`;
+        }
+        shapeConstructor += "</div><div id='shape-constructor-grid'>";
+        for (let i = 0; i < 4; i++) {
+          for (let j = 0; j < 4; j++) {
+            shapeConstructor += `<div id='shape-constructor-cell-${i}-${j}' class='nd-cell'></div>`;
+          }
+        }
+        shapeConstructor += '</div>';
+      }
 
       return `
       <div class="sheet-wrapper ${current}" id='sheet-${player.id}'>
@@ -114,6 +129,46 @@ define([
 
           <div class="end-of-lines">
             ${endOfLines}
+          </div>
+
+          <div class="sheet-right-column">
+            <div class="shape-constructor">
+              ${shapeConstructor}
+            </div>
+            <div class="sheet-bonus">
+              <div class="sheet-bonus-identical">
+                <div class="sheet-bonus-header"></div>
+                <div class="sheet-bonus-grid">
+                  <div class="sheet-bonus-cell">3</div>
+                  <div class="sheet-bonus-cell">4</div>
+                  <div class="sheet-bonus-cell">5</div>
+                  <div class="sheet-bonus-cell">6</div>
+                  <div class="sheet-bonus-cell">7</div>
+                </div>
+              </div>
+
+              <div class="sheet-bonus-sequence">
+                <div class="sheet-bonus-header"></div>
+                <div class="sheet-bonus-grid">
+                  <div class="sheet-bonus-cell">3</div>
+                  <div class="sheet-bonus-cell">4</div>
+                  <div class="sheet-bonus-cell">5</div>
+                  <div class="sheet-bonus-cell">6</div>
+                  <div class="sheet-bonus-cell">7</div>
+                </div>
+              </div>
+
+              <div class="sheet-bonus-drop">
+                <div class="sheet-bonus-header"></div>
+                <div class="sheet-bonus-grid">
+                  <div class="sheet-bonus-cell">A</div>
+                  <div class="sheet-bonus-cell">B</div>
+                  <div class="sheet-bonus-cell">C</div>
+                  <div class="sheet-bonus-cell">D</div>
+                  <div class="sheet-bonus-cell">E</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -220,12 +275,39 @@ define([
       }
     },
 
+    /***********************************
+     ************ Drop Shape ***********
+     ***********************************/
+    onEnteringStateDropShape(args) {
+      if (this.isReadOnly()) return;
+
+      ['I', 'L', 'O', 'S', 'T'].forEach((shape, i) => {
+        this.onClick('shape-selector-' + i, () => this.selectShape(shape));
+      });
+    },
+
+    selectShape(shapeId) {
+      let shape = this.gamedatas.shapes[shapeId][0];
+      for(let i = 0; i < 4; i++){
+        for(let j = 0; j < 4; j++){
+          dojo.toggleClass(`shape-constructor-cell-${i}-${j}`, 'active', shape[i][j] != ' ');
+        }
+      }
+    },
+
     /**************************************
      *************** Dice *****************
      **************************************/
     setupDices() {
       dojo.place('<div id="dice-holder"></div>', 'main-holder');
-      let dices = ['1*3457', '12*456', '234*67', '123567', 'IOTLS*'];
+      let dices = ['1*3457', '12*456', '234*67', '123567'];
+      let shapeDice = ['*'];
+      ['I', 'O', 'T', 'L', 'S'].forEach((shape) => {
+        shapeDice.push(`<span class="tetromino tetromino-${shape}"></span>`);
+      });
+      dices.push(shapeDice);
+
+      // Create the dice
       dices.forEach((dice, i) => {
         this.place('tplDice', { id: i, values: dice }, 'dice-holder');
       });

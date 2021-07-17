@@ -32,7 +32,6 @@ $swdNamespaceAutoload = function ($class) {
 };
 spl_autoload_register($swdNamespaceAutoload, true, true);
 
-
 use NUMDROP\Managers\Players;
 use NUMDROP\Core\Globals;
 use NUMDROP\Core\Preferences;
@@ -85,6 +84,7 @@ class NumberDrop extends Table
       'prefs' => Preferences::getUiData($pId),
       'players' => Players::getUiData($pId),
       'dies' => Globals::getDies(),
+      'shapes' => $this->shapes,
     ];
   }
 
@@ -97,7 +97,6 @@ class NumberDrop extends Table
     return 50;
   }
 
-
   function actChangePreference($pref, $value)
   {
     Preferences::set($this->getCurrentPId(), $pref, $value);
@@ -106,8 +105,6 @@ class NumberDrop extends Table
   ///////////////////////////
   //// DEBUG FUNCTIONS //////
   ///////////////////////////
-
-
 
   ////////////////////////////////////
   ////////////   Zombie   ////////////
@@ -144,7 +141,6 @@ class NumberDrop extends Table
    */
   public function upgradeTableDb($from_version)
   {
-
   }
 
   /////////////////////////////////////////////////////////////
