@@ -233,7 +233,7 @@ define([
     getCellContent(row, col = null) {
       let cell = this.getCell(row, col);
       if (cell == null) {
-        return 'X';
+        return null;
       }
       return cell.getAttribute('data-n') || '';
     },
@@ -357,7 +357,6 @@ define([
         this.updateShapeShadow();
       });
 
-
       // Cells
       for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
@@ -424,6 +423,7 @@ define([
 
     onClickCellShapeConstructor(i, j) {
       let shape = this.gamedatas.shapes[this._selectedShape][this._selectedRotation];
+      let n = shape.length;
       let y = this._selectedFlip == 0 ? j : n - j - 1;
       let id = shape[i][y];
       if (id == ' ') return;
@@ -463,6 +463,25 @@ define([
       }
     },
 
+    replaceInsideGrid() {
+      // Check current drop column against current rotation
+      let minCol = 8,
+        maxCol = 0;
+      this.getCurrentShape().forEach((pos) => {
+        minCol = Math.min(minCol, pos.col);
+        maxCol = Math.max(maxCol, pos.col);
+      });
+      if (minCol + this._selectedCol < 0) {
+        this._selectedCol = -minCol;
+      }
+      $('control-move-left').classList.toggle('disabled', this._selectedCol == -minCol);
+
+      if (maxCol + this._selectedCol > 6) {
+        this._selectedCol = 6 - maxCol;
+      }
+      $('control-move-right').classList.toggle('disabled', this._selectedCol == 6 - maxCol);
+    },
+
     findLowestDropRow() {
       for (let i = 11; i > -3; i--) {
         let collision = false;
@@ -482,9 +501,11 @@ define([
 
     updateShapeShadow() {
       this.clearShapeShadow();
+      this.replaceInsideGrid();
 
       let row = this.findLowestDropRow();
-      if(row == 12){ // Only happens if too far right/left
+      if (row == 12) {
+        // Only happens if too far right/left
         return;
       }
 

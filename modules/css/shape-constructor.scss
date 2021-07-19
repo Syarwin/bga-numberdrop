@@ -81,6 +81,16 @@
           background-size: auto 70%;
           visibility: hidden;
         }
+
+        &.disabled {
+          cursor: not-allowed;
+          filter: grayscale(100%);
+          box-shadow: 0 0 0 1px #aaa;
+
+          &:hover {
+            background-color: transparent;
+          }
+        }
       }
     }
 

@@ -376,6 +376,12 @@ html.darkmode {
           background-image: url("img/flip-vertical.svg");
           background-size: auto 70%;
           visibility: hidden; }
+        .shape-constructor #shape-constructor-holder .shape-constructor-controls div.disabled {
+          cursor: not-allowed;
+          filter: grayscale(100%);
+          box-shadow: 0 0 0 1px #aaa; }
+          .shape-constructor #shape-constructor-holder .shape-constructor-controls div.disabled:hover {
+            background-color: transparent; }
     .shape-constructor #shape-constructor-holder #shape-constructor-grid {
       display: grid;
       grid-template-columns: repeat(4, auto);
