@@ -23,7 +23,7 @@ define([
   'ebg/counter',
   g_gamethemeurl + 'modules/js/Core/game.js',
   g_gamethemeurl + 'modules/js/Core/modal.js',
-], function (dojo, declare, noUiSlider, sortable) {
+], function (dojo, declare) {
   let DARK_MODE = 100;
   let DARK_MODE_DISABLED = 1;
   let DARK_MODE_ENABLED = 2;
@@ -58,7 +58,13 @@ define([
       this.setupScoreSheets();
       this.setupDices();
       this.addDarkModeSwitch();
+      dojo.connect($('overall-content'), 'click', () => this.clearDial());
       this.inherited(arguments);
+    },
+
+    clearPossible() {
+      this.clearDial();
+      this.inherit();
     },
 
     /**************************************
@@ -192,7 +198,7 @@ define([
           <div class="shape-constructor-controls">
             <div class="nd-cell" id="control-flip-horizontal"></div>
             <div class="nd-cell" id="control-move-left"></div>
-            <div class="nd-cell" id="control-rotate-right"></div>
+            <div class="nd-cell" id="control-rotate-left"></div>
           </div>
           <div id='shape-constructor-grid'>
             ${shapeConstructorGrid}
@@ -200,7 +206,7 @@ define([
           <div class="shape-constructor-controls">
             <div class="nd-cell" id="control-flip-vertical"></div>
             <div class="nd-cell" id="control-move-right"></div>
-            <div class="nd-cell" id="control-rotate-left"></div>
+            <div class="nd-cell" id="control-rotate-right"></div>
           </div>
         </div>
         `;
@@ -222,6 +228,14 @@ define([
         row: cell.getAttribute('data-row'),
         col: cell.getAttribute('data-col'),
       };
+    },
+
+    getCellContent(row, col = null) {
+      let cell = this.getCell(row, col);
+      if (cell == null) {
+        return 'X';
+      }
+      return cell.getAttribute('data-n') || '';
     },
 
     setCellContent(cell, n, turn = 0) {
@@ -312,6 +326,7 @@ define([
       this._selectedShape = null;
       this._selectedRotation = 0;
       this._selectedFlip = 0;
+      this._selectedCol = 3;
       ['I', 'L', 'O', 'S', 'T'].forEach((shape, i) => {
         this.onClick('shape-selector-' + i, () => this.selectShape(shape));
       });
@@ -332,10 +347,24 @@ define([
         this.updateShapeConstructor();
       });
 
+      this.onClick('control-move-left', () => {
+        this._selectedCol--; // TODO : check left border
+        this.updateShapeShadow();
+      });
+
+      this.onClick('control-move-right', () => {
+        this._selectedCol++; // TODO : check left border
+        this.updateShapeShadow();
+      });
+
+
       // Cells
       for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
-          this.onClick(`shape-constructor-cell-${i}-${j}`, () => this.onClickCellShapeConstructor(i, j));
+          this.onClick(`shape-constructor-cell-${i}-${j}`, (evt) => {
+            evt.stopPropagation();
+            this.onClickCellShapeConstructor(i, j);
+          });
         }
       }
     },
@@ -367,6 +396,30 @@ define([
           }
         }
       }
+
+      this.updateShapeShadow();
+    },
+
+    getCurrentShape() {
+      let shape = this.gamedatas.shapes[this._selectedShape][this._selectedRotation];
+      let n = shape.length;
+
+      let res = [];
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          let y = this._selectedFlip == 0 ? j : n - j - 1;
+          let id = shape[i][y];
+          if (id != ' ') {
+            res.push({
+              row: i,
+              col: j,
+              n: id,
+            });
+          }
+        }
+      }
+
+      return res;
     },
 
     onClickCellShapeConstructor(i, j) {
@@ -375,8 +428,83 @@ define([
       let id = shape[i][y];
       if (id == ' ') return;
 
-      this._choices[id] = parseInt(4 * Math.random());
-      this.updateShapeConstructor();
+      let cell = $(`shape-constructor-cell-${i}-${j}`);
+      this.placeDial(cell, id);
+    },
+
+    placeDial(cell, id) {
+      // Clear existing dial if any
+      this.clearDial();
+
+      // Create a new dial with correct enabled numbers
+      let html = '<div id="shape-constructor-dial">';
+      let possibleNumbers = [1, 2, 3, 4, 5, 7]; // TODO
+      for (let i = 1; i < 8; i++) {
+        let status = possibleNumbers.includes(i) ? 'active' : 'disabled';
+        html += `<div id="shape-constructor-dial-${i}" class="${status}">${i}</div>`;
+      }
+      html += '<div id="shape-constructor-clear"></div></div>';
+      dojo.place(html, cell);
+
+      // Connect listeners
+      possibleNumbers.forEach((i) => {
+        dojo.connect($('shape-constructor-dial-' + i), 'click', (evt) => {
+          evt.stopPropagation();
+          this.clearDial();
+          this._choices[id] = i;
+          this.updateShapeConstructor();
+        });
+      });
+    },
+
+    clearDial() {
+      if ($('shape-constructor-dial')) {
+        dojo.destroy('shape-constructor-dial');
+      }
+    },
+
+    findLowestDropRow() {
+      for (let i = 11; i > -3; i--) {
+        let collision = false;
+        this.getCurrentShape().forEach((pos) => {
+          pos.row += i;
+          pos.col += this._selectedCol;
+          if (this.getCellContent(pos) != '') collision = true;
+        });
+
+        if (collision) {
+          return i + 1;
+        }
+      }
+
+      return 0;
+    },
+
+    updateShapeShadow() {
+      this.clearShapeShadow();
+
+      let row = this.findLowestDropRow();
+      if(row == 12){ // Only happens if too far right/left
+        return;
+      }
+
+      this.getCurrentShape().forEach((pos) => {
+        pos.row += row;
+        pos.col += this._selectedCol;
+
+        let cell = this.getCell(pos);
+        this.setCellContent(cell, this._choices[pos.n]);
+        cell.classList.add('active');
+      });
+    },
+
+    clearShapeShadow() {
+      let grid = document.querySelector('.sheet-wrapper.current .sheet-top .grid-wrapper .nd-grid');
+      let cells = [...grid.querySelectorAll('.nd-cell.active')];
+      cells.forEach((cell) => {
+        this.clearCellContent(cell);
+        cell.classList.remove('active');
+      });
     },
 
     /**************************************

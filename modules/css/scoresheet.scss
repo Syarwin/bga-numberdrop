@@ -63,6 +63,10 @@
       justify-content: center;
       align-items: center;
 
+      &.active {
+        background: #d5d5d5;
+      }
+
       @for $i from 11 to 14 {
         &[data-row='#{$i}'] {
           box-shadow: 0 0 0 1px #f2247b;

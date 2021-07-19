@@ -239,6 +239,8 @@ html.darkmode {
     display: flex;
     justify-content: center;
     align-items: center; }
+    .sheet-wrapper .sheet-top .nd-cell.active {
+      background: #d5d5d5; }
     .sheet-wrapper .sheet-top .nd-cell[data-row='11'] {
       box-shadow: 0 0 0 1px #f2247b; }
     .sheet-wrapper .sheet-top .nd-cell[data-row='12'] {
@@ -382,7 +384,8 @@ html.darkmode {
       grid-gap: 1px;
       margin: 0px auto; }
       .shape-constructor #shape-constructor-holder #shape-constructor-grid .nd-cell {
-        box-shadow: 0 0 0 1px #b9bcbd; }
+        box-shadow: 0 0 0 1px #b9bcbd;
+        position: relative; }
         .shape-constructor #shape-constructor-holder #shape-constructor-grid .nd-cell.active {
           background: #d5d5d5; }
         .shape-constructor #shape-constructor-holder #shape-constructor-grid .nd-cell:not(.active).selectable {
@@ -407,5 +410,29 @@ html.darkmode {
           display: none; }
         .shape-constructor #shape-constructor-holder #shape-constructor-grid[data-dim='3'] #shape-constructor-cell-3-3 {
           display: none; }
+      .shape-constructor #shape-constructor-holder #shape-constructor-grid #shape-constructor-dial {
+        background: #ddd;
+        position: absolute;
+        top: 27px;
+        left: 27px;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 4px;
+        padding: 4px;
+        border: 1px solid black; }
+        .shape-constructor #shape-constructor-holder #shape-constructor-grid #shape-constructor-dial div {
+          width: 30px;
+          height: 30px;
+          border: 1px solid #a2a2a2;
+          background: #eae7e7;
+          font-family: 'Press Start 2P';
+          font-size: 16px;
+          text-align: center;
+          line-height: 31px; }
+          .shape-constructor #shape-constructor-holder #shape-constructor-grid #shape-constructor-dial div.disabled {
+            cursor: not-allowed;
+            background: #dbdbdb;
+            color: #959393; }
 
 /*# sourceMappingURL=numberdrop.css.map */
