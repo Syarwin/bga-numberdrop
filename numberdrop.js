@@ -105,17 +105,7 @@ define([
 
       let shapeConstructor = '';
       if (player.id == this.player_id) {
-        shapeConstructor += "<div id='shape-selector'>";
-        for (let i = 0; i < 5; i++) {
-          shapeConstructor += `<div id='shape-selector-${i}'></div>`;
-        }
-        shapeConstructor += "</div><div id='shape-constructor-grid'>";
-        for (let i = 0; i < 4; i++) {
-          for (let j = 0; j < 4; j++) {
-            shapeConstructor += `<div id='shape-constructor-cell-${i}-${j}' class='nd-cell'></div>`;
-          }
-        }
-        shapeConstructor += '</div>';
+        shapeConstructor = this.tplShapeConstructor();
       }
 
       return `
@@ -179,6 +169,41 @@ define([
         </div>
       </div>
       `;
+    },
+
+    tplShapeConstructor() {
+      let shapeSelectors = '';
+      for (let i = 0; i < 5; i++) {
+        shapeSelectors += `<div id='shape-selector-${i}'></div>`;
+      }
+
+      let shapeConstructorGrid = '';
+      for (let i = 3; i >= 0; i--) {
+        for (let j = 0; j < 4; j++) {
+          shapeConstructorGrid += `<div id='shape-constructor-cell-${i}-${j}' class='nd-cell'></div>`;
+        }
+      }
+
+      return `
+        <div id='shape-selector'>
+          ${shapeSelectors}
+        </div>
+        <div id="shape-constructor-holder">
+          <div class="shape-constructor-controls">
+            <div class="nd-cell" id="control-flip-horizontal"></div>
+            <div class="nd-cell" id="control-move-left"></div>
+            <div class="nd-cell" id="control-rotate-right"></div>
+          </div>
+          <div id='shape-constructor-grid'>
+            ${shapeConstructorGrid}
+          </div>
+          <div class="shape-constructor-controls">
+            <div class="nd-cell" id="control-flip-vertical"></div>
+            <div class="nd-cell" id="control-move-right"></div>
+            <div class="nd-cell" id="control-rotate-left"></div>
+          </div>
+        </div>
+        `;
     },
 
     getCell(row, col = null, pId = null) {
@@ -281,18 +306,77 @@ define([
     onEnteringStateDropShape(args) {
       if (this.isReadOnly()) return;
 
+      this._choices = ['', '', '', ''];
+
+      // Shape selector
+      this._selectedShape = null;
+      this._selectedRotation = 0;
+      this._selectedFlip = 0;
       ['I', 'L', 'O', 'S', 'T'].forEach((shape, i) => {
         this.onClick('shape-selector-' + i, () => this.selectShape(shape));
       });
+
+      // Shape controls
+      this.onClick('control-rotate-left', () => {
+        this._selectedRotation += this._selectedFlip == 1 ? 1 : -1;
+        this.updateShapeConstructor();
+      });
+
+      this.onClick('control-rotate-right', () => {
+        this._selectedRotation += this._selectedFlip == 1 ? -1 : 1;
+        this.updateShapeConstructor();
+      });
+
+      this.onClick('control-flip-horizontal', () => {
+        this._selectedFlip = 1 - this._selectedFlip;
+        this.updateShapeConstructor();
+      });
+
+      // Cells
+      for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+          this.onClick(`shape-constructor-cell-${i}-${j}`, () => this.onClickCellShapeConstructor(i, j));
+        }
+      }
     },
 
     selectShape(shapeId) {
-      let shape = this.gamedatas.shapes[shapeId][0];
-      for(let i = 0; i < 4; i++){
-        for(let j = 0; j < 4; j++){
-          dojo.toggleClass(`shape-constructor-cell-${i}-${j}`, 'active', shape[i][j] != ' ');
+      this._selectedShape = shapeId;
+      this._selectedRotation = 0;
+      this._selectedFlip = 0;
+      this.updateShapeConstructor();
+    },
+
+    updateShapeConstructor() {
+      this._selectedRotation = (this._selectedRotation + 4) % 4;
+
+      let shape = this.gamedatas.shapes[this._selectedShape][this._selectedRotation];
+      let n = shape.length;
+      dojo.attr('shape-constructor-grid', 'data-dim', n);
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          let y = this._selectedFlip == 0 ? j : n - j - 1;
+
+          let cell = $(`shape-constructor-cell-${i}-${j}`);
+          if (shape[i][y] == ' ') {
+            cell.classList.remove('active');
+            cell.setAttribute('data-n', '');
+          } else {
+            cell.classList.add('active');
+            cell.setAttribute('data-n', this._choices[shape[i][y]]);
+          }
         }
       }
+    },
+
+    onClickCellShapeConstructor(i, j) {
+      let shape = this.gamedatas.shapes[this._selectedShape][this._selectedRotation];
+      let y = this._selectedFlip == 0 ? j : n - j - 1;
+      let id = shape[i][y];
+      if (id == ' ') return;
+
+      this._choices[id] = parseInt(4 * Math.random());
+      this.updateShapeConstructor();
     },
 
     /**************************************

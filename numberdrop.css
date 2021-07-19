@@ -268,47 +268,6 @@ html.darkmode {
     flex-flow: column;
     flex-grow: 1;
     margin-left: 10px; }
-    .sheet-wrapper .sheet-top .sheet-right-column .shape-constructor {
-      height: 230px; }
-      .sheet-wrapper .sheet-top .sheet-right-column .shape-constructor #shape-selector {
-        display: flex;
-        justify-content: space-evenly; }
-        .sheet-wrapper .sheet-top .sheet-right-column .shape-constructor #shape-selector div {
-          width: 40px;
-          height: 40px;
-          border: 1px solid black;
-          background-repeat: no-repeat;
-          background-position: center center;
-          background-color: white; }
-          .sheet-wrapper .sheet-top .sheet-right-column .shape-constructor #shape-selector div.selectable {
-            cursor: pointer; }
-          .sheet-wrapper .sheet-top .sheet-right-column .shape-constructor #shape-selector div#shape-selector-0 {
-            background-image: url("img/tetromino-I.svg");
-            background-size: 80% auto; }
-          .sheet-wrapper .sheet-top .sheet-right-column .shape-constructor #shape-selector div#shape-selector-1 {
-            background-image: url("img/tetromino-L.svg");
-            background-size: auto 75%; }
-          .sheet-wrapper .sheet-top .sheet-right-column .shape-constructor #shape-selector div#shape-selector-2 {
-            background-image: url("img/tetromino-O.svg");
-            background-size: 60% auto; }
-          .sheet-wrapper .sheet-top .sheet-right-column .shape-constructor #shape-selector div#shape-selector-3 {
-            background-image: url("img/tetromino-S.svg");
-            background-size: auto 75%; }
-          .sheet-wrapper .sheet-top .sheet-right-column .shape-constructor #shape-selector div#shape-selector-4 {
-            background-image: url("img/tetromino-T.svg");
-            background-size: 80% auto; }
-      .sheet-wrapper .sheet-top .sheet-right-column .shape-constructor #shape-constructor-grid {
-        display: grid;
-        grid-template-columns: repeat(4, auto);
-        grid-template-rows: repeat(4, auto);
-        width: 154px;
-        border-collapse: collapse;
-        grid-gap: 1px;
-        margin: 10px auto; }
-        .sheet-wrapper .sheet-top .sheet-right-column .shape-constructor #shape-constructor-grid .nd-cell {
-          box-shadow: 0 0 0 1px #b9bcbd; }
-          .sheet-wrapper .sheet-top .sheet-right-column .shape-constructor #shape-constructor-grid .nd-cell.active {
-            background: #d5d5d5; }
     .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus {
       display: flex;
       flex-flow: row;
@@ -353,5 +312,100 @@ html.darkmode {
         height: 54px;
         background-size: 100% 100%;
         vertical-align: middle; }
+
+.shape-constructor {
+  height: 250px; }
+  .shape-constructor #shape-selector {
+    display: flex;
+    justify-content: space-evenly; }
+    .shape-constructor #shape-selector div {
+      width: 40px;
+      height: 40px;
+      border: 1px solid black;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-color: white; }
+      .shape-constructor #shape-selector div.selectable {
+        cursor: pointer; }
+      .shape-constructor #shape-selector div#shape-selector-0 {
+        background-image: url("img/tetromino-I.svg");
+        background-size: 80% auto; }
+      .shape-constructor #shape-selector div#shape-selector-1 {
+        background-image: url("img/tetromino-L.svg");
+        background-size: auto 75%; }
+      .shape-constructor #shape-selector div#shape-selector-2 {
+        background-image: url("img/tetromino-O.svg");
+        background-size: 60% auto; }
+      .shape-constructor #shape-selector div#shape-selector-3 {
+        background-image: url("img/tetromino-S.svg");
+        background-size: auto 75%; }
+      .shape-constructor #shape-selector div#shape-selector-4 {
+        background-image: url("img/tetromino-T.svg");
+        background-size: 80% auto; }
+  .shape-constructor #shape-constructor-holder {
+    display: flex;
+    margin: 20px 3px;
+    height: 150px;
+    align-items: center; }
+    .shape-constructor #shape-constructor-holder .shape-constructor-controls {
+      display: flex;
+      flex-flow: column;
+      justify-content: space-between;
+      height: 100%; }
+      .shape-constructor #shape-constructor-holder .shape-constructor-controls div {
+        background-repeat: no-repeat;
+        background-position: center center; }
+        .shape-constructor #shape-constructor-holder .shape-constructor-controls div#control-rotate-left {
+          background-image: url("img/rotate-left.svg");
+          background-size: 70% auto; }
+        .shape-constructor #shape-constructor-holder .shape-constructor-controls div#control-rotate-right {
+          background-image: url("img/rotate-right.svg");
+          background-size: 70% auto; }
+        .shape-constructor #shape-constructor-holder .shape-constructor-controls div#control-move-left {
+          background-image: url("img/move-left.svg");
+          background-size: auto 65%; }
+        .shape-constructor #shape-constructor-holder .shape-constructor-controls div#control-move-right {
+          background-image: url("img/move-right.svg");
+          background-size: auto 65%; }
+        .shape-constructor #shape-constructor-holder .shape-constructor-controls div#control-flip-horizontal {
+          background-image: url("img/flip-horizontal.svg");
+          background-size: 70% auto; }
+        .shape-constructor #shape-constructor-holder .shape-constructor-controls div#control-flip-vertical {
+          background-image: url("img/flip-vertical.svg");
+          background-size: auto 70%;
+          visibility: hidden; }
+    .shape-constructor #shape-constructor-holder #shape-constructor-grid {
+      display: grid;
+      grid-template-columns: repeat(4, auto);
+      grid-template-rows: repeat(4, auto);
+      border-collapse: collapse;
+      grid-gap: 1px;
+      margin: 0px auto; }
+      .shape-constructor #shape-constructor-holder #shape-constructor-grid .nd-cell {
+        box-shadow: 0 0 0 1px #b9bcbd; }
+        .shape-constructor #shape-constructor-holder #shape-constructor-grid .nd-cell.active {
+          background: #d5d5d5; }
+        .shape-constructor #shape-constructor-holder #shape-constructor-grid .nd-cell:not(.active).selectable {
+          cursor: default;
+          background: none; }
+      .shape-constructor #shape-constructor-holder #shape-constructor-grid[data-dim='3'] {
+        grid-template-columns: repeat(3, auto);
+        grid-template-rows: repeat(3, auto); }
+        .shape-constructor #shape-constructor-holder #shape-constructor-grid[data-dim='3'] #shape-constructor-cell-3-0 {
+          display: none; }
+        .shape-constructor #shape-constructor-holder #shape-constructor-grid[data-dim='3'] #shape-constructor-cell-0-3 {
+          display: none; }
+        .shape-constructor #shape-constructor-holder #shape-constructor-grid[data-dim='3'] #shape-constructor-cell-3-1 {
+          display: none; }
+        .shape-constructor #shape-constructor-holder #shape-constructor-grid[data-dim='3'] #shape-constructor-cell-1-3 {
+          display: none; }
+        .shape-constructor #shape-constructor-holder #shape-constructor-grid[data-dim='3'] #shape-constructor-cell-3-2 {
+          display: none; }
+        .shape-constructor #shape-constructor-holder #shape-constructor-grid[data-dim='3'] #shape-constructor-cell-2-3 {
+          display: none; }
+        .shape-constructor #shape-constructor-holder #shape-constructor-grid[data-dim='3'] #shape-constructor-cell-3-3 {
+          display: none; }
+        .shape-constructor #shape-constructor-holder #shape-constructor-grid[data-dim='3'] #shape-constructor-cell-3-3 {
+          display: none; }
 
 /*# sourceMappingURL=numberdrop.css.map */
