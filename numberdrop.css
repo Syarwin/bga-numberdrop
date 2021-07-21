@@ -19,6 +19,9 @@
   font-weight: normal;
   font-style: normal;
   font-display: swap; }
+.no-transition {
+  transition: none !important; }
+
 html {
   background: #eee !important; }
 
@@ -90,7 +93,8 @@ html {
     position: relative;
     width: 50px;
     height: 50px;
-    transform-style: preserve-3d; }
+    transform-style: preserve-3d;
+    transition: transform 2s; }
     .nb-dice-wrap .nb-dice div {
       position: absolute;
       width: 50px;
@@ -114,7 +118,7 @@ html {
         transform: rotateX(-90deg) translateY(-25px);
         transform-origin: top center; }
       .nb-dice-wrap .nb-dice div.dice-bottom {
-        transform: rotateX(90deg) translateY(25px);
+        transform: rotateZ(180deg) rotateX(90deg) translateY(25px);
         transform-origin: bottom center; }
       .nb-dice-wrap .nb-dice div.dice-front {
         transform: translateZ(25px); }

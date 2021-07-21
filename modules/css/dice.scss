@@ -14,6 +14,7 @@ $diceSize: 50px;
     width: $diceSize;
     height: $diceSize;
     transform-style: preserve-3d;
+    transition: transform 2s;
 
     div {
       position: absolute;
@@ -43,7 +44,7 @@ $diceSize: 50px;
         transform-origin: top center;
       }
       &.dice-bottom {
-        transform: rotateX(90deg) translateY($diceSize/2);
+        transform: rotateZ(180deg) rotateX(90deg) translateY($diceSize/2);
         transform-origin: bottom center;
       }
       &.dice-front {

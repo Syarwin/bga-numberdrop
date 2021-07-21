@@ -23,6 +23,9 @@
   font-display: swap;
 }
 
+.no-transition {
+  transition: none !important;
+}
 
 html {
   background: #eee !important;

@@ -31,12 +31,7 @@ define([
   return declare('bgagame.numberdrop', [customgame.game], {
     constructor() {
       this._activeStates = [];
-      this._notifications = [
-        /*
-           ['placeFarmer', 1000],
-           ['addFences', null],
-           */
-      ];
+      this._notifications = [['throwDies', 2500]];
 
       // TODO
       // Fix mobile viewport (remove CSS zoom)
@@ -64,7 +59,7 @@ define([
 
     clearPossible() {
       this.clearDial();
-      this.inherit();
+      this.inherited(arguments);
     },
 
     /**************************************
@@ -544,6 +539,11 @@ define([
       dices.forEach((dice, i) => {
         this.place('tplDice', { id: i, values: dice }, 'dice-holder');
       });
+
+      // Rotate them if initialized already
+      this.gamedatas.dies.forEach((value, i) => {
+        this.rotateDice(i, value, false);
+      });
     },
 
     tplDice(dice) {
@@ -559,6 +559,43 @@ define([
           </div>
       </div>
       `;
+    },
+
+    rotateDice(diceId, value, transition = true) {
+      let dice = $('nb-dice-' + diceId).querySelector('.nb-dice');
+
+      // Compute the index of the face
+      let dices = ['1*3457', '12*456', '234*67', '123567', '*IOTLS'];
+      let faceToShow = dices[diceId].indexOf(value);
+
+      // Compute the angles
+      let angles = [
+        { z: 0, y: 0, x: 0 },
+        { z: 0, y: 180, x: 0 },
+        { z: 180, y: 180, x: 90 },
+        { z: 0, y: 180, x: -90 },
+        { z: 90, y: 90, x: 90 },
+        { z: 0, y: -90, x: 0 },
+      ];
+      let angle = angles[faceToShow];
+      if (!transition) {
+        dice.classList.add('no-transition');
+        dice.offsetWidth;
+      } else {
+        angle.x += (parseInt(Math.random() * 9) - 4) * 360;
+        angle.y += (parseInt(Math.random() * 9) - 4) * 360;
+        angle.z += (parseInt(Math.random() * 9) - 4) * 360;
+      }
+      dice.style.transform = `rotateZ(${angle.z}deg) rotateY(${angle.y}deg) rotateX(${angle.x}deg)`;
+      dice.offsetWidth;
+      dice.classList.remove('no-transition');
+    },
+
+    notif_throwDies(n) {
+      debug('Notif: rolling dies', n);
+      n.args.dies.forEach((value, i) => {
+        this.rotateDice(i, value);
+      });
     },
 
     /**************************************
