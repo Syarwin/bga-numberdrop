@@ -12,8 +12,11 @@
       background-repeat: no-repeat;
       background-position: center center;
       background-color: white;
+      opacity: 0.3;
+      cursor: not-allowed;
 
       &.selectable {
+        opacity: 1;
         cursor: pointer;
       }
 
@@ -76,10 +79,9 @@
           background-image: url('img/flip-horizontal.svg');
           background-size: 70% auto;
         }
-        &#control-flip-vertical {
-          background-image: url('img/flip-vertical.svg');
+        &#control-clear {
+          background-image: url('img/clear.svg');
           background-size: auto 70%;
-          visibility: hidden;
         }
 
         &.disabled {
@@ -157,6 +159,13 @@
             cursor: not-allowed;
             background: #dbdbdb;
             color: #959393;
+          }
+
+          &#shape-constructor-clear {
+            background-image: url('img/clear.svg');
+            background-size: auto 70%;
+            background-repeat: no-repeat;
+            background-position: center center;
           }
         }
       }

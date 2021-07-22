@@ -89,6 +89,8 @@ html {
   display: flex;
   justify-content: center;
   align-items: center; }
+  .nb-dice-wrap.used {
+    opacity: 0.4; }
   .nb-dice-wrap .nb-dice {
     position: relative;
     width: 50px;
@@ -115,7 +117,7 @@ html {
         transform: rotateY(270deg) translateX(-25px);
         transform-origin: center left; }
       .nb-dice-wrap .nb-dice div.dice-top {
-        transform: rotateX(-90deg) translateY(-25px);
+        transform: rotateZ(180deg) rotateX(-90deg) translateY(-25px);
         transform-origin: top center; }
       .nb-dice-wrap .nb-dice div.dice-bottom {
         transform: rotateZ(180deg) rotateX(90deg) translateY(25px);
@@ -330,8 +332,11 @@ html.darkmode {
       border: 1px solid black;
       background-repeat: no-repeat;
       background-position: center center;
-      background-color: white; }
+      background-color: white;
+      opacity: 0.3;
+      cursor: not-allowed; }
       .shape-constructor #shape-selector div.selectable {
+        opacity: 1;
         cursor: pointer; }
       .shape-constructor #shape-selector div#shape-selector-0 {
         background-image: url("img/tetromino-I.svg");
@@ -376,10 +381,9 @@ html.darkmode {
         .shape-constructor #shape-constructor-holder .shape-constructor-controls div#control-flip-horizontal {
           background-image: url("img/flip-horizontal.svg");
           background-size: 70% auto; }
-        .shape-constructor #shape-constructor-holder .shape-constructor-controls div#control-flip-vertical {
-          background-image: url("img/flip-vertical.svg");
-          background-size: auto 70%;
-          visibility: hidden; }
+        .shape-constructor #shape-constructor-holder .shape-constructor-controls div#control-clear {
+          background-image: url("img/clear.svg");
+          background-size: auto 70%; }
         .shape-constructor #shape-constructor-holder .shape-constructor-controls div.disabled {
           cursor: not-allowed;
           filter: grayscale(100%);
@@ -444,5 +448,10 @@ html.darkmode {
             cursor: not-allowed;
             background: #dbdbdb;
             color: #959393; }
+          .shape-constructor #shape-constructor-holder #shape-constructor-grid #shape-constructor-dial div#shape-constructor-clear {
+            background-image: url("img/clear.svg");
+            background-size: auto 70%;
+            background-repeat: no-repeat;
+            background-position: center center; }
 
 /*# sourceMappingURL=numberdrop.css.map */

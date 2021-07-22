@@ -199,7 +199,7 @@ define([
             ${shapeConstructorGrid}
           </div>
           <div class="shape-constructor-controls">
-            <div class="nd-cell" id="control-flip-vertical"></div>
+            <div class="nd-cell" id="control-clear"></div>
             <div class="nd-cell" id="control-move-right"></div>
             <div class="nd-cell" id="control-rotate-right"></div>
           </div>
@@ -318,12 +318,15 @@ define([
       this._choices = ['', '', '', ''];
 
       // Shape selector
-      this._selectedShape = null;
+      let shapeDice = args.dies[4];
+      this._selectedShape = shapeDice == '*' ? null : shapeDice;
       this._selectedRotation = 0;
       this._selectedFlip = 0;
       this._selectedCol = 3;
       ['I', 'L', 'O', 'S', 'T'].forEach((shape, i) => {
-        this.onClick('shape-selector-' + i, () => this.selectShape(shape));
+        if (shapeDice == '*' || shapeDice == shape) {
+          this.onClick('shape-selector-' + i, () => this.selectShape(shape));
+        }
       });
 
       // Shape controls
@@ -343,13 +346,23 @@ define([
       });
 
       this.onClick('control-move-left', () => {
-        this._selectedCol--; // TODO : check left border
+        this._selectedCol--;
         this.updateShapeShadow();
       });
 
       this.onClick('control-move-right', () => {
-        this._selectedCol++; // TODO : check left border
+        this._selectedCol++;
         this.updateShapeShadow();
+      });
+
+      this.onClick('control-clear', () => {
+        this._choices = ['', '', '', ''];
+        this._selectedShape = shapeDice == '*' ? null : shapeDice;
+        this._selectedRotation = 0;
+        this._selectedFlip = 0;
+        this._selectedCol = 3;
+        this.updateShapeConstructor();
+        this.updateRemeaningDices();
       });
 
       // Cells
@@ -361,6 +374,8 @@ define([
           });
         }
       }
+
+      this.updateShapeConstructor();
     },
 
     selectShape(shapeId) {
@@ -427,13 +442,29 @@ define([
       this.placeDial(cell, id);
     },
 
+    updateRemeaningDices() {
+      dojo.query('#dice-holder .nb-dice-wrap').removeClass('used');
+
+      let dices = this.gamedatas.dies.slice(0, 4);
+      this._choices.forEach((value) => {
+        if (value == '') return;
+
+        let pos = dices.indexOf(dices.includes(value) ? value : '*');
+        dices[pos] = 'X';
+        dojo.addClass('nb-dice-' + pos, 'used');
+      });
+
+      if (dices.includes('*')) return [1, 2, 3, 4, 5, 6, 7];
+      else return dices.filter((value) => value != 'X').map(val => parseInt(val));
+    },
+
     placeDial(cell, id) {
       // Clear existing dial if any
       this.clearDial();
 
       // Create a new dial with correct enabled numbers
       let html = '<div id="shape-constructor-dial">';
-      let possibleNumbers = [1, 2, 3, 4, 5, 7]; // TODO
+      let possibleNumbers = this.updateRemeaningDices();
       for (let i = 1; i < 8; i++) {
         let status = possibleNumbers.includes(i) ? 'active' : 'disabled';
         html += `<div id="shape-constructor-dial-${i}" class="${status}">${i}</div>`;
@@ -446,10 +477,20 @@ define([
         dojo.connect($('shape-constructor-dial-' + i), 'click', (evt) => {
           evt.stopPropagation();
           this.clearDial();
-          this._choices[id] = i;
+          this._choices[id] = "" + i;
           this.updateShapeConstructor();
+          this.updateRemeaningDices();
         });
       });
+
+      // Clear button
+      dojo.connect($('shape-constructor-clear'), 'click', (evt) => {
+        evt.stopPropagation();
+        this.clearDial();
+        this._choices[id] = "";
+        this.updateShapeConstructor();
+        this.updateRemeaningDices();
+      })
     },
 
     clearDial() {
@@ -572,7 +613,7 @@ define([
       let angles = [
         { z: 0, y: 0, x: 0 },
         { z: 0, y: 180, x: 0 },
-        { z: 180, y: 180, x: 90 },
+        { z: 0, y: 180, x: 90 },
         { z: 0, y: 180, x: -90 },
         { z: 90, y: 90, x: 90 },
         { z: 0, y: -90, x: 0 },
@@ -596,6 +637,7 @@ define([
       n.args.dies.forEach((value, i) => {
         this.rotateDice(i, value);
       });
+      this.gamedatas.dies = n.args.dies;
     },
 
     /**************************************

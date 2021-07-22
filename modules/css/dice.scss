@@ -9,6 +9,10 @@ $diceSize: 50px;
   justify-content: center;
   align-items: center;
 
+  &.used {
+    opacity: 0.4;
+  }
+
   .nb-dice {
     position: relative;
     width: $diceSize;
@@ -40,7 +44,7 @@ $diceSize: 50px;
         transform-origin: center left;
       }
       &.dice-top {
-        transform: rotateX(-90deg) translateY(-$diceSize/2);
+        transform: rotateZ(180deg) rotateX(-90deg) translateY(-$diceSize/2);
         transform-origin: top center;
       }
       &.dice-bottom {
