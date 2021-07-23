@@ -33,10 +33,10 @@ class Notifications
     self::notify($pId, 'message', $txt, $args);
   }
 
-  public static function throwDies($dies)
+  public static function throwDices($dices)
   {
-    self::notifyAll('throwDies', clienttranslate('Throwing the dies'), [
-      'dies' => $dies,
+    self::notifyAll('throwDices', clienttranslate('Throwing the dice'), [
+      'dices' => $dices,
     ]);
   }
 

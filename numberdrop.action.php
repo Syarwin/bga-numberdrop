@@ -52,4 +52,35 @@ class action_numberdrop extends APP_GameAction
     $this->game->actPlaceStartingNumber($col);
     self::ajaxResponse();
   }
+
+  public function actConstructTetromino()
+  {
+    $tetromino = self::getArg('tetromino', AT_json, true);
+    $this->validateJSonAlphaNum($tetromino, 'tetromino');
+    $this->game->actConstructTetromino($tetromino);
+    self::ajaxResponse();
+  }
+
+
+  //////////////////
+  ///// UTILS  /////
+  //////////////////
+  public function validateJSonAlphaNum($value, $argName = 'unknown')
+  {
+    if (is_array($value)) {
+      foreach ($value as $key => $v) {
+        $this->validateJSonAlphaNum($key, $argName);
+        $this->validateJSonAlphaNum($v, $argName);
+      }
+      return true;
+    }
+    if (is_int($value)) {
+      return true;
+    }
+    $bValid = preg_match("/^[_0-9a-zA-Z- ]*$/", $value) === 1;
+    if (!$bValid) {
+      throw new feException("Bad value for: $argName", true, true, FEX_bad_input_argument);
+    }
+    return true;
+  }
 }

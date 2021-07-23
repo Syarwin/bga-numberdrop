@@ -14,16 +14,17 @@ trait NewTurnTrait
   {
     // Increase turn counters
     Globals::incCurrentTurn();
-    
-    // Throw the dies
-    $dies = ['1*3457', '12*456', '234*67', '123567', 'IOTLS*'];
+    Globals::setTetrominos([]);
+
+    // Throw the dices
+    $dices = ['1*3457', '12*456', '234*67', '123567', 'IOTLS*'];
     $result = [];
-    foreach($dies as $die){
+    foreach($dices as $dice){
       $r = bga_rand(0,5);
-      $result[] = $die[$r];
+      $result[] = $dice[$r];
     }
-    Globals::setDies($result);
-    Notifications::throwDies($result);
+    Globals::setDices($result);
+    Notifications::throwDices($result);
 
     if(in_array('*', $result) && Players::getNextActiveDrop() != null){
       StateMachine::initPrivateStates(ST_PLAYER_TURN);

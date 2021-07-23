@@ -78,7 +78,7 @@ $machinestates = [
     'descriptionmyturn' => clienttranslate('${you} must construct and drop your tetromino'),
     'type' => 'private',
     'args' => 'argDropShape',
-    'possibleactions' => [],
+    'possibleactions' => ['actConstructTetromino'],
     'transitions' => [],
   ],
 

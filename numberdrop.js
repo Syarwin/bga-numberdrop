@@ -23,15 +23,16 @@ define([
   'ebg/counter',
   g_gamethemeurl + 'modules/js/Core/game.js',
   g_gamethemeurl + 'modules/js/Core/modal.js',
+  g_gamethemeurl + 'modules/js/ShapeConstructor.js',
 ], function (dojo, declare) {
   let DARK_MODE = 100;
   let DARK_MODE_DISABLED = 1;
   let DARK_MODE_ENABLED = 2;
 
-  return declare('bgagame.numberdrop', [customgame.game], {
+  return declare('bgagame.numberdrop', [customgame.game, numberdrop.shapeConstructor], {
     constructor() {
       this._activeStates = [];
-      this._notifications = [['throwDies', 2500]];
+      this._notifications = [['throwDices', 2500]];
 
       // TODO
       // Fix mobile viewport (remove CSS zoom)
@@ -172,41 +173,6 @@ define([
       `;
     },
 
-    tplShapeConstructor() {
-      let shapeSelectors = '';
-      for (let i = 0; i < 5; i++) {
-        shapeSelectors += `<div id='shape-selector-${i}'></div>`;
-      }
-
-      let shapeConstructorGrid = '';
-      for (let i = 3; i >= 0; i--) {
-        for (let j = 0; j < 4; j++) {
-          shapeConstructorGrid += `<div id='shape-constructor-cell-${i}-${j}' class='nd-cell'></div>`;
-        }
-      }
-
-      return `
-        <div id='shape-selector'>
-          ${shapeSelectors}
-        </div>
-        <div id="shape-constructor-holder">
-          <div class="shape-constructor-controls">
-            <div class="nd-cell" id="control-flip-horizontal"></div>
-            <div class="nd-cell" id="control-move-left"></div>
-            <div class="nd-cell" id="control-rotate-left"></div>
-          </div>
-          <div id='shape-constructor-grid'>
-            ${shapeConstructorGrid}
-          </div>
-          <div class="shape-constructor-controls">
-            <div class="nd-cell" id="control-clear"></div>
-            <div class="nd-cell" id="control-move-right"></div>
-            <div class="nd-cell" id="control-rotate-right"></div>
-          </div>
-        </div>
-        `;
-    },
-
     getCell(row, col = null, pId = null) {
       if (col == null) {
         // We can also call with a single argument containing row and col and pId
@@ -309,264 +275,14 @@ define([
       }
     },
 
-    /***********************************
-     ************ Drop Shape ***********
-     ***********************************/
-    onEnteringStateDropShape(args) {
-      if (this.isReadOnly()) return;
-
-      this._choices = ['', '', '', ''];
-
-      // Shape selector
-      let shapeDice = args.dies[4];
-      this._selectedShape = shapeDice == '*' ? null : shapeDice;
-      this._selectedRotation = 0;
-      this._selectedFlip = 0;
-      this._selectedCol = 3;
-      ['I', 'L', 'O', 'S', 'T'].forEach((shape, i) => {
-        if (shapeDice == '*' || shapeDice == shape) {
-          this.onClick('shape-selector-' + i, () => this.selectShape(shape));
-        }
-      });
-
-      // Shape controls
-      this.onClick('control-rotate-left', () => {
-        this._selectedRotation += this._selectedFlip == 1 ? 1 : -1;
-        this.updateShapeConstructor();
-      });
-
-      this.onClick('control-rotate-right', () => {
-        this._selectedRotation += this._selectedFlip == 1 ? -1 : 1;
-        this.updateShapeConstructor();
-      });
-
-      this.onClick('control-flip-horizontal', () => {
-        this._selectedFlip = 1 - this._selectedFlip;
-        this.updateShapeConstructor();
-      });
-
-      this.onClick('control-move-left', () => {
-        this._selectedCol--;
-        this.updateShapeShadow();
-      });
-
-      this.onClick('control-move-right', () => {
-        this._selectedCol++;
-        this.updateShapeShadow();
-      });
-
-      this.onClick('control-clear', () => {
-        this._choices = ['', '', '', ''];
-        this._selectedShape = shapeDice == '*' ? null : shapeDice;
-        this._selectedRotation = 0;
-        this._selectedFlip = 0;
-        this._selectedCol = 3;
-        this.updateShapeConstructor();
-        this.updateRemeaningDices();
-      });
-
-      // Cells
-      for (let i = 0; i < 4; i++) {
-        for (let j = 0; j < 4; j++) {
-          this.onClick(`shape-constructor-cell-${i}-${j}`, (evt) => {
-            evt.stopPropagation();
-            this.onClickCellShapeConstructor(i, j);
-          });
-        }
-      }
-
-      this.updateShapeConstructor();
-    },
-
-    selectShape(shapeId) {
-      this._selectedShape = shapeId;
-      this._selectedRotation = 0;
-      this._selectedFlip = 0;
-      this.updateShapeConstructor();
-    },
-
-    updateShapeConstructor() {
-      this._selectedRotation = (this._selectedRotation + 4) % 4;
-
-      let shape = this.gamedatas.shapes[this._selectedShape][this._selectedRotation];
-      let n = shape.length;
-      dojo.attr('shape-constructor-grid', 'data-dim', n);
-      for (let i = 0; i < n; i++) {
-        for (let j = 0; j < n; j++) {
-          let y = this._selectedFlip == 0 ? j : n - j - 1;
-
-          let cell = $(`shape-constructor-cell-${i}-${j}`);
-          if (shape[i][y] == ' ') {
-            cell.classList.remove('active');
-            cell.setAttribute('data-n', '');
-          } else {
-            cell.classList.add('active');
-            cell.setAttribute('data-n', this._choices[shape[i][y]]);
-          }
-        }
-      }
-
-      this.updateShapeShadow();
-    },
-
-    getCurrentShape() {
-      let shape = this.gamedatas.shapes[this._selectedShape][this._selectedRotation];
-      let n = shape.length;
-
-      let res = [];
-      for (let i = 0; i < n; i++) {
-        for (let j = 0; j < n; j++) {
-          let y = this._selectedFlip == 0 ? j : n - j - 1;
-          let id = shape[i][y];
-          if (id != ' ') {
-            res.push({
-              row: i,
-              col: j,
-              n: id,
-            });
-          }
-        }
-      }
-
-      return res;
-    },
-
-    onClickCellShapeConstructor(i, j) {
-      let shape = this.gamedatas.shapes[this._selectedShape][this._selectedRotation];
-      let n = shape.length;
-      let y = this._selectedFlip == 0 ? j : n - j - 1;
-      let id = shape[i][y];
-      if (id == ' ') return;
-
-      let cell = $(`shape-constructor-cell-${i}-${j}`);
-      this.placeDial(cell, id);
-    },
-
-    updateRemeaningDices() {
-      dojo.query('#dice-holder .nb-dice-wrap').removeClass('used');
-
-      let dices = this.gamedatas.dies.slice(0, 4);
-      this._choices.forEach((value) => {
-        if (value == '') return;
-
-        let pos = dices.indexOf(dices.includes(value) ? value : '*');
-        dices[pos] = 'X';
-        dojo.addClass('nb-dice-' + pos, 'used');
-      });
-
-      if (dices.includes('*')) return [1, 2, 3, 4, 5, 6, 7];
-      else return dices.filter((value) => value != 'X').map(val => parseInt(val));
-    },
-
-    placeDial(cell, id) {
-      // Clear existing dial if any
-      this.clearDial();
-
-      // Create a new dial with correct enabled numbers
-      let html = '<div id="shape-constructor-dial">';
-      let possibleNumbers = this.updateRemeaningDices();
-      for (let i = 1; i < 8; i++) {
-        let status = possibleNumbers.includes(i) ? 'active' : 'disabled';
-        html += `<div id="shape-constructor-dial-${i}" class="${status}">${i}</div>`;
-      }
-      html += '<div id="shape-constructor-clear"></div></div>';
-      dojo.place(html, cell);
-
-      // Connect listeners
-      possibleNumbers.forEach((i) => {
-        dojo.connect($('shape-constructor-dial-' + i), 'click', (evt) => {
-          evt.stopPropagation();
-          this.clearDial();
-          this._choices[id] = "" + i;
-          this.updateShapeConstructor();
-          this.updateRemeaningDices();
-        });
-      });
-
-      // Clear button
-      dojo.connect($('shape-constructor-clear'), 'click', (evt) => {
-        evt.stopPropagation();
-        this.clearDial();
-        this._choices[id] = "";
-        this.updateShapeConstructor();
-        this.updateRemeaningDices();
-      })
-    },
-
-    clearDial() {
-      if ($('shape-constructor-dial')) {
-        dojo.destroy('shape-constructor-dial');
-      }
-    },
-
-    replaceInsideGrid() {
-      // Check current drop column against current rotation
-      let minCol = 8,
-        maxCol = 0;
-      this.getCurrentShape().forEach((pos) => {
-        minCol = Math.min(minCol, pos.col);
-        maxCol = Math.max(maxCol, pos.col);
-      });
-      if (minCol + this._selectedCol < 0) {
-        this._selectedCol = -minCol;
-      }
-      $('control-move-left').classList.toggle('disabled', this._selectedCol == -minCol);
-
-      if (maxCol + this._selectedCol > 6) {
-        this._selectedCol = 6 - maxCol;
-      }
-      $('control-move-right').classList.toggle('disabled', this._selectedCol == 6 - maxCol);
-    },
-
-    findLowestDropRow() {
-      for (let i = 11; i > -3; i--) {
-        let collision = false;
-        this.getCurrentShape().forEach((pos) => {
-          pos.row += i;
-          pos.col += this._selectedCol;
-          if (this.getCellContent(pos) != '') collision = true;
-        });
-
-        if (collision) {
-          return i + 1;
-        }
-      }
-
-      return 0;
-    },
-
-    updateShapeShadow() {
-      this.clearShapeShadow();
-      this.replaceInsideGrid();
-
-      let row = this.findLowestDropRow();
-      if (row == 12) {
-        // Only happens if too far right/left
-        return;
-      }
-
-      this.getCurrentShape().forEach((pos) => {
-        pos.row += row;
-        pos.col += this._selectedCol;
-
-        let cell = this.getCell(pos);
-        this.setCellContent(cell, this._choices[pos.n]);
-        cell.classList.add('active');
-      });
-    },
-
-    clearShapeShadow() {
-      let grid = document.querySelector('.sheet-wrapper.current .sheet-top .grid-wrapper .nd-grid');
-      let cells = [...grid.querySelectorAll('.nd-cell.active')];
-      cells.forEach((cell) => {
-        this.clearCellContent(cell);
-        cell.classList.remove('active');
-      });
-    },
 
     /**************************************
      *************** Dice *****************
      **************************************/
+
+     /**
+      * Create the dices and initialize them to their value
+      */
     setupDices() {
       dojo.place('<div id="dice-holder"></div>', 'main-holder');
       let dices = ['1*3457', '12*456', '234*67', '123567'];
@@ -582,11 +298,14 @@ define([
       });
 
       // Rotate them if initialized already
-      this.gamedatas.dies.forEach((value, i) => {
-        this.rotateDice(i, value, false);
+      this.gamedatas.dices.forEach((face, i) => {
+        this.rotateDice(i, face, false);
       });
     },
 
+    /**
+     * HTML template for a 3D dice
+     */
     tplDice(dice) {
       return `
       <div class="nb-dice-wrap" id="nb-dice-${dice.id}">
@@ -602,10 +321,13 @@ define([
       `;
     },
 
+    /**
+     * Rotate a dice with smooth animation to the targeted face
+     */
     rotateDice(diceId, value, transition = true) {
       let dice = $('nb-dice-' + diceId).querySelector('.nb-dice');
 
-      // Compute the index of the face
+      // Compute the index of the face depending on the diceId
       let dices = ['1*3457', '12*456', '234*67', '123567', '*IOTLS'];
       let faceToShow = dices[diceId].indexOf(value);
 
@@ -623,6 +345,7 @@ define([
         dice.classList.add('no-transition');
         dice.offsetWidth;
       } else {
+        // Add some random variations
         angle.x += (parseInt(Math.random() * 9) - 4) * 360;
         angle.y += (parseInt(Math.random() * 9) - 4) * 360;
         angle.z += (parseInt(Math.random() * 9) - 4) * 360;
@@ -632,12 +355,15 @@ define([
       dice.classList.remove('no-transition');
     },
 
-    notif_throwDies(n) {
+    /**
+     * Notif: new dice throw, make them roll
+     */
+    notif_throwDices(n) {
       debug('Notif: rolling dies', n);
-      n.args.dies.forEach((value, i) => {
+      n.args.dices.forEach((value, i) => {
         this.rotateDice(i, value);
       });
-      this.gamedatas.dies = n.args.dies;
+      this.gamedatas.dices = n.args.dices;
     },
 
     /**************************************

@@ -83,7 +83,7 @@ class NumberDrop extends Table
     return [
       'prefs' => Preferences::getUiData($pId),
       'players' => Players::getUiData($pId),
-      'dies' => Globals::getDies(),
+      'dices' => Globals::getDices(),
       'shapes' => $this->shapes,
     ];
   }
