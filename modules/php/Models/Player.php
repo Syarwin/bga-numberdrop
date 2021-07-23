@@ -85,13 +85,34 @@ class Player extends \NUMDROP\Helpers\DB_Manager implements \JsonSerializable
       'name' => $this->name,
       'color' => $this->color,
       'score' => $this->score,
-      'scribbles' => Scribbles::getOfPlayer($this->id),
+      'scribbles' => $this->getScribbles(),
     ];
     return $data;
+  }
+
+  public function getScribbles()
+  {
+    return Scribbles::getOfPlayer($this->id);
   }
 
   public function addNumber($row, $col, $n, $turn = null)
   {
     Scribbles::addNumber($this->id, $row, $col, $n, $turn);
+  }
+
+  public function getBoard()
+  {
+    $board = [];
+    for($i = 0; $i < 14; $i++){
+      for($j = 0; $j < 7; $j++){
+        $board[$i][$j] = null;
+      }
+    }
+
+    foreach($this->getScribbles() as $scribble){
+      $board[$scribble['row']][$scribble['col']] = $scribble;
+    }
+
+    return $board;
   }
 }

@@ -55,9 +55,17 @@ class action_numberdrop extends APP_GameAction
 
   public function actConstructTetromino()
   {
+    self::setAjaxMode();
     $tetromino = self::getArg('tetromino', AT_json, true);
     $this->validateJSonAlphaNum($tetromino, 'tetromino');
     $this->game->actConstructTetromino($tetromino);
+    self::ajaxResponse();
+  }
+
+  public function actConfirmTetromino()
+  {
+    self::setAjaxMode();
+    $this->game->actConfirmTetromino();
     self::ajaxResponse();
   }
 

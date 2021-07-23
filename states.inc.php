@@ -78,7 +78,19 @@ $machinestates = [
     'descriptionmyturn' => clienttranslate('${you} must construct and drop your tetromino'),
     'type' => 'private',
     'args' => 'argDropShape',
-    'possibleactions' => ['actConstructTetromino'],
+    'possibleactions' => ['actConstructTetromino', 'actConfirmTetromino'],
+    'transitions' => [
+      'scoreCombination' => ST_SCORE_COMBINATION,
+    ],
+  ],
+
+
+  ST_SCORE_COMBINATION => [
+    'name' => 'scoreCombination',
+    'descriptionmyturn' => clienttranslate('${you} may score a combination'),
+    'type' => 'private',
+    'args' => 'argScoreCombination',
+    'possibleactions' => [],
     'transitions' => [],
   ],
 

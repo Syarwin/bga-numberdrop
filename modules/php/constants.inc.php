@@ -25,6 +25,7 @@ define('ST_APPLY_TURNS', 5);
 
 // Parallel flow
 define('ST_DROP_SHAPE', 20);
+define('ST_SCORE_COMBINATION', 21);
 
 
 define('ST_CONFIRM_TURN', 40);

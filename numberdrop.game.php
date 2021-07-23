@@ -42,6 +42,7 @@ class NumberDrop extends Table
   use NUMDROP\States\StartingNumberTrait;
   use NUMDROP\States\NewTurnTrait;
   use NUMDROP\States\DropShapeTrait;
+  use NUMDROP\States\ScoreCombinationTrait;
 
   public static $instance = null;
   function __construct()

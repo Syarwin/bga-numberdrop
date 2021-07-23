@@ -152,6 +152,14 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
       // Update tetromino "shadow" in the player's grid
       this.updateTetrominoShadow();
+
+      // Handle action button
+      dojo.destroy('btnConfirmTetromino');
+      if (!this._tetromino.numbers.includes('')) {
+        this.addActionButton('btnConfirmTetromino', _('Confirm tetromino drop'), () =>
+          this.takeAction('actConfirmTetromino'),
+        );
+      }
     },
 
     /**
