@@ -44,8 +44,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      ************ Drop Shape ***********
      ***********************************/
     onEnteringStateDropShape(args) {
-      if (this.isReadOnly()) return;
-
       let shapeDice = args.dices[4];
       let defaultTetromino = () => ({
         shape: shapeDice == '*' ? null : shapeDice,
@@ -74,7 +72,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         'move-left': () => tetromino.col--,
         'move-right': () => tetromino.col++,
         clear: () => {
-          tetromino = defaultTetromino();
+          this._tetromino = defaultTetromino();
           this.updateRemeaningDices();
         },
       };
@@ -114,13 +112,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Update shape constructor
      */
     updateShapeConstructor(takeAction = true) {
-      if (this._tetromino.shape == null) {
-        return;
-      }
-
-      // Make sure the shape fit in the grid
-      this.replaceTetrominoInsideGrid();
-
       // Send the tetromino to server
       if (takeAction) {
         this.takeAction('actConstructTetromino', {
@@ -128,6 +119,19 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           tetromino: JSON.stringify(this._tetromino),
         });
       }
+
+      if (this._tetromino.shape == null) {
+        // Clear everything
+        dojo.query('#shape-constructor-grid .nd-cell').forEach((cell) => {
+          cell.classList.remove('active');
+          cell.setAttribute('data-n', '');
+        });
+        this.clearTetrominoShadow();
+        return;
+      }
+
+      // Make sure the shape fit in the grid
+      this.replaceTetrominoInsideGrid();
 
       // Update the shape constructor grid
       let shape = this.gamedatas.shapes[this._tetromino.shape][this._tetromino.rotation];

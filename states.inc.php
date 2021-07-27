@@ -84,14 +84,16 @@ $machinestates = [
     ],
   ],
 
-
   ST_SCORE_COMBINATION => [
     'name' => 'scoreCombination',
     'descriptionmyturn' => clienttranslate('${you} may score a combination'),
     'type' => 'private',
+    'action' => 'stScoreCombination',
     'args' => 'argScoreCombination',
-    'possibleactions' => [],
-    'transitions' => [],
+    'possibleactions' => ['actConstructCombination', 'actConfirmCombination', 'actPassScoreCombination'],
+    'transitions' => [
+      'confirmWait' => ST_CONFIRM_TURN,
+    ],
   ],
 
   //////////////////////////
@@ -103,7 +105,7 @@ $machinestates = [
     'name' => 'confirmTurn',
     'descriptionmyturn' => clienttranslate('${you} must confirm or restart your turn'),
     'type' => 'private',
-    'args' => 'argPrivatePlayerTurn',
+//    'args' => 'argPrivatePlayerTurn',
     'possibleactions' => ['confirm', 'restart'],
     'transitions' => [
       'confirm' => ST_WAIT_OTHERS,

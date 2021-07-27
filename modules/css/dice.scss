@@ -57,6 +57,10 @@ $diceSize: 50px;
     }
   }
 
+  &#nb-dice-4 .nb-dice div {
+    background: rgba(70, 182, 217, 0.91);
+  }
+
   span.tetromino {
     display: inline-block;
     width: 1.5em;

@@ -12,8 +12,10 @@ class Scribbles extends \NUMDROP\Helpers\DB_Manager
   protected static $primary = 'id';
   protected static function cast($row)
   {
+    // Set pId instead of player_id for shortness
     $row['pId'] = $row['player_id'];
     unset($row['player_id']);
+
     return $row;
   }
 
@@ -28,6 +30,22 @@ class Scribbles extends \NUMDROP\Helpers\DB_Manager
       'turn' => $turn,
     ]);
   }
+
+  /**
+   * Mark a cell as used
+   */
+  public function useCell($pId, $cell)
+  {
+    $turn = Globals::getCurrentTurn();
+    self::DB()->insert([
+      'player_id' => $pId,
+      'row' => $cell['row'],
+      'col' => $cell['col'],
+      'number' => CIRCLE,
+      'turn' => $turn,
+    ]);
+  }
+
 
   public function getOfPlayer($player)
   {

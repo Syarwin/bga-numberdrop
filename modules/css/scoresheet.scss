@@ -86,6 +86,11 @@
         font-size: 20px;
       }
 
+      &.selected {
+        background-color: rgba(0, 253, 253, 0.68);
+        color: #cc1fa9;
+      }
+
       &.selectable {
         cursor: pointer;
 
@@ -93,14 +98,29 @@
           background-color: rgba(255, 0, 0, 0.5);
         }
 
-        &.selected {
-          background-color: rgba(0, 253, 253, 0.68);
-          color: #cc1fa9;
-
-          &:hover {
-            color: black;
-          }
+        &.selected:hover {
+          color: black;
         }
+      }
+
+      // highlight score combinations
+      @for $i from 1 to 20 {
+        &[data-circled='#{$i}'] {
+          background-color: rgba(255, 3 * $i, 0, 0.4);
+        }
+      }
+
+      &.neighbour-0 {
+        border-top: 1px solid black;
+      }
+      &.neighbour-1 {
+        border-right: 1px solid black;
+      }
+      &.neighbour-2 {
+        border-bottom: 1px solid black;
+      }
+      &.neighbour-3 {
+        border-left: 1px solid black;
       }
     }
 

@@ -20,7 +20,6 @@ CREATE TABLE IF NOT EXISTS `scribbles` (
 
 
 
-
 CREATE TABLE IF NOT EXISTS `global_variables` (
   `name` varchar(255) NOT NULL,
   `value` JSON,

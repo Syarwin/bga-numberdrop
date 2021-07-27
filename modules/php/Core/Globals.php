@@ -12,10 +12,7 @@ class Globals extends \NUMDROP\Helpers\DB_Manager
     'startingNumberChoices' => 'obj',
     'dices' => 'obj',
     'tetrominos' => 'obj', // Store ongoing shapes
-    /*
-    'firstPlayer' => 'int',
-    'deckA' => 'bool',
-    */
+    'combinations' => 'obj', // Store ongoing combinations
   ];
 
   protected static $table = 'global_variables';

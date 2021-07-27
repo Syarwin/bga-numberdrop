@@ -100,6 +100,22 @@ class Player extends \NUMDROP\Helpers\DB_Manager implements \JsonSerializable
     Scribbles::addNumber($this->id, $row, $col, $n, $turn);
   }
 
+  public function getScoringColumns()
+  {
+    $result = [
+      COL_SAME => [false, false, false, false, false],
+      COL_SEQUENCE => [false, false, false, false, false],
+      COL_BONUS => [false]
+    ];
+    foreach($this->getScribbles() as $scribble){
+      if(in_array($scribble['col'], [COL_SAME, COL_SEQUENCE, COL_BONUS])){
+        $result[$scribble['col']][$scribble['row']] = true;
+      }
+    }
+
+    return $result;
+  }
+
   public function getBoard()
   {
     $board = [];

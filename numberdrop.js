@@ -24,12 +24,13 @@ define([
   g_gamethemeurl + 'modules/js/Core/game.js',
   g_gamethemeurl + 'modules/js/Core/modal.js',
   g_gamethemeurl + 'modules/js/ShapeConstructor.js',
+  g_gamethemeurl + 'modules/js/ScoreCombination.js',
 ], function (dojo, declare) {
   let DARK_MODE = 100;
   let DARK_MODE_DISABLED = 1;
   let DARK_MODE_ENABLED = 2;
 
-  return declare('bgagame.numberdrop', [customgame.game, numberdrop.shapeConstructor], {
+  return declare('bgagame.numberdrop', [customgame.game, numberdrop.shapeConstructor, numberdrop.scoreCombination], {
     constructor() {
       this._activeStates = [];
       this._notifications = [['throwDices', 2500]];
@@ -76,6 +77,7 @@ define([
       this.forEachPlayer((player) => {
         this.place('tplScoreSheet', player, 'main-holder');
         player.scribbles.forEach((scribble) => this.addScribble(scribble));
+        this.highlightScoringCombinations(player.id);
       });
     },
 
@@ -83,9 +85,15 @@ define([
      * Add a scribble onto someone scoresheet
      */
     addScribble(scribble) {
-      if (scribble.number) {
-        let cell = this.getCell(scribble);
+      let cell = this.getCell(scribble);
+
+      // > 0 number => this is a number in the grid of the player
+      if (scribble.number > 0) {
         this.setCellContent(cell, scribble.number, scribble.turn);
+      }
+      // 0 => circled stuff
+      else if(scribble.number == 0) {
+        cell.setAttribute('data-circled', scribble.turn);
       }
     },
 
@@ -188,6 +196,7 @@ define([
       return {
         row: cell.getAttribute('data-row'),
         col: cell.getAttribute('data-col'),
+        n: cell.getAttribute('data-n'),
       };
     },
 
@@ -204,7 +213,7 @@ define([
       cell.setAttribute('data-turn', turn);
     },
     clearCellContent(cell) {
-      this.setCellContent(cell, '', '');
+      this.setCellContent(cell, '', '', false);
     },
 
     /**************************************
@@ -276,13 +285,65 @@ define([
     },
 
 
+    /////////////////////////////////////
+    //////   Display basic info   ///////
+    /////////////////////////////////////
+    displayBasicInfo(args){
+      // Add an UNDO button if there is something to cancel
+      if(args.cancelable && !$('buttonCancelTurn')){
+        this.addSecondaryActionButton('buttonCancelTurn', _('Restart turn'), 'onClickCancelTurn');
+      }
+
+      if(args.selectedCards){
+        this._constructionCards.highlight(args.selectedCards, args.cancelable? this.onClickCancelTurn.bind(this) : null);
+      }
+
+      if(args.selectedPlans && args.selectedPlans.length > 0){
+        this._planCards.highlight(args.selectedPlans);
+      }
+    },
+
+
+
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+    /////////   Confirm/undo turn   ///////
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+    onEnteringStateConfirmTurn(args){
+      this.displayBasicInfo(args);
+      this.addPrimaryActionButton("buttonConfirmAction", _("Confirm"), () => this.takeAction('actConfirmTurn'));
+
+/*
+      // Launch timer on button depending on pref
+      var pref = 1;
+      if(this.prefs[CONFIRM].value == CONFIRM_DISABLED) pref = 0;
+      if(this.prefs[CONFIRM].value == CONFIRM_ENABLED) pref = 2;
+      debug(this.prefs, pref)
+      this.startActionTimer('buttonConfirmAction', 10, pref);
+*/
+    },
+
+
+    notif_clearTurn(n){
+      debug("Notif: restarting turn", n);
+      this._scoreSheet.clearTurn(n.args.turn);
+      this._planCards.clearTurn(n.args.turn);
+      this.cancelLogs(n.args.notifIds);
+    },
+
+    onEnteringStateWaitOthers(args){
+      this.displayBasicInfo(args);
+    },
+
+
     /**************************************
      *************** Dice *****************
      **************************************/
 
-     /**
-      * Create the dices and initialize them to their value
-      */
+    /**
+     * Create the dices and initialize them to their value
+     */
     setupDices() {
       dojo.place('<div id="dice-holder"></div>', 'main-holder');
       let dices = ['1*3457', '12*456', '234*67', '123567'];
@@ -296,6 +357,7 @@ define([
       dices.forEach((dice, i) => {
         this.place('tplDice', { id: i, values: dice }, 'dice-holder');
       });
+      dojo.place('nb-dice-4', 'dice-holder', 'first'); // Put the shape dice first
 
       // Rotate them if initialized already
       this.gamedatas.dices.forEach((face, i) => {
@@ -364,6 +426,7 @@ define([
         this.rotateDice(i, value);
       });
       this.gamedatas.dices = n.args.dices;
+      this.gamedatas.turn = n.args.turn;
     },
 
     /**************************************

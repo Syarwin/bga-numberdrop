@@ -33,3 +33,15 @@ define('ST_WAIT_OTHERS', 41);
 
 define('ST_COMPUTE_SCORES', 90);
 define('ST_END_GAME', 99);
+
+
+/**
+ * Others
+ */
+define('CIRCLE', 0); // 0 will be used as a "false" number to circle stuff
+
+define('COL_END_LINES', 10);
+define('COL_SAME', 11);
+define('COL_SEQUENCE', 12);
+define('COL_DROP', 13);
+define('COL_BONUS', 14);

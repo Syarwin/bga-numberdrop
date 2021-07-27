@@ -124,6 +124,8 @@ html {
         transform-origin: bottom center; }
       .nb-dice-wrap .nb-dice div.dice-front {
         transform: translateZ(25px); }
+  .nb-dice-wrap#nb-dice-4 .nb-dice div {
+    background: rgba(70, 182, 217, 0.91); }
   .nb-dice-wrap span.tetromino {
     display: inline-block;
     width: 1.5em;
@@ -262,15 +264,61 @@ html.darkmode {
       font-family: 'Press Start 2P';
       font-weight: bold;
       font-size: 20px; }
+    .sheet-wrapper .sheet-top .nd-cell.selected {
+      background-color: rgba(0, 253, 253, 0.68);
+      color: #cc1fa9; }
     .sheet-wrapper .sheet-top .nd-cell.selectable {
       cursor: pointer; }
       .sheet-wrapper .sheet-top .nd-cell.selectable:hover {
         background-color: rgba(255, 0, 0, 0.5); }
-      .sheet-wrapper .sheet-top .nd-cell.selectable.selected {
-        background-color: rgba(0, 253, 253, 0.68);
-        color: #cc1fa9; }
-        .sheet-wrapper .sheet-top .nd-cell.selectable.selected:hover {
-          color: black; }
+      .sheet-wrapper .sheet-top .nd-cell.selectable.selected:hover {
+        color: black; }
+    .sheet-wrapper .sheet-top .nd-cell[data-circled='1'] {
+      background-color: rgba(255, 3, 0, 0.4); }
+    .sheet-wrapper .sheet-top .nd-cell[data-circled='2'] {
+      background-color: rgba(255, 6, 0, 0.4); }
+    .sheet-wrapper .sheet-top .nd-cell[data-circled='3'] {
+      background-color: rgba(255, 9, 0, 0.4); }
+    .sheet-wrapper .sheet-top .nd-cell[data-circled='4'] {
+      background-color: rgba(255, 12, 0, 0.4); }
+    .sheet-wrapper .sheet-top .nd-cell[data-circled='5'] {
+      background-color: rgba(255, 15, 0, 0.4); }
+    .sheet-wrapper .sheet-top .nd-cell[data-circled='6'] {
+      background-color: rgba(255, 18, 0, 0.4); }
+    .sheet-wrapper .sheet-top .nd-cell[data-circled='7'] {
+      background-color: rgba(255, 21, 0, 0.4); }
+    .sheet-wrapper .sheet-top .nd-cell[data-circled='8'] {
+      background-color: rgba(255, 24, 0, 0.4); }
+    .sheet-wrapper .sheet-top .nd-cell[data-circled='9'] {
+      background-color: rgba(255, 27, 0, 0.4); }
+    .sheet-wrapper .sheet-top .nd-cell[data-circled='10'] {
+      background-color: rgba(255, 30, 0, 0.4); }
+    .sheet-wrapper .sheet-top .nd-cell[data-circled='11'] {
+      background-color: rgba(255, 33, 0, 0.4); }
+    .sheet-wrapper .sheet-top .nd-cell[data-circled='12'] {
+      background-color: rgba(255, 36, 0, 0.4); }
+    .sheet-wrapper .sheet-top .nd-cell[data-circled='13'] {
+      background-color: rgba(255, 39, 0, 0.4); }
+    .sheet-wrapper .sheet-top .nd-cell[data-circled='14'] {
+      background-color: rgba(255, 42, 0, 0.4); }
+    .sheet-wrapper .sheet-top .nd-cell[data-circled='15'] {
+      background-color: rgba(255, 45, 0, 0.4); }
+    .sheet-wrapper .sheet-top .nd-cell[data-circled='16'] {
+      background-color: rgba(255, 48, 0, 0.4); }
+    .sheet-wrapper .sheet-top .nd-cell[data-circled='17'] {
+      background-color: rgba(255, 51, 0, 0.4); }
+    .sheet-wrapper .sheet-top .nd-cell[data-circled='18'] {
+      background-color: rgba(255, 54, 0, 0.4); }
+    .sheet-wrapper .sheet-top .nd-cell[data-circled='19'] {
+      background-color: rgba(255, 57, 0, 0.4); }
+    .sheet-wrapper .sheet-top .nd-cell.neighbour-0 {
+      border-top: 1px solid black; }
+    .sheet-wrapper .sheet-top .nd-cell.neighbour-1 {
+      border-right: 1px solid black; }
+    .sheet-wrapper .sheet-top .nd-cell.neighbour-2 {
+      border-bottom: 1px solid black; }
+    .sheet-wrapper .sheet-top .nd-cell.neighbour-3 {
+      border-left: 1px solid black; }
   .sheet-wrapper .sheet-top .sheet-right-column {
     display: flex;
     flex-flow: column;

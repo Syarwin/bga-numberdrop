@@ -69,6 +69,29 @@ class action_numberdrop extends APP_GameAction
     self::ajaxResponse();
   }
 
+  public function actPassScoreCombination()
+  {
+    self::setAjaxMode();
+    $this->game->actPassScoreCombination();
+    self::ajaxResponse();
+  }
+
+  public function actConstructCombination()
+  {
+    self::setAjaxMode();
+    $combination = self::getArg('combination', AT_json, true);
+    $this->validateJSonAlphaNum($combination, 'combination');
+    $this->game->actConstructCombination($combination);
+    self::ajaxResponse();
+  }
+
+  public function actConfirmCombination()
+  {
+    self::setAjaxMode();
+    $this->game->actConfirmCombination();
+    self::ajaxResponse();
+  }
+
 
   //////////////////
   ///// UTILS  /////
