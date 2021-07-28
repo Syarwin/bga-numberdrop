@@ -55,13 +55,20 @@ define([
       this.setupScoreSheets();
       this.setupDices();
       this.addDarkModeSwitch();
-      dojo.connect($('overall-content'), 'click', () => this.clearDial());
+      this.updateTurnNumber();
+      if (!this.isReadOnly()) {
+        dojo.connect($('overall-content'), 'click', () => this.clearDial());
+      }
       this.inherited(arguments);
     },
 
     clearPossible() {
       this.clearDial();
       this.inherited(arguments);
+    },
+
+    updateTurnNumber() {
+      $('game_play_area').setAttribute('data-turn', this.gamedatas.turn);
     },
 
     /**************************************
@@ -92,7 +99,7 @@ define([
         this.setCellContent(cell, scribble.number, scribble.turn);
       }
       // 0 => circled stuff
-      else if(scribble.number == 0) {
+      else if (scribble.number == 0) {
         cell.setAttribute('data-circled', scribble.turn);
       }
     },
@@ -284,37 +291,26 @@ define([
       }
     },
 
-
     /////////////////////////////////////
     //////   Display basic info   ///////
     /////////////////////////////////////
-    displayBasicInfo(args){
+    displayBasicInfo(args) {
       // Add an UNDO button if there is something to cancel
-      if(args.cancelable && !$('buttonCancelTurn')){
-        this.addSecondaryActionButton('buttonCancelTurn', _('Restart turn'), 'onClickCancelTurn');
-      }
-
-      if(args.selectedCards){
-        this._constructionCards.highlight(args.selectedCards, args.cancelable? this.onClickCancelTurn.bind(this) : null);
-      }
-
-      if(args.selectedPlans && args.selectedPlans.length > 0){
-        this._planCards.highlight(args.selectedPlans);
+      if (args.cancelable && !$('buttonCancelTurn')) {
+        this.addSecondaryActionButton('buttonCancelTurn', _('Restart turn'), () => this.takeAction('actRestart'));
       }
     },
-
-
 
     ///////////////////////////////////////
     ///////////////////////////////////////
     /////////   Confirm/undo turn   ///////
     ///////////////////////////////////////
     ///////////////////////////////////////
-    onEnteringStateConfirmTurn(args){
+    onEnteringStateConfirmTurn(args) {
       this.displayBasicInfo(args);
-      this.addPrimaryActionButton("buttonConfirmAction", _("Confirm"), () => this.takeAction('actConfirmTurn'));
+      this.addPrimaryActionButton('buttonConfirmAction', _('Confirm'), () => this.takeAction('actConfirmTurn'));
 
-/*
+      /*
       // Launch timer on button depending on pref
       var pref = 1;
       if(this.prefs[CONFIRM].value == CONFIRM_DISABLED) pref = 0;
@@ -324,18 +320,16 @@ define([
 */
     },
 
-
-    notif_clearTurn(n){
-      debug("Notif: restarting turn", n);
+    notif_clearTurn(n) {
+      debug('Notif: restarting turn', n);
       this._scoreSheet.clearTurn(n.args.turn);
       this._planCards.clearTurn(n.args.turn);
       this.cancelLogs(n.args.notifIds);
     },
 
-    onEnteringStateWaitOthers(args){
+    onEnteringStateWaitOthers(args) {
       this.displayBasicInfo(args);
     },
-
 
     /**************************************
      *************** Dice *****************
@@ -427,6 +421,7 @@ define([
       });
       this.gamedatas.dices = n.args.dices;
       this.gamedatas.turn = n.args.turn;
+      this.updateTurnNumber();
     },
 
     /**************************************

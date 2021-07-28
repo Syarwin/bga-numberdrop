@@ -78,9 +78,10 @@ $machinestates = [
     'descriptionmyturn' => clienttranslate('${you} must construct and drop your tetromino'),
     'type' => 'private',
     'args' => 'argDropShape',
-    'possibleactions' => ['actConstructTetromino', 'actConfirmTetromino'],
+    'possibleactions' => ['actConstructTetromino', 'actConfirmTetromino', 'actRestart'],
     'transitions' => [
       'scoreCombination' => ST_SCORE_COMBINATION,
+      'restart' => ST_DROP_SHAPE,
     ],
   ],
 
@@ -90,9 +91,10 @@ $machinestates = [
     'type' => 'private',
     'action' => 'stScoreCombination',
     'args' => 'argScoreCombination',
-    'possibleactions' => ['actConstructCombination', 'actConfirmCombination', 'actPassScoreCombination'],
+    'possibleactions' => ['actConstructCombination', 'actConfirmCombination', 'actPassScoreCombination', 'actRestart'],
     'transitions' => [
       'confirmWait' => ST_CONFIRM_TURN,
+      'restart' => ST_DROP_SHAPE,
     ],
   ],
 
@@ -105,8 +107,8 @@ $machinestates = [
     'name' => 'confirmTurn',
     'descriptionmyturn' => clienttranslate('${you} must confirm or restart your turn'),
     'type' => 'private',
-//    'args' => 'argPrivatePlayerTurn',
-    'possibleactions' => ['confirm', 'restart'],
+    //    'args' => 'argPrivatePlayerTurn',
+    'possibleactions' => ['actConfirmTurn', 'actRestart'],
     'transitions' => [
       'confirm' => ST_WAIT_OTHERS,
       'restart' => ST_DROP_SHAPE,
@@ -120,7 +122,7 @@ $machinestates = [
     'type' => 'private',
     'action' => 'stWaitOther',
     'args' => 'argPrivatePlayerTurn',
-    'possibleactions' => ['restart'],
+    'possibleactions' => ['actRestart'],
     'transitions' => [
       'restart' => ST_DROP_SHAPE,
     ],

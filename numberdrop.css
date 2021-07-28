@@ -197,6 +197,111 @@ html.darkmode {
   html.darkmode .sheet-wrapper .sheet-right-column .shape-constructor #shape-selector div {
     background-color: #89898a; }
 
+/********************************
+*** Hightlight recent actions ***
+********************************/
+#game_play_area[data-turn="1"] .nd-cell[data-n][data-turn="1"] {
+  color: red; }
+
+#game_play_area[data-turn="2"] .nd-cell[data-n][data-turn="2"] {
+  color: red; }
+
+#game_play_area[data-turn="3"] .nd-cell[data-n][data-turn="3"] {
+  color: red; }
+
+#game_play_area[data-turn="4"] .nd-cell[data-n][data-turn="4"] {
+  color: red; }
+
+#game_play_area[data-turn="5"] .nd-cell[data-n][data-turn="5"] {
+  color: red; }
+
+#game_play_area[data-turn="6"] .nd-cell[data-n][data-turn="6"] {
+  color: red; }
+
+#game_play_area[data-turn="7"] .nd-cell[data-n][data-turn="7"] {
+  color: red; }
+
+#game_play_area[data-turn="8"] .nd-cell[data-n][data-turn="8"] {
+  color: red; }
+
+#game_play_area[data-turn="9"] .nd-cell[data-n][data-turn="9"] {
+  color: red; }
+
+#game_play_area[data-turn="10"] .nd-cell[data-n][data-turn="10"] {
+  color: red; }
+
+#game_play_area[data-turn="11"] .nd-cell[data-n][data-turn="11"] {
+  color: red; }
+
+#game_play_area[data-turn="12"] .nd-cell[data-n][data-turn="12"] {
+  color: red; }
+
+#game_play_area[data-turn="13"] .nd-cell[data-n][data-turn="13"] {
+  color: red; }
+
+#game_play_area[data-turn="14"] .nd-cell[data-n][data-turn="14"] {
+  color: red; }
+
+#game_play_area[data-turn="15"] .nd-cell[data-n][data-turn="15"] {
+  color: red; }
+
+#game_play_area[data-turn="16"] .nd-cell[data-n][data-turn="16"] {
+  color: red; }
+
+#game_play_area[data-turn="17"] .nd-cell[data-n][data-turn="17"] {
+  color: red; }
+
+#game_play_area[data-turn="18"] .nd-cell[data-n][data-turn="18"] {
+  color: red; }
+
+#game_play_area[data-turn="19"] .nd-cell[data-n][data-turn="19"] {
+  color: red; }
+
+#game_play_area[data-turn="20"] .nd-cell[data-n][data-turn="20"] {
+  color: red; }
+
+#game_play_area[data-turn="21"] .nd-cell[data-n][data-turn="21"] {
+  color: red; }
+
+#game_play_area[data-turn="22"] .nd-cell[data-n][data-turn="22"] {
+  color: red; }
+
+#game_play_area[data-turn="23"] .nd-cell[data-n][data-turn="23"] {
+  color: red; }
+
+#game_play_area[data-turn="24"] .nd-cell[data-n][data-turn="24"] {
+  color: red; }
+
+#game_play_area[data-turn="25"] .nd-cell[data-n][data-turn="25"] {
+  color: red; }
+
+#game_play_area[data-turn="26"] .nd-cell[data-n][data-turn="26"] {
+  color: red; }
+
+#game_play_area[data-turn="27"] .nd-cell[data-n][data-turn="27"] {
+  color: red; }
+
+#game_play_area[data-turn="28"] .nd-cell[data-n][data-turn="28"] {
+  color: red; }
+
+#game_play_area[data-turn="29"] .nd-cell[data-n][data-turn="29"] {
+  color: red; }
+
+#game_play_area[data-turn="30"] .nd-cell[data-n][data-turn="30"] {
+  color: red; }
+
+#game_play_area[data-turn="31"] .nd-cell[data-n][data-turn="31"] {
+  color: red; }
+
+#game_play_area[data-turn="32"] .nd-cell[data-n][data-turn="32"] {
+  color: red; }
+
+#game_play_area[data-turn="33"] .nd-cell[data-n][data-turn="33"] {
+  color: red; }
+
+/********************************
+*********************************
+********************************/
 .sheet-wrapper {
   width: 650px;
   margin: 10px;
@@ -311,13 +416,13 @@ html.darkmode {
       background-color: rgba(255, 54, 0, 0.4); }
     .sheet-wrapper .sheet-top .nd-cell[data-circled='19'] {
       background-color: rgba(255, 57, 0, 0.4); }
-    .sheet-wrapper .sheet-top .nd-cell.neighbour-0 {
+    .sheet-wrapper .sheet-top .nd-cell.border-0 {
       border-top: 1px solid black; }
-    .sheet-wrapper .sheet-top .nd-cell.neighbour-1 {
+    .sheet-wrapper .sheet-top .nd-cell.border-1 {
       border-right: 1px solid black; }
-    .sheet-wrapper .sheet-top .nd-cell.neighbour-2 {
+    .sheet-wrapper .sheet-top .nd-cell.border-2 {
       border-bottom: 1px solid black; }
-    .sheet-wrapper .sheet-top .nd-cell.neighbour-3 {
+    .sheet-wrapper .sheet-top .nd-cell.border-3 {
       border-left: 1px solid black; }
   .sheet-wrapper .sheet-top .sheet-right-column {
     display: flex;

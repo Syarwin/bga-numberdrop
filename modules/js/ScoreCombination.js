@@ -1,9 +1,9 @@
 define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
   const DIRS = [
-    [0, 1],
     [1, 0],
-    [0, -1],
+    [0, 1],
     [-1, 0],
+    [0, -1],
   ];
 
   const COL_SAME = 11;
@@ -17,7 +17,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     highlightScoringCombinations(pId) {
       let grid = document.querySelector('#sheet-' + pId + ' .sheet-top .grid-wrapper .nd-grid');
-      for (let i = 1; i < this.gamedatas.turn; i++) {
+      for (let i = 1; i <= this.gamedatas.turn; i++) {
         // Fetch all used cells of turn ${i}
         let cells = [...grid.querySelectorAll(`.nd-cell[data-circled="${i}"]`)].map((cell) => this.getCellObj(cell));
 
@@ -28,9 +28,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           // For each direction
           DIRS.forEach((dir, dirIndex) => {
             // Test if another cell of the same shape is in this direction
-            let neighbour = cells.filter((cell2) => (cell2.row = cell.row + dir[0] && cell2.col == cell.col + dir[1]));
-            if (neighbour.length == 1) {
-              cellElt.classList.add('neighbour-' + dirIndex);
+            let neighbour = cells.filter((cell2) => (cell2.row == parseInt(cell.row) + dir[0] && cell2.col == parseInt(cell.col) + dir[1]));
+            if (neighbour.length == 0) {
+              cellElt.classList.add('border-' + dirIndex);
             }
           });
         });

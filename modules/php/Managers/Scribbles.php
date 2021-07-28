@@ -46,7 +46,10 @@ class Scribbles extends \NUMDROP\Helpers\DB_Manager
     ]);
   }
 
-
+  /**
+   * Get all the scribbles of a player with a filter on ongoing scribbles if not current player
+   *  => that way no-one will be able to spy onto another player by refreshing the page
+   */
   public function getOfPlayer($player)
   {
     $pId = is_int($player) ? $player : $player->getId();
@@ -62,11 +65,26 @@ class Scribbles extends \NUMDROP\Helpers\DB_Manager
     }
   }
 
+  /**
+   * Useful to know if the player have something to cancel or not
+   */
   public function hasScribbleSomething($pId)
   {
     return self::DB()
       ->wherePlayer($pId)
       ->where('turn', Globals::getCurrentTurn())
       ->count() > 0;
+  }
+
+  /**
+   * clearTurn : remove all houses written by player during this turn
+   */
+  public function clearTurn($pId)
+  {
+    self::DB()
+      ->wherePlayer($pId)
+      ->where('turn', Globals::getCurrentTurn())
+      ->delete()
+      ->run();
   }
 }

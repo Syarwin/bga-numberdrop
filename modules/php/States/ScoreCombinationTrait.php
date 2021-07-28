@@ -117,5 +117,6 @@ trait ScoreCombinationTrait
   function actPassScoreCombination()
   {
     $player = Players::getCurrent();
+    StateMachine::nextState("confirmWait");
   }
 }

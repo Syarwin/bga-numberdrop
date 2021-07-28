@@ -92,6 +92,24 @@ class action_numberdrop extends APP_GameAction
     self::ajaxResponse();
   }
 
+  /////////////////////////////
+  //// Confirm / pass turn ////
+  /////////////////////////////
+  public function actCancelTurn()
+  {
+    self::setAjaxMode();
+    $this->game->actCancelTurn();
+    self::ajaxResponse();
+  }
+
+  public function actConfirmTurn()
+  {
+    self::setAjaxMode();
+    $this->game->actConfirmTurn();
+    self::ajaxResponse();
+  }
+
+
 
   //////////////////
   ///// UTILS  /////

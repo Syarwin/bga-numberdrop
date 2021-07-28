@@ -105,10 +105,10 @@ class Player extends \NUMDROP\Helpers\DB_Manager implements \JsonSerializable
     $result = [
       COL_SAME => [false, false, false, false, false],
       COL_SEQUENCE => [false, false, false, false, false],
-      COL_BONUS => [false]
+      COL_BONUS => [false],
     ];
-    foreach($this->getScribbles() as $scribble){
-      if(in_array($scribble['col'], [COL_SAME, COL_SEQUENCE, COL_BONUS])){
+    foreach ($this->getScribbles() as $scribble) {
+      if (in_array($scribble['col'], [COL_SAME, COL_SEQUENCE, COL_BONUS])) {
         $result[$scribble['col']][$scribble['row']] = true;
       }
     }
@@ -119,16 +119,35 @@ class Player extends \NUMDROP\Helpers\DB_Manager implements \JsonSerializable
   public function getBoard()
   {
     $board = [];
-    for($i = 0; $i < 14; $i++){
-      for($j = 0; $j < 7; $j++){
+    for ($i = 0; $i < 14; $i++) {
+      for ($j = 0; $j < 7; $j++) {
         $board[$i][$j] = null;
       }
     }
 
-    foreach($this->getScribbles() as $scribble){
+    foreach ($this->getScribbles() as $scribble) {
       $board[$scribble['row']][$scribble['col']] = $scribble;
     }
 
     return $board;
   }
+
+  /*
+   * Boolean value needed to know if we display the "restart turn" button
+   */
+  public function hasSomethingToCancel()
+  {
+//    return !empty(Log::getLastActions($this->id)) || Scribbles::hasScribbleSomething($this->id);
+    return Scribbles::hasScribbleSomething($this->id);
+  }
+
+
+  // Restart the turn by clearing all log, houses, scribbles.
+  public function restartTurn()
+  {
+//    $notifIds = Log::clearTurn($this->id);
+    Scribbles::clearTurn($this->id);
+//    Notifications::clearTurn($this, $notifIds);
+  }
+
 }

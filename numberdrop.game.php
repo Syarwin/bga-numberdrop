@@ -43,6 +43,8 @@ class NumberDrop extends Table
   use NUMDROP\States\NewTurnTrait;
   use NUMDROP\States\DropShapeTrait;
   use NUMDROP\States\ScoreCombinationTrait;
+  use NUMDROP\States\ConfirmWaitTrait;
+  use NUMDROP\States\EndOfGameTrait;
 
   public static $instance = null;
   function __construct()

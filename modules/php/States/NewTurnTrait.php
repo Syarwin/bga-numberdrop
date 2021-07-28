@@ -58,8 +58,6 @@ trait NewTurnTrait
     }
 
     $data = [
-      'selectedCards' => $player->getSelectedCards(),
-      'selectedPlans' => $player->getSelectedPlans(),
       'cancelable' => $player->hasSomethingToCancel(),
     ];
 
