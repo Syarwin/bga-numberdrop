@@ -1,6 +1,6 @@
 <?php
 namespace NUMDROP\Helpers;
-use \NUMDROP\Core\Game;
+use NUMDROP\Core\Game;
 
 class DB_Manager extends \APP_DbObject
 {

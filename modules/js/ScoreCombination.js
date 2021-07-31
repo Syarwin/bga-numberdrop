@@ -28,7 +28,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           // For each direction
           DIRS.forEach((dir, dirIndex) => {
             // Test if another cell of the same shape is in this direction
-            let neighbour = cells.filter((cell2) => (cell2.row == parseInt(cell.row) + dir[0] && cell2.col == parseInt(cell.col) + dir[1]));
+            let neighbour = cells.filter(
+              (cell2) => cell2.row == parseInt(cell.row) + dir[0] && cell2.col == parseInt(cell.col) + dir[1],
+            );
             if (neighbour.length == 0) {
               cellElt.classList.add('border-' + dirIndex);
             }
@@ -180,6 +182,14 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
       this._combination.push(cell);
       this.updatePossibleCellsForCombination();
+    },
+
+    /**
+     * Received once the player confirm its combination : useful for loging and replay
+     */
+    notif_scoreCombination(n) {
+      debug('Notif: scoring a combination', n);
+      n.args.scribbles.forEach((scribble) => this.addScribble(scribble));
     },
   });
 });

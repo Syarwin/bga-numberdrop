@@ -1,5 +1,11 @@
 define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
   return declare('numberdrop.shapeConstructor', null, {
+    toggleShapeConstructor(visible, pId = null){
+      pId = pId || this.player_id;
+      let constructor = document.querySelector('#sheet-' + pId + ' .sheet-top .shape-constructor');
+      constructor.classList.toggle('active', visible);
+    },
+
     /**
      * HTML template for the shape constructor module
      */
@@ -44,12 +50,13 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      ************ Drop Shape ***********
      ***********************************/
     onEnteringStateDropShape(args) {
+      this.toggleShapeConstructor(true);
       let shapeDice = args.dices[4];
       let defaultTetromino = () => ({
         shape: shapeDice == '*' ? null : shapeDice,
         rotation: 0,
         flip: 0,
-        col: 3,
+        col: 2,
         numbers: ['', '', '', ''],
       });
 
@@ -64,13 +71,12 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       });
 
       // Shape constructor controls
-      let tetromino = this._tetromino;
       let controls = {
-        'rotate-left': () => (tetromino.rotation += tetromino.flip == 1 ? 1 : -1),
-        'rotate-right': () => (tetromino.rotation += tetromino.flip == 1 ? -1 : 1),
-        'flip-horizontal': () => (tetromino.flip = 1 - tetromino.flip),
-        'move-left': () => tetromino.col--,
-        'move-right': () => tetromino.col++,
+        'rotate-left': () => (this._tetromino.rotation += this._tetromino.flip == 1 ? 1 : -1),
+        'rotate-right': () => (this._tetromino.rotation += this._tetromino.flip == 1 ? -1 : 1),
+        'flip-horizontal': () => (this._tetromino.flip = 1 - this._tetromino.flip),
+        'move-left': () => this._tetromino.col--,
+        'move-right': () => this._tetromino.col++,
         clear: () => {
           this._tetromino = defaultTetromino();
           this.updateRemeaningDices();
@@ -338,7 +344,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         pos.col += this._tetromino.col;
 
         let cell = this.getCell(pos);
-        this.setCellContent(cell, this._tetromino.numbers[pos.n]);
+        this.setCellContent(cell, this._tetromino.numbers[pos.n], this.gamedatas.turn);
         cell.classList.add('active');
       });
     },

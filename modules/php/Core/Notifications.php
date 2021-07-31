@@ -41,6 +41,19 @@ class Notifications
     ]);
   }
 
+  public static function scoreCombination($player, $type, $size, $scribbles)
+  {
+    $msg =
+      $type == COL_SAME
+        ? clienttranslate('${player_name} scores ${size} identical numbers')
+        : clienttranslate('${player_name} scores ${size} consecutive numbers');
+
+    self::notify($player, 'scoreCombination', $msg, [
+      'player' => $player,
+      'size' => $size,
+      'scribbles' => $scribbles,
+    ]);
+  }
 
   /*********************
    **** UPDATE ARGS ****
@@ -50,7 +63,11 @@ class Notifications
    */
   protected static function updateArgs(&$data)
   {
+    if (isset($data['player'])) {
+      $data['player_name'] = $data['player']->getName();
+      $data['player_id'] = $data['player']->getId();
+      unset($data['player']);
+    }
   }
-
 }
 ?>

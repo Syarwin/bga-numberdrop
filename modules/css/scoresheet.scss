@@ -2,19 +2,18 @@
 *** Hightlight recent actions ***
 ********************************/
 @for $t from 1 through 33 {
-  #game_play_area[data-turn="#{$t}"] .nd-cell[data-n][data-turn="#{$t}"] {
-    color:red;
+  #game_play_area[data-turn='#{$t}'] .nd-cell[data-n][data-turn='#{$t}'] {
+    color: red;
   }
 
-  #game_play_area[data-turn="#{$t}"] .nd-cell[data-circled="#{$t}"] {
-//    border-color:red;
+  #game_play_area[data-turn='#{$t}'] .nd-cell[data-circled='#{$t}'] {
+    //    border-color:red;
   }
 }
 
 /********************************
 *********************************
 ********************************/
-
 
 .sheet-wrapper {
   width: 650px;
@@ -153,6 +152,23 @@
         flex-flow: row;
         justify-content: space-around;
 
+        .sheet-bonus-header {
+          width: 100px;
+          height: 50px;
+          background: url('img/column-headers.png');
+          background-size: 400% 100%;
+          background-repeat: no-repeat;
+        }
+        .sheet-bonus-identical .sheet-bonus-header {
+          background-position: 0% 0%;
+        }
+        .sheet-bonus-sequence .sheet-bonus-header {
+          background-position: 33.33% 0%;
+        }
+        .sheet-bonus-drop .sheet-bonus-header {
+          background-position: 66.66% 0%;
+        }
+
         .sheet-bonus-identical,
         .sheet-bonus-sequence,
         .sheet-bonus-drop {
@@ -161,22 +177,36 @@
 
           .sheet-bonus-grid {
             border: 1px dashed gray;
+            margin: 0px 20px;
 
             .sheet-bonus-cell {
+              position: relative;
               width: 30px;
               height: 30px;
-              margin: 5px;
+              margin: 10px auto;
               display: flex;
               justify-content: center;
               align-items: center;
+              background: url('img/combination-columns.png');
+              background-size: 200% 600%;
 
-              font-family: 'Press Start 2P';
-              font-weight: bold;
-              font-size: 20px;
-              color: transparent;
-              background: linear-gradient(to bottom, #f2247b, #00bdd0);
-              background-clip: text;
+              @for $i from 1 to 6 {
+                &:nth-child(#{$i}) {
+                  background-position-y: ($i - 1) * 20%;
+                }
+              }
+
+              svg {
+                width: 50px;
+                height: 50px;
+                stroke: black;
+                position: absolute;
+              }
             }
+          }
+
+          &.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell {
+            background-position-x: 100%;
           }
         }
       }

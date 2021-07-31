@@ -1,5 +1,9 @@
 .shape-constructor {
   height: 250px;
+  visibility: hidden;
+  &.active {
+    visibility: visible;
+  }
 
   #shape-selector {
     display: flex;

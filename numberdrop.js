@@ -33,7 +33,10 @@ define([
   return declare('bgagame.numberdrop', [customgame.game, numberdrop.shapeConstructor, numberdrop.scoreCombination], {
     constructor() {
       this._activeStates = [];
-      this._notifications = [['throwDices', 2500]];
+      this._notifications = [
+        ['throwDices', 2500],
+        ['scoreCombination', 1500],
+      ];
 
       // TODO
       // Fix mobile viewport (remove CSS zoom)
@@ -64,6 +67,8 @@ define([
 
     clearPossible() {
       this.clearDial();
+      this.toggleShapeConstructor(false);
+      dojo.query('.nd-cell').removeClass('active selected');
       this.inherited(arguments);
     },
 
@@ -93,6 +98,10 @@ define([
      */
     addScribble(scribble) {
       let cell = this.getCell(scribble);
+      if (!cell) {
+        console.error('Trying to get an undefined cell to place scribble', scribble);
+        return;
+      }
 
       // > 0 number => this is a number in the grid of the player
       if (scribble.number > 0) {
@@ -125,6 +134,28 @@ define([
         shapeConstructor = this.tplShapeConstructor();
       }
 
+      let combinations = '';
+      ['identical', 'sequence', 'drop'].forEach((type) => {
+        combinations +=
+          `
+        <div class="sheet-bonus-${type}">
+          <div class="sheet-bonus-header"></div>
+          <div class="sheet-bonus-grid">
+          ` +
+          [0, 1, 2, 3, 4]
+            .map(
+              (i) => `
+              <div class="sheet-bonus-cell" id="scoring-combination-${type}-${i}">
+                <svg viewBox="100 0 700 512" class="scribble-circle hidden"><use class="scribble-path" href="#scribble-circle-svg" /></svg>
+              </div>`
+            )
+            .join('') +
+          `
+          </div>
+        </div>
+        `;
+      });
+
       return `
       <div class="sheet-wrapper ${current}" id='sheet-${player.id}'>
         <div class="sheet-top">
@@ -143,38 +174,7 @@ define([
               ${shapeConstructor}
             </div>
             <div class="sheet-bonus">
-              <div class="sheet-bonus-identical">
-                <div class="sheet-bonus-header"></div>
-                <div class="sheet-bonus-grid">
-                  <div class="sheet-bonus-cell">3</div>
-                  <div class="sheet-bonus-cell">4</div>
-                  <div class="sheet-bonus-cell">5</div>
-                  <div class="sheet-bonus-cell">6</div>
-                  <div class="sheet-bonus-cell">7</div>
-                </div>
-              </div>
-
-              <div class="sheet-bonus-sequence">
-                <div class="sheet-bonus-header"></div>
-                <div class="sheet-bonus-grid">
-                  <div class="sheet-bonus-cell">3</div>
-                  <div class="sheet-bonus-cell">4</div>
-                  <div class="sheet-bonus-cell">5</div>
-                  <div class="sheet-bonus-cell">6</div>
-                  <div class="sheet-bonus-cell">7</div>
-                </div>
-              </div>
-
-              <div class="sheet-bonus-drop">
-                <div class="sheet-bonus-header"></div>
-                <div class="sheet-bonus-grid">
-                  <div class="sheet-bonus-cell">A</div>
-                  <div class="sheet-bonus-cell">B</div>
-                  <div class="sheet-bonus-cell">C</div>
-                  <div class="sheet-bonus-cell">D</div>
-                  <div class="sheet-bonus-cell">E</div>
-                </div>
-              </div>
+              ${combinations}
             </div>
           </div>
         </div>

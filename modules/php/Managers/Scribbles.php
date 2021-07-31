@@ -22,7 +22,7 @@ class Scribbles extends \NUMDROP\Helpers\DB_Manager
   public function addNumber($pId, $row, $col, $n, $turn = null)
   {
     $turn = $turn ?? Globals::getCurrentTurn();
-    self::DB()->insert([
+    return self::DB()->insert([
       'player_id' => $pId,
       'row' => $row,
       'col' => $col,
@@ -34,10 +34,11 @@ class Scribbles extends \NUMDROP\Helpers\DB_Manager
   /**
    * Mark a cell as used
    */
-  public function useCell($pId, $cell)
+  public function useCell($player, $cell)
   {
+    $pId = is_int($player) ? $player : $player->getId();
     $turn = Globals::getCurrentTurn();
-    self::DB()->insert([
+    return self::DB()->insert([
       'player_id' => $pId,
       'row' => $cell['row'],
       'col' => $cell['col'],
@@ -86,5 +87,35 @@ class Scribbles extends \NUMDROP\Helpers\DB_Manager
       ->where('turn', Globals::getCurrentTurn())
       ->delete()
       ->run();
+  }
+
+
+  /**
+   * Get specific scribbles by id
+   */
+  public static function getMany($ids, $raiseExceptionIfNotEnough = true)
+  {
+    if (!is_array($ids)) {
+      $ids = [$ids];
+    }
+
+    if (empty($ids)) {
+      return new Collection([]);
+    }
+
+    $result = self::DB()
+      ->whereIn(static::$primary, $ids)
+      ->get();
+    if ($result->count() != count($ids) && $raiseExceptionIfNotEnough) {
+      throw new \feException('Class DB_Manager: getMany, some rows have not been found !' . json_encode($ids));
+    }
+
+    return $result;
+  }
+
+  public static function get($id, $raiseExceptionIfNotEnough = true)
+  {
+    $result = self::getMany($id, $raiseExceptionIfNotEnough);
+    return $result->count() == 1 ? $result->first() : $result;
   }
 }

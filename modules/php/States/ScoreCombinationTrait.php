@@ -65,10 +65,10 @@ trait ScoreCombinationTrait
     }
 
     // Find and check the type of combination
-    $col = null;
+    $type = null;
     if ($combination[0]['n'] == $combination[1]['n']) {
       // Should be a combination of identical numbers
-      $col = COL_SAME;
+      $type = COL_SAME;
       $number = $combination[0]['n'];
       foreach ($combination as $cell) {
         if ($cell['n'] != $number) {
@@ -77,7 +77,7 @@ trait ScoreCombinationTrait
       }
     } else {
       // Should be a increasing/decreasing sequence
-      $col = COL_SEQUENCE;
+      $type = COL_SEQUENCE;
       $inc = $combination[0]['n'] < $combination[1]['n'] ? 1 : -1;
       $number = $combination[0]['n'];
       foreach($combination as $cell){
@@ -87,6 +87,7 @@ trait ScoreCombinationTrait
         $number += $inc;
       }
     }
+    $col = $type;
 
     // Special case of bonus combination
     $row = $cSize - 3;
@@ -103,11 +104,20 @@ trait ScoreCombinationTrait
 
 
     // Update DB
+    $scribbles = [];
     foreach($combination as $cell){
-      Scribbles::useCell($player->getId(), $cell);
+      $scribbles[] = Scribbles::useCell($player, $cell);
     }
-    // TODO : notification of combination for replay ?
+    $scribbles[] = Scribbles::useCell($player, [
+      'row' => $row,
+      'col' => $col,
+    ]);
+
+    // Notifications
+    Notifications::scoreCombination($player, $type, $cSize, Scribbles::get($scribbles));
     // TODO : updateScore
+
+    // TODO : check unlocked DROP
 
     // Move on to next state
     StateMachine::nextState("confirmWait");
