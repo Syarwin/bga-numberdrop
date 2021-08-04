@@ -14,7 +14,7 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
       this._activeStatus = null;
       this._helpMode = false;
 
-      this.canceledNotifFeature = false;
+      this.canceledNotifFeature = true;
       this._notif_uid_to_log_id = {};
       this._last_notif = null;
     },

@@ -5,20 +5,20 @@
   .scribble-path {
     stroke: black;
     stroke-linecap: round;
+    visibility: hidden;
   }
+}
 
-  &.animate .scribble-path {
+[data-circled] {
+  .scribble-path {
+    visibility: visible;
     animation: drawScribble 2s cubic-bezier(0.215, 0.61, 0.355, 1);
     animation-fill-mode: forwards;
   }
-  @keyframes drawScribble {
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-
-  &.hidden .scribble-path {
-    visibility: hidden;
+}
+@keyframes drawScribble {
+  to {
+    stroke-dashoffset: 0;
   }
 }
 
@@ -28,7 +28,9 @@
     stroke-dashoffset: 0;
   }
 
-  &.animate .scribble-path {
-    stroke-dashoffset: 1500;
+  [data-circled] & {
+    .scribble-path {
+      stroke-dashoffset: 1500;
+    }
   }
 }

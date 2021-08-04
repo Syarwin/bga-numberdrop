@@ -36,6 +36,7 @@ define([
       this._notifications = [
         ['throwDices', 2500],
         ['scoreCombination', 1500],
+        ['clearTurn', 10],
       ];
 
       // TODO
@@ -145,9 +146,9 @@ define([
           [0, 1, 2, 3, 4]
             .map(
               (i) => `
-              <div class="sheet-bonus-cell" id="scoring-combination-${type}-${i}">
+              <div class="sheet-bonus-cell" id="cell-${player.id}-${i}-${type}">
                 <svg viewBox="100 0 700 512" class="scribble-circle hidden"><use class="scribble-path" href="#scribble-circle-svg" /></svg>
-              </div>`
+              </div>`,
             )
             .join('') +
           `
@@ -188,6 +189,11 @@ define([
       `;
     },
 
+    getGrid(pId = null) {
+      pId = pId || this.player_id;
+      return document.querySelector('#sheet-' + pId + ' .sheet-top .grid-wrapper .nd-grid');
+    },
+
     getCell(row, col = null, pId = null) {
       if (col == null) {
         // We can also call with a single argument containing row and col and pId
@@ -195,6 +201,16 @@ define([
         col = row.col;
         row = row.row;
       }
+
+      if (col > 10) {
+        let cols = {
+          11: 'identical',
+          12: 'sequence',
+          13: 'drop',
+        };
+        col = cols[col];
+      }
+
       pId = pId || this.player_id;
       return $(`cell-${pId}-${row}-${col}`);
     },
@@ -321,10 +337,17 @@ define([
     },
 
     notif_clearTurn(n) {
-      debug('Notif: restarting turn', n);
-      this._scoreSheet.clearTurn(n.args.turn);
-      this._planCards.clearTurn(n.args.turn);
-      this.cancelLogs(n.args.notifIds);
+      debug('Notif: clearing turn', n);
+      let grid = $('sheet-' + this.player_id);
+      [...grid.querySelectorAll(`[data-turn="${n.args.turn}"]`)].forEach((cell) => {
+        cell.removeAttribute('data-turn');
+        cell.removeAttribute('data-n');
+      });
+
+      [...grid.querySelectorAll(`[data-circled="${n.args.turn}"]`)].forEach((cell) => {
+        cell.removeAttribute('data-circled');
+      });
+      //      this.cancelLogs(n.args.notifIds);
     },
 
     onEnteringStateWaitOthers(args) {

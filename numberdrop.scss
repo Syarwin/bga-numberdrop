@@ -101,6 +101,24 @@ html {
 }
 
 
+/* Cancelled notification messages */
+
+.log.cancel {
+  color: #c62828 !important;
+  text-decoration: line-through;
+}
+
+/* Desktop logs */
+.log.cancel .roundedbox {
+  background-color: rgba(239, 154, 154, 0.6);
+}
+
+/* Mobile logs */
+.log.cancel.roundedbox {
+  background-color: #ef9a9a;
+}
+
+
 @import 'modules/css/dice';
 @import 'modules/css/darkmode';
 @import 'modules/css/scoresheet';

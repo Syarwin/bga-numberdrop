@@ -4,6 +4,7 @@ use NUMDROP\Core\Globals;
 use NUMDROP\Core\Notifications;
 use NUMDROP\Core\Preferences;
 use NUMDROP\Helpers\Utils;
+use NUMDROP\Helpers\Log;
 use NUMDROP\Managers\Scribbles;
 
 /*
@@ -137,17 +138,15 @@ class Player extends \NUMDROP\Helpers\DB_Manager implements \JsonSerializable
    */
   public function hasSomethingToCancel()
   {
-//    return !empty(Log::getLastActions($this->id)) || Scribbles::hasScribbleSomething($this->id);
+    //    return !empty(Log::getLastActions($this->id)) || Scribbles::hasScribbleSomething($this->id);
     return Scribbles::hasScribbleSomething($this->id);
   }
-
 
   // Restart the turn by clearing all log, houses, scribbles.
   public function restartTurn()
   {
-//    $notifIds = Log::clearTurn($this->id);
+    $notifIds = Log::clearTurn($this->id);
     Scribbles::clearTurn($this->id);
-//    Notifications::clearTurn($this, $notifIds);
+    Notifications::clearTurn($this, $notifIds);
   }
-
 }

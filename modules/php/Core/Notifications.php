@@ -51,7 +51,16 @@ class Notifications
     self::notify($player, 'scoreCombination', $msg, [
       'player' => $player,
       'size' => $size,
-      'scribbles' => $scribbles,
+      'scribbles' => $scribbles->toArray(),
+    ]);
+  }
+
+  public static function clearTurn($player, $notifIds)
+  {
+    self::notify($player, 'clearTurn', clienttranslate('${player_name} restart their turn'), [
+      'player' => $player,
+      'turn' => Globals::getCurrentTurn(),
+      'notifIds' => $notifIds,
     ]);
   }
 

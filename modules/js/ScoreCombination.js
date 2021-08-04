@@ -72,7 +72,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      */
     getPossibleCellsForCombination(filterCells = true) {
       // Compute all the unused cells
-      let grid = document.querySelector('#sheet-' + this.player_id + ' .sheet-top .grid-wrapper .nd-grid');
+      let grid = this.getGrid();
       let unusedCells = [
         ...grid.querySelectorAll(`.nd-cell[data-n]:not([data-circled])` + (filterCells ? ':not(.selected)' : '')),
       ].map((cell) => this.getCellObj(cell));

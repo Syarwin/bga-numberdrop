@@ -81,6 +81,19 @@ html {
   display: flex;
   flex-flow: column; }
 
+/* Cancelled notification messages */
+.log.cancel {
+  color: #c62828 !important;
+  text-decoration: line-through; }
+
+/* Desktop logs */
+.log.cancel .roundedbox {
+  background-color: rgba(239, 154, 154, 0.6); }
+
+/* Mobile logs */
+.log.cancel.roundedbox {
+  background-color: #ef9a9a; }
+
 .nb-dice-wrap {
   perspective: 150px;
   perspective-origin: 50% 50%;
@@ -203,101 +216,200 @@ html.darkmode {
 #game_play_area[data-turn='1'] .nd-cell[data-n][data-turn='1'] {
   color: red; }
 
+#game_play_area[data-turn='1'] [data-circled='1'] .scribble-circle .scribble-path {
+  stroke: red; }
+
 #game_play_area[data-turn='2'] .nd-cell[data-n][data-turn='2'] {
   color: red; }
+
+#game_play_area[data-turn='2'] [data-circled='2'] .scribble-circle .scribble-path {
+  stroke: red; }
 
 #game_play_area[data-turn='3'] .nd-cell[data-n][data-turn='3'] {
   color: red; }
 
+#game_play_area[data-turn='3'] [data-circled='3'] .scribble-circle .scribble-path {
+  stroke: red; }
+
 #game_play_area[data-turn='4'] .nd-cell[data-n][data-turn='4'] {
   color: red; }
+
+#game_play_area[data-turn='4'] [data-circled='4'] .scribble-circle .scribble-path {
+  stroke: red; }
 
 #game_play_area[data-turn='5'] .nd-cell[data-n][data-turn='5'] {
   color: red; }
 
+#game_play_area[data-turn='5'] [data-circled='5'] .scribble-circle .scribble-path {
+  stroke: red; }
+
 #game_play_area[data-turn='6'] .nd-cell[data-n][data-turn='6'] {
   color: red; }
+
+#game_play_area[data-turn='6'] [data-circled='6'] .scribble-circle .scribble-path {
+  stroke: red; }
 
 #game_play_area[data-turn='7'] .nd-cell[data-n][data-turn='7'] {
   color: red; }
 
+#game_play_area[data-turn='7'] [data-circled='7'] .scribble-circle .scribble-path {
+  stroke: red; }
+
 #game_play_area[data-turn='8'] .nd-cell[data-n][data-turn='8'] {
   color: red; }
+
+#game_play_area[data-turn='8'] [data-circled='8'] .scribble-circle .scribble-path {
+  stroke: red; }
 
 #game_play_area[data-turn='9'] .nd-cell[data-n][data-turn='9'] {
   color: red; }
 
+#game_play_area[data-turn='9'] [data-circled='9'] .scribble-circle .scribble-path {
+  stroke: red; }
+
 #game_play_area[data-turn='10'] .nd-cell[data-n][data-turn='10'] {
   color: red; }
+
+#game_play_area[data-turn='10'] [data-circled='10'] .scribble-circle .scribble-path {
+  stroke: red; }
 
 #game_play_area[data-turn='11'] .nd-cell[data-n][data-turn='11'] {
   color: red; }
 
+#game_play_area[data-turn='11'] [data-circled='11'] .scribble-circle .scribble-path {
+  stroke: red; }
+
 #game_play_area[data-turn='12'] .nd-cell[data-n][data-turn='12'] {
   color: red; }
+
+#game_play_area[data-turn='12'] [data-circled='12'] .scribble-circle .scribble-path {
+  stroke: red; }
 
 #game_play_area[data-turn='13'] .nd-cell[data-n][data-turn='13'] {
   color: red; }
 
+#game_play_area[data-turn='13'] [data-circled='13'] .scribble-circle .scribble-path {
+  stroke: red; }
+
 #game_play_area[data-turn='14'] .nd-cell[data-n][data-turn='14'] {
   color: red; }
+
+#game_play_area[data-turn='14'] [data-circled='14'] .scribble-circle .scribble-path {
+  stroke: red; }
 
 #game_play_area[data-turn='15'] .nd-cell[data-n][data-turn='15'] {
   color: red; }
 
+#game_play_area[data-turn='15'] [data-circled='15'] .scribble-circle .scribble-path {
+  stroke: red; }
+
 #game_play_area[data-turn='16'] .nd-cell[data-n][data-turn='16'] {
   color: red; }
+
+#game_play_area[data-turn='16'] [data-circled='16'] .scribble-circle .scribble-path {
+  stroke: red; }
 
 #game_play_area[data-turn='17'] .nd-cell[data-n][data-turn='17'] {
   color: red; }
 
+#game_play_area[data-turn='17'] [data-circled='17'] .scribble-circle .scribble-path {
+  stroke: red; }
+
 #game_play_area[data-turn='18'] .nd-cell[data-n][data-turn='18'] {
   color: red; }
+
+#game_play_area[data-turn='18'] [data-circled='18'] .scribble-circle .scribble-path {
+  stroke: red; }
 
 #game_play_area[data-turn='19'] .nd-cell[data-n][data-turn='19'] {
   color: red; }
 
+#game_play_area[data-turn='19'] [data-circled='19'] .scribble-circle .scribble-path {
+  stroke: red; }
+
 #game_play_area[data-turn='20'] .nd-cell[data-n][data-turn='20'] {
   color: red; }
+
+#game_play_area[data-turn='20'] [data-circled='20'] .scribble-circle .scribble-path {
+  stroke: red; }
 
 #game_play_area[data-turn='21'] .nd-cell[data-n][data-turn='21'] {
   color: red; }
 
+#game_play_area[data-turn='21'] [data-circled='21'] .scribble-circle .scribble-path {
+  stroke: red; }
+
 #game_play_area[data-turn='22'] .nd-cell[data-n][data-turn='22'] {
   color: red; }
+
+#game_play_area[data-turn='22'] [data-circled='22'] .scribble-circle .scribble-path {
+  stroke: red; }
 
 #game_play_area[data-turn='23'] .nd-cell[data-n][data-turn='23'] {
   color: red; }
 
+#game_play_area[data-turn='23'] [data-circled='23'] .scribble-circle .scribble-path {
+  stroke: red; }
+
 #game_play_area[data-turn='24'] .nd-cell[data-n][data-turn='24'] {
   color: red; }
+
+#game_play_area[data-turn='24'] [data-circled='24'] .scribble-circle .scribble-path {
+  stroke: red; }
 
 #game_play_area[data-turn='25'] .nd-cell[data-n][data-turn='25'] {
   color: red; }
 
+#game_play_area[data-turn='25'] [data-circled='25'] .scribble-circle .scribble-path {
+  stroke: red; }
+
 #game_play_area[data-turn='26'] .nd-cell[data-n][data-turn='26'] {
   color: red; }
+
+#game_play_area[data-turn='26'] [data-circled='26'] .scribble-circle .scribble-path {
+  stroke: red; }
 
 #game_play_area[data-turn='27'] .nd-cell[data-n][data-turn='27'] {
   color: red; }
 
+#game_play_area[data-turn='27'] [data-circled='27'] .scribble-circle .scribble-path {
+  stroke: red; }
+
 #game_play_area[data-turn='28'] .nd-cell[data-n][data-turn='28'] {
   color: red; }
+
+#game_play_area[data-turn='28'] [data-circled='28'] .scribble-circle .scribble-path {
+  stroke: red; }
 
 #game_play_area[data-turn='29'] .nd-cell[data-n][data-turn='29'] {
   color: red; }
 
+#game_play_area[data-turn='29'] [data-circled='29'] .scribble-circle .scribble-path {
+  stroke: red; }
+
 #game_play_area[data-turn='30'] .nd-cell[data-n][data-turn='30'] {
   color: red; }
+
+#game_play_area[data-turn='30'] [data-circled='30'] .scribble-circle .scribble-path {
+  stroke: red; }
 
 #game_play_area[data-turn='31'] .nd-cell[data-n][data-turn='31'] {
   color: red; }
 
+#game_play_area[data-turn='31'] [data-circled='31'] .scribble-circle .scribble-path {
+  stroke: red; }
+
 #game_play_area[data-turn='32'] .nd-cell[data-n][data-turn='32'] {
   color: red; }
 
+#game_play_area[data-turn='32'] [data-circled='32'] .scribble-circle .scribble-path {
+  stroke: red; }
+
 #game_play_area[data-turn='33'] .nd-cell[data-n][data-turn='33'] {
   color: red; }
+
+#game_play_area[data-turn='33'] [data-circled='33'] .scribble-circle .scribble-path {
+  stroke: red; }
 
 /********************************
 *********************************
@@ -658,22 +770,21 @@ html.darkmode {
   .scribble .scribble-path,
   .scribble-circle .scribble-path {
     stroke: black;
-    stroke-linecap: round; }
-  .scribble.animate .scribble-path,
-  .scribble-circle.animate .scribble-path {
-    animation: drawScribble 2s cubic-bezier(0.215, 0.61, 0.355, 1);
-    animation-fill-mode: forwards; }
+    stroke-linecap: round;
+    visibility: hidden; }
+
+[data-circled] .scribble-path {
+  visibility: visible;
+  animation: drawScribble 2s cubic-bezier(0.215, 0.61, 0.355, 1);
+  animation-fill-mode: forwards; }
+
 @keyframes drawScribble {
   to {
     stroke-dashoffset: 0; } }
-  .scribble.hidden .scribble-path,
-  .scribble-circle.hidden .scribble-path {
-    visibility: hidden; }
-
 .scribble-circle .scribble-path {
   stroke-dasharray: 1500;
   stroke-dashoffset: 0; }
-.scribble-circle.animate .scribble-path {
+[data-circled] .scribble-circle .scribble-path {
   stroke-dashoffset: 1500; }
 
 /*# sourceMappingURL=numberdrop.css.map */

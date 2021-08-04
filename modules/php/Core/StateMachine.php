@@ -195,9 +195,12 @@ class StateMachine extends \APP_DbObject
 
     // Compute args if any provided
     $args = [];
+    if (\method_exists(self::getGame(), 'argPrivatePlayerTurn')) {
+      $args = self::getGame()->argPrivatePlayerTurn($player);
+    }
     if (isset($newState['args'])) {
       $method = $newState['args'];
-      $args = self::getGame()->$method($player);
+      $args = array_merge($args, self::getGame()->$method($player));
     }
 
     // Update state and args on UI using notification

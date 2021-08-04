@@ -36,6 +36,7 @@ use NUMDROP\Managers\Players;
 use NUMDROP\Core\Globals;
 use NUMDROP\Core\Preferences;
 use NUMDROP\Core\Stats;
+use NUMDROP\Helpers\Log;
 
 class NumberDrop extends Table
 {
@@ -89,6 +90,7 @@ class NumberDrop extends Table
       'dices' => Globals::getDices(),
       'turn' => Globals::getCurrentTurn(),
       'shapes' => $this->shapes,
+      'canceledNotifIds' => Log::getCanceledNotifIds(),
     ];
   }
 

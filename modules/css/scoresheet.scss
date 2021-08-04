@@ -9,6 +9,10 @@
   #game_play_area[data-turn='#{$t}'] .nd-cell[data-circled='#{$t}'] {
     //    border-color:red;
   }
+
+  #game_play_area[data-turn='#{$t}'] [data-circled='#{$t}'] .scribble-circle .scribble-path {
+    stroke: red;
+  }
 }
 
 /********************************

@@ -95,7 +95,7 @@ class action_numberdrop extends APP_GameAction
   /////////////////////////////
   //// Confirm / pass turn ////
   /////////////////////////////
-  public function actCancelTurn()
+  public function actRestart()
   {
     self::setAjaxMode();
     $this->game->actCancelTurn();
