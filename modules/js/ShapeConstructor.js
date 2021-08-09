@@ -1,6 +1,6 @@
 define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
   return declare('numberdrop.shapeConstructor', null, {
-    toggleShapeConstructor(visible, pId = null){
+    toggleShapeConstructor(visible, pId = null) {
       pId = pId || this.player_id;
       let constructor = document.querySelector('#sheet-' + pId + ' .sheet-top .shape-constructor');
       constructor.classList.toggle('active', visible);
@@ -244,6 +244,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Construct a dial depending on the remeaining dices
      */
     placeDial(cell, id) {
+      debug(cell, id);
       // Clear existing dial if any
       this.clearDial();
 
@@ -308,7 +309,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Given current shape and col, find lowest row before it's blocked
      */
     findLowestDropRow() {
-      for (let i = 11; i > -3; i--) {
+      for (let i = 10; i > -3; i--) {
         let collision = false;
         this.getCurrentShapeBlocks().forEach((pos) => {
           pos.row += i;
@@ -345,7 +346,11 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
         let cell = this.getCell(pos);
         this.setCellContent(cell, this._tetromino.numbers[pos.n], this.gamedatas.turn);
-        cell.classList.add('active');
+        cell.classList.add('active', 'selectable');
+        this._listeningCells.push(dojo.connect(cell, 'click', (evt) => {
+          evt.stopPropagation();
+          this.placeDial(cell, pos.n)
+        }));
       });
     },
 
@@ -357,8 +362,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       let cells = [...grid.querySelectorAll('.nd-cell.active')];
       cells.forEach((cell) => {
         this.clearCellContent(cell);
-        cell.classList.remove('active');
+        cell.classList.remove('active', 'selectable');
       });
+      this._listeningCells.forEach((listener) => dojo.disconnect(listener));
     },
   });
 });

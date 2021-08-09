@@ -1,8 +1,10 @@
 <?php
 namespace NUMDROP\States;
 use NUMDROP\Core\Globals;
+use NUMDROP\Core\Notifications;
 use NUMDROP\Core\StateMachine;
 use NUMDROP\Managers\Players;
+use NUMDROP\Managers\Scribbles;
 
 trait DropShapeTrait
 {
@@ -58,6 +60,32 @@ trait DropShapeTrait
       $pos['row'] += $row;
       $pos['col'] += $tetromino['col'];
       $player->addNumber($pos['row'], $pos['col'], $pos['n']);
+    }
+
+    // Check completed lines
+    $scoringColumns = $player->getScoringColumns();
+    $board = $player->getBoard();
+    for($i = 0; $i < 11; $i++){
+      if($scoringColumns[COL_END_LINES][$i])
+        continue;
+
+      // Is the line full?
+      $hole = false;
+      for($j = 0; $j < 7; $j++){
+        if($board[$i][$j] === null){
+          $hole = true;
+          break;
+        }
+      }
+      if($hole)
+        continue;
+
+      // Create scribble and notify
+      $scribble = Scribbles::useCell($player, [
+        'row' => $i,
+        'col' => COL_END_LINES,
+      ]);
+      Notifications::scoreLine($player, $i, Scribbles::get($scribble));
     }
 
     // Move on to next state

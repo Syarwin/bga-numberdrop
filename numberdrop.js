@@ -36,8 +36,10 @@ define([
       this._notifications = [
         ['throwDices', 2500],
         ['scoreCombination', 1500],
+        ['scoreLine', 1500],
         ['clearTurn', 10],
       ];
+      this._listeningCells = [];
 
       // TODO
       // Fix mobile viewport (remove CSS zoom)
@@ -70,6 +72,10 @@ define([
       this.clearDial();
       this.toggleShapeConstructor(false);
       dojo.query('.nd-cell').removeClass('active selected');
+
+      this._listeningCells.forEach((listener) => dojo.disconnect(listener));
+      this._listeningCells = [];
+
       this.inherited(arguments);
     },
 
@@ -126,7 +132,11 @@ define([
         }
 
         let n = i < 11 ? '+2' : '-5';
-        endOfLines += `<div class='nd-cell' data-col='7' data-row='${i}' id='cell-${player.id}-${i}-7' data-n='${n}'></div>`;
+        endOfLines += `
+        <div class='nd-cell' data-col='10' data-row='${i}' id='cell-${player.id}-${i}-10' data-n='${n}'>
+          <svg viewBox="100 0 700 512" class="scribble-circle hidden"><use class="scribble-path" href="#scribble-circle-svg" /></svg>
+        </div>
+        `;
       }
       let current = player.id == this.player_id ? 'current' : '';
 

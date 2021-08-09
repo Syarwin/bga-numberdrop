@@ -190,6 +190,16 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     notif_scoreCombination(n) {
       debug('Notif: scoring a combination', n);
       n.args.scribbles.forEach((scribble) => this.addScribble(scribble));
+      this.highlightScoringCombinations(this.player_id);
+    },
+
+
+    /**
+     * Received when the player finish a line
+     */
+    notif_scoreLine(n) {
+      debug('Notif: scoring a line', n);
+      this.addScribble(n.args.scribble);
     },
   });
 });

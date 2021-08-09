@@ -69,9 +69,20 @@
       grid-gap: 1px;
       border-collapse: collapse;
 
-      .nd-cell::before {
-        font-size: 13px;
-        color: #b7b7b7;
+      .nd-cell {
+        background: none !important;
+
+        &::before {
+          font-size: 13px;
+          color: #b7b7b7;
+        }
+
+        svg {
+          width: 40px;
+          height: 40px;
+          stroke: black;
+          position: absolute;
+        }
       }
     }
 
@@ -83,6 +94,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      position: relative;
 
       &.active {
         background: #d5d5d5;
@@ -127,7 +139,7 @@
       // highlight score combinations
       @for $i from 1 to 20 {
         &[data-circled='#{$i}'] {
-          background-color: rgba(255, 3 * $i, 0, 0.4);
+          background-color: rgba(200, 3 * $i, 0, 0.4);
         }
       }
 

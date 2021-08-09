@@ -104,12 +104,13 @@ class Player extends \NUMDROP\Helpers\DB_Manager implements \JsonSerializable
   public function getScoringColumns()
   {
     $result = [
+      COL_END_LINES => [false, false, false, false, false, false, false, false, false, false, false, false, false, false],
       COL_SAME => [false, false, false, false, false],
       COL_SEQUENCE => [false, false, false, false, false],
       COL_BONUS => [false],
     ];
     foreach ($this->getScribbles() as $scribble) {
-      if (in_array($scribble['col'], [COL_SAME, COL_SEQUENCE, COL_BONUS])) {
+      if (in_array($scribble['col'], [COL_END_LINES, COL_SAME, COL_SEQUENCE, COL_BONUS])) {
         $result[$scribble['col']][$scribble['row']] = true;
       }
     }

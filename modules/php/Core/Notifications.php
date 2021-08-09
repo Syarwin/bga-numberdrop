@@ -55,6 +55,17 @@ class Notifications
     ]);
   }
 
+  public static function scoreLine($player, $line, $scribble)
+  {
+    self::notify($player, 'scoreLine', clienttranslate('${player_name} scores 2 points for completing the line : ${i}'), [
+      'player' => $player,
+      'i' => $line,
+      'scribble' => $scribble,
+    ]);
+
+  }
+
+
   public static function clearTurn($player, $notifIds)
   {
     self::notify($player, 'clearTurn', clienttranslate('${player_name} restart their turn'), [

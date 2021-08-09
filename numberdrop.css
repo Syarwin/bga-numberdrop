@@ -453,9 +453,16 @@ html.darkmode {
     display: grid;
     grid-gap: 1px;
     border-collapse: collapse; }
-    .sheet-wrapper .sheet-top .end-of-lines .nd-cell::before {
-      font-size: 13px;
-      color: #b7b7b7; }
+    .sheet-wrapper .sheet-top .end-of-lines .nd-cell {
+      background: none !important; }
+      .sheet-wrapper .sheet-top .end-of-lines .nd-cell::before {
+        font-size: 13px;
+        color: #b7b7b7; }
+      .sheet-wrapper .sheet-top .end-of-lines .nd-cell svg {
+        width: 40px;
+        height: 40px;
+        stroke: black;
+        position: absolute; }
   .sheet-wrapper .sheet-top .nd-cell {
     width: 36px;
     height: 36px;
@@ -463,7 +470,8 @@ html.darkmode {
     box-shadow: 0 0 0 1px #5ac0ec;
     display: flex;
     justify-content: center;
-    align-items: center; }
+    align-items: center;
+    position: relative; }
     .sheet-wrapper .sheet-top .nd-cell.active {
       background: #d5d5d5; }
     .sheet-wrapper .sheet-top .nd-cell[data-row='11'] {
@@ -491,43 +499,43 @@ html.darkmode {
       .sheet-wrapper .sheet-top .nd-cell.selectable.selected:hover {
         color: black; }
     .sheet-wrapper .sheet-top .nd-cell[data-circled='1'] {
-      background-color: rgba(255, 3, 0, 0.4); }
+      background-color: rgba(200, 3, 0, 0.4); }
     .sheet-wrapper .sheet-top .nd-cell[data-circled='2'] {
-      background-color: rgba(255, 6, 0, 0.4); }
+      background-color: rgba(200, 6, 0, 0.4); }
     .sheet-wrapper .sheet-top .nd-cell[data-circled='3'] {
-      background-color: rgba(255, 9, 0, 0.4); }
+      background-color: rgba(200, 9, 0, 0.4); }
     .sheet-wrapper .sheet-top .nd-cell[data-circled='4'] {
-      background-color: rgba(255, 12, 0, 0.4); }
+      background-color: rgba(200, 12, 0, 0.4); }
     .sheet-wrapper .sheet-top .nd-cell[data-circled='5'] {
-      background-color: rgba(255, 15, 0, 0.4); }
+      background-color: rgba(200, 15, 0, 0.4); }
     .sheet-wrapper .sheet-top .nd-cell[data-circled='6'] {
-      background-color: rgba(255, 18, 0, 0.4); }
+      background-color: rgba(200, 18, 0, 0.4); }
     .sheet-wrapper .sheet-top .nd-cell[data-circled='7'] {
-      background-color: rgba(255, 21, 0, 0.4); }
+      background-color: rgba(200, 21, 0, 0.4); }
     .sheet-wrapper .sheet-top .nd-cell[data-circled='8'] {
-      background-color: rgba(255, 24, 0, 0.4); }
+      background-color: rgba(200, 24, 0, 0.4); }
     .sheet-wrapper .sheet-top .nd-cell[data-circled='9'] {
-      background-color: rgba(255, 27, 0, 0.4); }
+      background-color: rgba(200, 27, 0, 0.4); }
     .sheet-wrapper .sheet-top .nd-cell[data-circled='10'] {
-      background-color: rgba(255, 30, 0, 0.4); }
+      background-color: rgba(200, 30, 0, 0.4); }
     .sheet-wrapper .sheet-top .nd-cell[data-circled='11'] {
-      background-color: rgba(255, 33, 0, 0.4); }
+      background-color: rgba(200, 33, 0, 0.4); }
     .sheet-wrapper .sheet-top .nd-cell[data-circled='12'] {
-      background-color: rgba(255, 36, 0, 0.4); }
+      background-color: rgba(200, 36, 0, 0.4); }
     .sheet-wrapper .sheet-top .nd-cell[data-circled='13'] {
-      background-color: rgba(255, 39, 0, 0.4); }
+      background-color: rgba(200, 39, 0, 0.4); }
     .sheet-wrapper .sheet-top .nd-cell[data-circled='14'] {
-      background-color: rgba(255, 42, 0, 0.4); }
+      background-color: rgba(200, 42, 0, 0.4); }
     .sheet-wrapper .sheet-top .nd-cell[data-circled='15'] {
-      background-color: rgba(255, 45, 0, 0.4); }
+      background-color: rgba(200, 45, 0, 0.4); }
     .sheet-wrapper .sheet-top .nd-cell[data-circled='16'] {
-      background-color: rgba(255, 48, 0, 0.4); }
+      background-color: rgba(200, 48, 0, 0.4); }
     .sheet-wrapper .sheet-top .nd-cell[data-circled='17'] {
-      background-color: rgba(255, 51, 0, 0.4); }
+      background-color: rgba(200, 51, 0, 0.4); }
     .sheet-wrapper .sheet-top .nd-cell[data-circled='18'] {
-      background-color: rgba(255, 54, 0, 0.4); }
+      background-color: rgba(200, 54, 0, 0.4); }
     .sheet-wrapper .sheet-top .nd-cell[data-circled='19'] {
-      background-color: rgba(255, 57, 0, 0.4); }
+      background-color: rgba(200, 57, 0, 0.4); }
     .sheet-wrapper .sheet-top .nd-cell.border-0 {
       border-top: 1px solid black; }
     .sheet-wrapper .sheet-top .nd-cell.border-1 {
@@ -733,35 +741,37 @@ html.darkmode {
           display: none; }
         .shape-constructor #shape-constructor-holder #shape-constructor-grid[data-dim='3'] #shape-constructor-cell-3-3 {
           display: none; }
-      .shape-constructor #shape-constructor-holder #shape-constructor-grid #shape-constructor-dial {
-        background: #ddd;
-        position: absolute;
-        top: 27px;
-        left: 27px;
-        z-index: 2;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 4px;
-        padding: 4px;
-        border: 1px solid black; }
-        .shape-constructor #shape-constructor-holder #shape-constructor-grid #shape-constructor-dial div {
-          width: 30px;
-          height: 30px;
-          border: 1px solid #a2a2a2;
-          background: #eae7e7;
-          font-family: 'Press Start 2P';
-          font-size: 16px;
-          text-align: center;
-          line-height: 31px; }
-          .shape-constructor #shape-constructor-holder #shape-constructor-grid #shape-constructor-dial div.disabled {
-            cursor: not-allowed;
-            background: #dbdbdb;
-            color: #959393; }
-          .shape-constructor #shape-constructor-holder #shape-constructor-grid #shape-constructor-dial div#shape-constructor-clear {
-            background-image: url("img/clear.svg");
-            background-size: auto 70%;
-            background-repeat: no-repeat;
-            background-position: center center; }
+
+#shape-constructor-dial {
+  background: #ddd;
+  position: absolute;
+  top: 27px;
+  left: 27px;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 4px;
+  padding: 4px;
+  border: 1px solid black; }
+  #shape-constructor-dial div {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #a2a2a2;
+    background: #eae7e7;
+    font-family: 'Press Start 2P';
+    font-size: 16px;
+    text-align: center;
+    line-height: 31px;
+    color: black; }
+    #shape-constructor-dial div.disabled {
+      cursor: not-allowed;
+      background: #dbdbdb;
+      color: #959393; }
+    #shape-constructor-dial div#shape-constructor-clear {
+      background-image: url("img/clear.svg");
+      background-size: auto 70%;
+      background-repeat: no-repeat;
+      background-position: center center; }
 
 .scribble,
 .scribble-circle {
