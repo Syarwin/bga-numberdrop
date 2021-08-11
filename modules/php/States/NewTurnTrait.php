@@ -23,11 +23,14 @@ trait NewTurnTrait
       $r = bga_rand(0,5);
       $result[] = $dice[$r];
     }
+    $result[0] = '*'; // TODO : remove
     Globals::setDices($result);
     Notifications::throwDices($result, $turn);
 
     if(in_array('*', $result) && Players::getNextActiveDrop() != null){
       StateMachine::initPrivateStates(ST_PLAYER_TURN);
+      var_dump(Players::getNextActiveDrop());
+      die("test");
       $this->gamestate->nextState('drop');
     } else {
       $ids = Players::getAll()->getIds();

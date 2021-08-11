@@ -107,11 +107,12 @@ class Player extends \NUMDROP\Helpers\DB_Manager implements \JsonSerializable
       COL_END_LINES => [false, false, false, false, false, false, false, false, false, false, false, false, false, false],
       COL_SAME => [false, false, false, false, false],
       COL_SEQUENCE => [false, false, false, false, false],
+      COL_DROP => [false, false, false, false, false],
       COL_BONUS => [false],
     ];
     foreach ($this->getScribbles() as $scribble) {
-      if (in_array($scribble['col'], [COL_END_LINES, COL_SAME, COL_SEQUENCE, COL_BONUS])) {
-        $result[$scribble['col']][$scribble['row']] = true;
+      if (in_array($scribble['col'], [COL_END_LINES, COL_SAME, COL_SEQUENCE, COL_DROP, COL_BONUS])) {
+        $result[$scribble['col']][$scribble['row']] = $scribble['number'] == CIRCLE? true : CROSSED;
       }
     }
 

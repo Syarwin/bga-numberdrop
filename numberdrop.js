@@ -358,6 +358,7 @@ define([
         cell.removeAttribute('data-circled');
       });
       //      this.cancelLogs(n.args.notifIds);
+      this.highlightScoringCombinations(this.player_id);
     },
 
     onEnteringStateWaitOthers(args) {

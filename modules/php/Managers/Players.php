@@ -71,7 +71,7 @@ class Players extends \NUMDROP\Helpers\DB_Manager
 
   public function getNextId($player)
   {
-    $pId = is_int($player)? $player : $player->getId();
+    $pId = is_int($player) ? $player : $player->getId();
     $table = Game::get()->getNextPlayerTable();
     return $table[$pId];
   }
@@ -111,9 +111,18 @@ class Players extends \NUMDROP\Helpers\DB_Manager
   }
   */
 
-
   public function getNextActiveDrop()
   {
-    return null; // TODO;
+    $dropMin = 10;
+    foreach (self::getAll() as $player) {
+      $columns = $player->getScoringColumns();
+      foreach ($columns[COL_DROP] as $i => $state) {
+        if ($state === true) {
+          $dropMin = min($dropMin, $i);
+        }
+      }
+    }
+
+    return $dropMin == 10 ? null : $dropMin;
   }
 }

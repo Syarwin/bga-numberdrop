@@ -39,6 +39,8 @@ define('ST_END_GAME', 99);
  * Others
  */
 define('CIRCLE', 0); // 0 will be used as a "false" number to circle stuff
+define('CROSS', -1);
+define('CROSSED', 2);
 
 define('COL_END_LINES', 10);
 define('COL_SAME', 11);

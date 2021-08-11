@@ -98,6 +98,23 @@ $machinestates = [
     ],
   ],
 
+
+  /****************************
+   ******* DROP a DROP ********
+   ****************************
+   ST_DROP_DROP => [
+     'name' => 'dropShape',
+     'descriptionmyturn' => clienttranslate('${you} must construct and drop your tetromino'),
+     'type' => 'private',
+     'args' => 'argDropShape',
+     'possibleactions' => ['actConstructTetromino', 'actConfirmTetromino', 'actRestart'],
+     'transitions' => [
+       'scoreCombination' => ST_SCORE_COMBINATION,
+       'restart' => ST_DROP_SHAPE,
+     ],
+   ],
+   */
+
   //////////////////////////
   ///// CONFIRM / END //////
   //////////////////////////

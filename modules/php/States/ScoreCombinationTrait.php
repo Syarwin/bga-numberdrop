@@ -81,8 +81,8 @@ trait ScoreCombinationTrait
       $type = COL_SEQUENCE;
       $inc = $combination[0]['n'] < $combination[1]['n'] ? 1 : -1;
       $number = $combination[0]['n'];
-      foreach($combination as $cell){
-        if($cell['n'] != $number){
+      foreach ($combination as $cell) {
+        if ($cell['n'] != $number) {
           throw new \BgaVisibleSystemException('This is an invalid combination');
         }
         $number += $inc;
@@ -92,42 +92,47 @@ trait ScoreCombinationTrait
 
     // Special case of bonus combination
     $row = $cSize - 3;
-    if($cSize == 8){
+    if ($cSize == 8) {
       $col = COL_BONUS;
       $row = 0;
     }
 
     // Check if this scoring spot is still available
     $scoringColumns = $player->getScoringColumns();
-    if($scoringColumns[$col][$row]){
+    if ($scoringColumns[$col][$row]) {
       throw new \BgaVisibleSystemException('You already scored this type/size of combination');
     }
 
-
     // Update DB
     $scribbles = [];
-    foreach($combination as $cell){
+    foreach ($combination as $cell) {
       $scribbles[] = Scribbles::useCell($player, $cell);
     }
     $scribbles[] = Scribbles::useCell($player, [
       'row' => $row,
       'col' => $col,
     ]);
+    $scoringColumns[$col][$row] = true;
+
+    // Check unlocked DROP
+    if ($scoringColumns[COL_SAME][$row] && $scoringColumns[COL_SEQUENCE][$row] && $scoringColumns[COL_DROP][$row] === false) {
+      $scribbles[] = Scribbles::useCell($player, [
+        'row' => $row,
+        'col' => COL_DROP,
+      ]);
+    }
 
     // Notifications
     Notifications::scoreCombination($player, $type, $cSize, Scribbles::get($scribbles));
     // TODO : updateScore
 
-    // TODO : check unlocked DROP
-
     // Move on to next state
-    StateMachine::nextState("confirmWait");
-
+    StateMachine::nextState('confirmWait');
   }
 
   function actPassScoreCombination()
   {
     $player = Players::getCurrent();
-    StateMachine::nextState("confirmWait");
+    StateMachine::nextState('confirmWait');
   }
 }
