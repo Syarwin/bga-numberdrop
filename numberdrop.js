@@ -59,6 +59,7 @@ define([
       dojo.place("<div id='numberdrop-topbar'></div>", 'topbar', 'after');
 
       this.setupScoreSheets();
+      this.setupBoard();
       this.setupDices();
       this.addDarkModeSwitch();
       this.updateTurnNumber();
@@ -81,6 +82,47 @@ define([
 
     updateTurnNumber() {
       $('game_play_area').setAttribute('data-turn', this.gamedatas.turn);
+    },
+
+    /**************************************
+     ************** Board *****************
+     **************************************/
+    setupBoard() {
+      this.place('tplBoard', {}, 'main-holder');
+
+      // Add drop tiles
+      this.gamedatas.drops.forEach((drop, i) => {
+        dojo.place(`
+          <div class='drop-tile ${drop.status? "flipped" : ""}' id='drop-tile-${i}' data-id='${drop.id}'></div>
+        `, `drop-tile-holder-${i}`);
+      })
+    },
+
+    tplBoard() {
+      return (
+        `
+      <div id="board">
+        <div id="drops-container">
+          ` +
+        [0, 1, 2, 3, 4]
+          .map(
+            (i) => `
+              <div id="drop-${i}" class="drop">
+                <div class="drop-header">
+                  <div class="drop-header-bg"></div>
+                  <div class="drop-header-letter"></div>
+                </div>
+                <div id='drop-tile-holder-${i}' class="drop-tile-holder"></div>
+              </div>
+            `,
+          )
+          .join('') +
+        `
+        </div>
+        <div id="dice-holder"></div>
+      </div>
+      `
+      );
     },
 
     /**************************************
@@ -153,7 +195,7 @@ define([
           <div class="sheet-bonus-header"></div>
           <div class="sheet-bonus-grid">
           ` +
-          [0, 1, 2, 3, 4]
+          [0, 1, 2, 3, 4, 5]
             .map(
               (i) => `
               <div class="sheet-bonus-cell" id="cell-${player.id}-${i}-${type}">
@@ -373,7 +415,6 @@ define([
      * Create the dices and initialize them to their value
      */
     setupDices() {
-      dojo.place('<div id="dice-holder"></div>', 'main-holder');
       let dices = ['1*3457', '12*456', '234*67', '123567'];
       let shapeDice = ['*'];
       ['I', 'O', 'T', 'L', 'S'].forEach((shape) => {

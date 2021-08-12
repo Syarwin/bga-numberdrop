@@ -122,6 +122,7 @@ trait DropShapeTrait
 
   /**
    * Same function as in js : given current shape and col, find lowest row before it's blocked
+   * TODO : seems buggy for the L-shape when not touching the floor
    */
   function findLowestDropRow($player, $tetrominoBlocks, $column) {
     $board = $player->getBoard();

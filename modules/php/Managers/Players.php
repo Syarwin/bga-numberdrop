@@ -31,6 +31,12 @@ class Players extends \NUMDROP\Helpers\DB_Manager
     $query->values($values);
     Game::get()->reattributeColorsBasedOnPreferences($players, $gameInfos['player_colors']);
     Game::get()->reloadPlayersBasicInfos();
+
+    $player = Players::getAll()->first();
+    Scribbles::useCell($player, [
+      'row' => 1,
+      'col' => COL_DROP,
+    ]);
   }
 
   public function getActiveId()
@@ -92,37 +98,5 @@ class Players extends \NUMDROP\Helpers\DB_Manager
     return self::getAll()->map(function ($player) use ($pId) {
       return $player->jsonSerialize($pId);
     });
-  }
-
-  /*
-   * Get current turn order according to first player variable
-   *
-   TODO : probably useless in this game
-  public function getTurnOrder($firstPlayer = null)
-  {
-    $firstPlayer = $firstPlayer ?? Globals::getFirstPlayer();
-    $order = [];
-    $p = $firstPlayer;
-    do {
-      $order[] = $p;
-      $p = self::getNextId($p);
-    } while($p != $firstPlayer);
-    return $order;
-  }
-  */
-
-  public function getNextActiveDrop()
-  {
-    $dropMin = 10;
-    foreach (self::getAll() as $player) {
-      $columns = $player->getScoringColumns();
-      foreach ($columns[COL_DROP] as $i => $state) {
-        if ($state === true) {
-          $dropMin = min($dropMin, $i);
-        }
-      }
-    }
-
-    return $dropMin == 10 ? null : $dropMin;
   }
 }

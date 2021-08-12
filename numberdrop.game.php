@@ -33,6 +33,7 @@ $swdNamespaceAutoload = function ($class) {
 spl_autoload_register($swdNamespaceAutoload, true, true);
 
 use NUMDROP\Managers\Players;
+use NUMDROP\Managers\Drops;
 use NUMDROP\Core\Globals;
 use NUMDROP\Core\Preferences;
 use NUMDROP\Core\Stats;
@@ -43,6 +44,7 @@ class NumberDrop extends Table
   use NUMDROP\States\StartingNumberTrait;
   use NUMDROP\States\NewTurnTrait;
   use NUMDROP\States\DropShapeTrait;
+  use NUMDROP\States\DropDropTrait;
   use NUMDROP\States\ScoreCombinationTrait;
   use NUMDROP\States\ConfirmWaitTrait;
   use NUMDROP\States\EndOfGameTrait;
@@ -71,6 +73,7 @@ class NumberDrop extends Table
   protected function setupNewGame($players, $options = [])
   {
     Players::setupNewGame($players, $options);
+    Drops::setupNewGame($players, $options);
     Stats::setupNewGame();
     Globals::setupNewGame($players, $options);
     Preferences::setupNewGame($players, $this->player_preferences);
@@ -91,6 +94,7 @@ class NumberDrop extends Table
       'turn' => Globals::getCurrentTurn(),
       'shapes' => $this->shapes,
       'canceledNotifIds' => Log::getCanceledNotifIds(),
+      'drops' => Globals::getDrops(),
     ];
   }
 

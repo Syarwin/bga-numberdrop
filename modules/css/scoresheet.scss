@@ -15,6 +15,7 @@
   }
 }
 
+
 /********************************
 *********************************
 ********************************/
@@ -194,6 +195,8 @@
           .sheet-bonus-grid {
             border: 1px dashed gray;
             margin: 0px 20px;
+            padding-bottom: 7px;
+            position: relative;
 
             .sheet-bonus-cell {
               position: relative;
@@ -218,11 +221,96 @@
                 stroke: black;
                 position: absolute;
               }
+
+              &:last-child {
+                background: none;
+                width: 40px;
+                height: 20px;
+                margin: 0px;
+                background: #eee;
+                position: absolute;
+                bottom: -10px;
+                left: 10px;
+
+                &::before {
+                  content: '+10';
+                  color: #b7b7b7;
+                  font-weight: bold;
+                  font-family: 'Press Start 2P';
+                  font-size: 13px;
+                }
+              }
             }
           }
 
-          &.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell {
-            background-position-x: 100%;
+          &.sheet-bonus-identical,
+          &.sheet-bonus-sequence {
+            .sheet-bonus-grid::after {
+              content: '⌄⌄⌄⌄⌄⌄⌄';
+              position: absolute;
+              height: 105px;
+              left: 10px;
+              bottom: -93px;
+
+              background: linear-gradient(to bottom, #aaa4a4 25%, #22a9bf 40%, #2fc5dd 60%, #aaa4a4 75%);
+              -webkit-background-clip: text;
+              background-clip: text;
+              -webkit-text-fill-color: transparent;
+              text-fill-color: transparent;
+              background-size: auto 200%;
+              writing-mode: vertical-rl;
+
+              font-family: 'Press Start 2P';
+              letter-spacing: -20px;
+              font-size: 31px;
+              font-weight: bold;
+            }
+
+            &.animate .sheet-bonus-grid::after {
+              animation: textShineVert 1.5s linear infinite;
+              @keyframes textShineVert {
+                to {
+                  background-position: 0% -200%;
+                }
+              }
+            }
+          }
+
+          &.sheet-bonus-drop .sheet-bonus-grid {
+            border: none;
+            .sheet-bonus-cell {
+              background-position-x: 100%;
+
+              &::before {
+                content: '>>>>>';
+                position: absolute;
+                left: -153%;
+
+                background: linear-gradient(to right, #aaa4a4 25%, #22a9bf 40%, #2fc5dd 60%, #aaa4a4 75%);
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+                text-fill-color: transparent;
+                background-size: 200% auto;
+                font-family: 'Press Start 2P';
+                font-size: 10px;
+                font-weight: bold;
+                letter-spacing: -1.5px;
+
+                &.animate {
+                  animation: textShine 1.5s linear infinite;
+                  @keyframes textShine {
+                    to {
+                      background-position: -200%;
+                    }
+                  }
+                }
+              }
+
+              &:last-child {
+                display: none;
+              }
+            }
           }
         }
       }

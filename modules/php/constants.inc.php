@@ -27,6 +27,9 @@ define('ST_APPLY_TURNS', 5);
 define('ST_DROP_SHAPE', 20);
 define('ST_SCORE_COMBINATION', 21);
 
+// Drop
+define('ST_DROP_PLAYER_TURN', 30);
+define('ST_DROP_DROP', 31);
 
 define('ST_CONFIRM_TURN', 40);
 define('ST_WAIT_OTHERS', 41);

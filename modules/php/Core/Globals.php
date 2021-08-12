@@ -13,6 +13,7 @@ class Globals extends \NUMDROP\Helpers\DB_Manager
     'dices' => 'obj',
     'tetrominos' => 'obj', // Store ongoing shapes
     'combinations' => 'obj', // Store ongoing combinations
+    'drops' => 'obj', // Drops and status of drops
   ];
 
   protected static $table = 'global_variables';
