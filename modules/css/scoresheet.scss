@@ -15,7 +15,6 @@
   }
 }
 
-
 /********************************
 *********************************
 ********************************/
@@ -25,6 +24,15 @@
   margin: 10px;
   display: flex;
   flex-flow: column;
+
+  @for $i from 1 through 5 {
+    &[data-no='#{$i}'] {
+      order: $i + 2;
+    }
+  }
+  &[data-no='0'] {
+    order: 1;
+  }
 
   .sheet-top,
   .sheet-bottom {

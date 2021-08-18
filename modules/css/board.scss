@@ -1,6 +1,99 @@
 #board {
   display: flex;
   flex-direction: column;
+  width: 180px;
+  order: 2;
+
+  #dice-holder {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    background: rgba(255, 255, 255, 0.43);
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px -2px black;
+    margin-bottom: 10px;
+    border: 1px solid #9b9797;
+    width: 180px;
+  }
+
+  #drops-container {
+    display: flex;
+    flex-flow: column;
+    background-color: #00bdd0;
+    height: 370px;
+    width: 160px;
+    padding: 10px 10px;
+    border-radius: 15px;
+    box-shadow: 2px 2px 4px -2px black;
+
+    .drop {
+      display: flex;
+      background-color: #8fd1e2;
+      margin: 2px;
+      height: 70px;
+      clip-path: polygon(100% 0%, 100% 100%, 15% 100%, 0% 0%);
+
+      .drop-header {
+        width: 85px;
+        height: 70px;
+        position: relative;
+
+        .drop-header-bg {
+          position: absolute;
+          width: 70px;
+          height: 45px;
+          top: 10px;
+          left: 8px;
+
+          background: url('img/column-headers.png');
+          background-size: 400% 100%;
+          background-position: 66.66% 0%;
+          filter: brightness(100);
+        }
+
+        .drop-header-letter {
+          background: url('img/combination-columns.png');
+          background-size: 200% 600%;
+          background-position-x: 100%;
+          width: 30px;
+          height: 30px;
+          position: absolute;
+          top: 30px;
+          left: 30px;
+        }
+      }
+
+      @for $i from 1 to 6 {
+        &:nth-child(#{$i}) .drop-header .drop-header-letter {
+          background-position-y: ($i - 1) * 20%;
+        }
+      }
+
+      .drop-tile-holder {
+        width: 70px;
+        height: 70px;
+        position: relative;
+
+        .drop-tile {
+          width: 70px;
+          height: 70px;
+          background: url('img/drops-multi.jpg');
+          background-size: 500% 100%;
+
+          @for $i from 0 to 5 {
+            &[data-id='#{$i}'] {
+              background-position-x: $i * 25%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+#board.horizontal {
+  display: flex;
+  flex-direction: column;
   width: 390px;
 
   #drops-container {

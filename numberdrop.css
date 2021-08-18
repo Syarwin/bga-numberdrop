@@ -59,7 +59,7 @@ html {
 .mobile_version #right-side {
   width: 100% !important;
   margin-left: 0px !important;
-  margin-top: 35px !important; }
+  margin-top: 10px !important; }
 
 #left-side-wrapper {
   margin-top: 0px !important; }
@@ -73,13 +73,9 @@ html {
 #main-holder {
   margin-top: 40px;
   margin-bottom: 200px;
-  margin-left: 50px;
   display: flex;
-  flex-wrap: wrap; }
-
-#dice-holder {
-  display: flex;
-  flex-flow: column; }
+  flex-wrap: wrap;
+  justify-content: space-evenly; }
 
 /* Cancelled notification messages */
 .log.cancel {
@@ -95,25 +91,27 @@ html {
   background-color: #ef9a9a; }
 
 .nb-dice-wrap {
-  perspective: 150px;
+  perspective: 135px;
   perspective-origin: 50% 50%;
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   display: flex;
   justify-content: center;
   align-items: center; }
+  .nb-dice-wrap#nb-dice-4 {
+    flex-basis: 100%; }
   .nb-dice-wrap.used {
     opacity: 0.4; }
   .nb-dice-wrap .nb-dice {
     position: relative;
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     transform-style: preserve-3d;
     transition: transform 2s; }
     .nb-dice-wrap .nb-dice div {
       position: absolute;
-      width: 50px;
-      height: 50px;
+      width: 45px;
+      height: 45px;
       background: #cd5397d9;
       border: 1px solid black;
       display: flex;
@@ -122,21 +120,21 @@ html {
       font-size: 28px;
       font-weight: bold; }
       .nb-dice-wrap .nb-dice div.dice-back {
-        transform: translateZ(-25px) rotateY(180deg); }
+        transform: translateZ(-22.5px) rotateY(180deg); }
       .nb-dice-wrap .nb-dice div.dice-right {
-        transform: rotateY(-270deg) translateX(25px);
+        transform: rotateY(-270deg) translateX(22.5px);
         transform-origin: top right; }
       .nb-dice-wrap .nb-dice div.dice-left {
-        transform: rotateY(270deg) translateX(-25px);
+        transform: rotateY(270deg) translateX(-22.5px);
         transform-origin: center left; }
       .nb-dice-wrap .nb-dice div.dice-top {
-        transform: rotateZ(180deg) rotateX(-90deg) translateY(-25px);
+        transform: rotateZ(180deg) rotateX(-90deg) translateY(-22.5px);
         transform-origin: top center; }
       .nb-dice-wrap .nb-dice div.dice-bottom {
-        transform: rotateZ(180deg) rotateX(90deg) translateY(25px);
+        transform: rotateZ(180deg) rotateX(90deg) translateY(22.5px);
         transform-origin: bottom center; }
       .nb-dice-wrap .nb-dice div.dice-front {
-        transform: translateZ(25px); }
+        transform: translateZ(22.5px); }
   .nb-dice-wrap#nb-dice-4 .nb-dice div {
     background: rgba(70, 182, 217, 0.91); }
   .nb-dice-wrap span.tetromino {
@@ -419,6 +417,18 @@ html.darkmode {
   margin: 10px;
   display: flex;
   flex-flow: column; }
+  .sheet-wrapper[data-no='1'] {
+    order: 3; }
+  .sheet-wrapper[data-no='2'] {
+    order: 4; }
+  .sheet-wrapper[data-no='3'] {
+    order: 5; }
+  .sheet-wrapper[data-no='4'] {
+    order: 6; }
+  .sheet-wrapper[data-no='5'] {
+    order: 7; }
+  .sheet-wrapper[data-no='0'] {
+    order: 1; }
   .sheet-wrapper .sheet-top,
   .sheet-wrapper .sheet-bottom {
     display: flex;
@@ -882,27 +892,43 @@ html.darkmode {
 #board {
   display: flex;
   flex-direction: column;
-  width: 390px; }
+  width: 180px;
+  order: 2; }
+  #board #dice-holder {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    background: rgba(255, 255, 255, 0.43);
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px -2px black;
+    margin-bottom: 10px;
+    border: 1px solid #9b9797;
+    width: 180px; }
   #board #drops-container {
     display: flex;
+    flex-flow: column;
     background-color: #00bdd0;
-    height: 160px;
+    height: 370px;
+    width: 160px;
     padding: 10px 10px;
     border-radius: 15px;
     box-shadow: 2px 2px 4px -2px black; }
     #board #drops-container .drop {
+      display: flex;
       background-color: #8fd1e2;
       margin: 2px;
-      width: 70px;
-      clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 10%); }
+      height: 70px;
+      clip-path: polygon(100% 0%, 100% 100%, 15% 100%, 0% 0%); }
       #board #drops-container .drop .drop-header {
-        height: 85px;
+        width: 85px;
+        height: 70px;
         position: relative; }
         #board #drops-container .drop .drop-header .drop-header-bg {
           position: absolute;
           width: 70px;
           height: 45px;
-          top: 20px;
+          top: 10px;
+          left: 8px;
           background: url("img/column-headers.png");
           background-size: 400% 100%;
           background-position: 66.66% 0%;
@@ -914,8 +940,8 @@ html.darkmode {
           width: 30px;
           height: 30px;
           position: absolute;
-          top: 40px;
-          left: 20px; }
+          top: 30px;
+          left: 30px; }
       #board #drops-container .drop:nth-child(1) .drop-header .drop-header-letter {
         background-position-y: 0%; }
       #board #drops-container .drop:nth-child(2) .drop-header .drop-header-letter {
@@ -944,6 +970,73 @@ html.darkmode {
           #board #drops-container .drop .drop-tile-holder .drop-tile[data-id='3'] {
             background-position-x: 75%; }
           #board #drops-container .drop .drop-tile-holder .drop-tile[data-id='4'] {
+            background-position-x: 100%; }
+
+#board.horizontal {
+  display: flex;
+  flex-direction: column;
+  width: 390px; }
+  #board.horizontal #drops-container {
+    display: flex;
+    background-color: #00bdd0;
+    height: 160px;
+    padding: 10px 10px;
+    border-radius: 15px;
+    box-shadow: 2px 2px 4px -2px black; }
+    #board.horizontal #drops-container .drop {
+      background-color: #8fd1e2;
+      margin: 2px;
+      width: 70px;
+      clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 10%); }
+      #board.horizontal #drops-container .drop .drop-header {
+        height: 85px;
+        position: relative; }
+        #board.horizontal #drops-container .drop .drop-header .drop-header-bg {
+          position: absolute;
+          width: 70px;
+          height: 45px;
+          top: 20px;
+          background: url("img/column-headers.png");
+          background-size: 400% 100%;
+          background-position: 66.66% 0%;
+          filter: brightness(100); }
+        #board.horizontal #drops-container .drop .drop-header .drop-header-letter {
+          background: url("img/combination-columns.png");
+          background-size: 200% 600%;
+          background-position-x: 100%;
+          width: 30px;
+          height: 30px;
+          position: absolute;
+          top: 40px;
+          left: 20px; }
+      #board.horizontal #drops-container .drop:nth-child(1) .drop-header .drop-header-letter {
+        background-position-y: 0%; }
+      #board.horizontal #drops-container .drop:nth-child(2) .drop-header .drop-header-letter {
+        background-position-y: 20%; }
+      #board.horizontal #drops-container .drop:nth-child(3) .drop-header .drop-header-letter {
+        background-position-y: 40%; }
+      #board.horizontal #drops-container .drop:nth-child(4) .drop-header .drop-header-letter {
+        background-position-y: 60%; }
+      #board.horizontal #drops-container .drop:nth-child(5) .drop-header .drop-header-letter {
+        background-position-y: 80%; }
+      #board.horizontal #drops-container .drop .drop-tile-holder {
+        width: 70px;
+        height: 70px;
+        position: relative; }
+        #board.horizontal #drops-container .drop .drop-tile-holder .drop-tile {
+          width: 70px;
+          height: 70px;
+          background: url("img/drops-multi.jpg");
+          background-size: 500% 100%; }
+          #board.horizontal #drops-container .drop .drop-tile-holder .drop-tile[data-id='0'] {
+            background-position-x: 0%; }
+          #board.horizontal #drops-container .drop .drop-tile-holder .drop-tile[data-id='1'] {
+            background-position-x: 25%; }
+          #board.horizontal #drops-container .drop .drop-tile-holder .drop-tile[data-id='2'] {
+            background-position-x: 50%; }
+          #board.horizontal #drops-container .drop .drop-tile-holder .drop-tile[data-id='3'] {
+            background-position-x: 75%; }
+          #board.horizontal #drops-container .drop .drop-tile-holder .drop-tile[data-id='4'] {
             background-position-x: 100%; }
 
 /*# sourceMappingURL=numberdrop.css.map */

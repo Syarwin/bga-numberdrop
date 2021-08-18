@@ -5,6 +5,7 @@ use NUMDROP\Core\Notifications;
 use NUMDROP\Core\StateMachine;
 use NUMDROP\Managers\Players;
 use NUMDROP\Managers\Scribbles;
+use NUMDROP\Managers\Drops;
 
 trait DropDropTrait
 {
@@ -13,6 +14,11 @@ trait DropDropTrait
    */
   function argDropDrop($player)
   {
-    return [];
+    $drop = Drops::getNextActiveDrop();
+    $dropId = Globals::getDrops()[$drop]['id'];
+    return [
+      'drop' => $dropId,
+      'tetromino' => Globals::getTetrominos()[$player->getId()] ?? null,
+    ];
   }
 }

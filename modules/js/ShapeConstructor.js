@@ -50,6 +50,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      ************ Drop Shape ***********
      ***********************************/
     onEnteringStateDropShape(args) {
+      this._isDrop = false;
       this.toggleShapeConstructor(true);
       let shapeDice = args.dices[4];
       let defaultTetromino = () => ({
@@ -114,6 +115,11 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       this.updateShapeConstructor();
     },
 
+    getCurrentShape() {
+      let shapes = this.gamedatas[this._isDrop ? 'dropShapes' : 'shapes'];
+      return shapes[this._tetromino.shape][this._tetromino.rotation];
+    },
+
     /**
      * Update shape constructor
      */
@@ -140,7 +146,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       this.replaceTetrominoInsideGrid();
 
       // Update the shape constructor grid
-      let shape = this.gamedatas.shapes[this._tetromino.shape][this._tetromino.rotation];
+      let shape = this.getCurrentShape();
       let n = shape.length;
       dojo.attr('shape-constructor-grid', 'data-dim', n); // Resize the grid accordingly to the shape dim
       for (let i = 0; i < n; i++) {
@@ -155,7 +161,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           } else {
             // Shape block, make it active and put corresponding chosen number
             cell.classList.add('active');
-            cell.setAttribute('data-n', this._tetromino.numbers[shape[i][y]]);
+            cell.setAttribute('data-n', this._isDrop? 'X' : this._tetromino.numbers[shape[i][y]]);
           }
         }
       }
@@ -165,7 +171,12 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
       // Handle action button
       dojo.destroy('btnConfirmTetromino');
-      if (!this._tetromino.numbers.includes('')) {
+      if (this._isDrop){
+        this.addActionButton('btnConfirmTetromino', _('Confirm drop drop'), () =>
+          this.takeAction('actConfirmTetrominoDrop'),
+        );
+      }
+      else if(!this._tetromino.numbers.includes('')) {
         this.addActionButton('btnConfirmTetromino', _('Confirm tetromino drop'), () =>
           this.takeAction('actConfirmTetromino'),
         );
@@ -201,7 +212,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Return the array of blocks forming the current shape
      */
     getCurrentShapeBlocks() {
-      let shape = this.gamedatas.shapes[this._tetromino.shape][this._tetromino.rotation];
+      let shape = this.getCurrentShape();
       let n = shape.length;
 
       let res = [];
@@ -230,7 +241,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * When a cell of shape constructor grid is clicked => add number dial
      */
     onClickCellShapeConstructor(i, j) {
-      let shape = this.gamedatas.shapes[this._tetromino.shape][this._tetromino.rotation];
+      let shape = this.getCurrentShape();
       let n = shape.length;
       let y = this._tetromino.flip == 0 ? j : n - j - 1;
       let id = shape[i][y];
@@ -286,6 +297,12 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Update remaining dices
      */
     updateRemeaningDices() {
+      if(this._isDrop){
+        dojo.style('shape-selector', 'visibility', 'hidden');
+        return;
+      }
+
+      dojo.style('shape-selector', 'visibility', 'visible');
       dojo.query('#dice-holder .nb-dice-wrap').removeClass('used');
 
       let dices = this.gamedatas.dices.slice(0, 4);
@@ -345,12 +362,19 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         pos.col += this._tetromino.col;
 
         let cell = this.getCell(pos);
-        this.setCellContent(cell, this._tetromino.numbers[pos.n], this.gamedatas.turn);
-        cell.classList.add('active', 'selectable');
-        this._listeningCells.push(dojo.connect(cell, 'click', (evt) => {
-          evt.stopPropagation();
-          this.placeDial(cell, pos.n)
-        }));
+        if (this._isDrop) {
+          this.setCellContent(cell, 'X', this.gamedatas.turn);
+          cell.classList.add('active');
+        } else {
+          this.setCellContent(cell, this._tetromino.numbers[pos.n], this.gamedatas.turn);
+          cell.classList.add('active', 'selectable');
+          this._listeningCells.push(
+            dojo.connect(cell, 'click', (evt) => {
+              evt.stopPropagation();
+              this.placeDial(cell, pos.n);
+            }),
+          );
+        }
       });
     },
 
@@ -365,6 +389,45 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         cell.classList.remove('active', 'selectable');
       });
       this._listeningCells.forEach((listener) => dojo.disconnect(listener));
+    },
+
+    /**************************************
+     **************************************
+     ************ Drop DROP *************
+     **************************************
+     **************************************/
+    onEnteringStateDropDrop(args) {
+      this.toggleShapeConstructor(true);
+      let shapeDice = args.drop;
+      let defaultTetromino = () => ({
+        shape: shapeDice,
+        rotation: 0,
+        flip: 0,
+        col: 2,
+      });
+      this._isDrop = true;
+
+      // Init with DB entry if player already started building it, otherwise default
+      this._tetromino = args.tetromino != null ? args.tetromino : defaultTetromino();
+
+      // Shape constructor controls
+      let controls = {
+        'rotate-left': () => (this._tetromino.rotation += this._tetromino.flip == 1 ? 1 : -1),
+        'rotate-right': () => (this._tetromino.rotation += this._tetromino.flip == 1 ? -1 : 1),
+        'flip-horizontal': () => (this._tetromino.flip = 1 - this._tetromino.flip),
+        'move-left': () => this._tetromino.col--,
+        'move-right': () => this._tetromino.col++,
+      };
+
+      Object.keys(controls).forEach((control) => {
+        this.onClick('control-' + control, () => {
+          controls[control]();
+          this.updateShapeConstructor();
+        });
+      });
+
+      this.updateShapeConstructor(false);
+      this.updateRemeaningDices();
     },
   });
 });

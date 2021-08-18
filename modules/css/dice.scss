@@ -1,4 +1,4 @@
-$diceSize: 50px;
+$diceSize: 45px;
 
 .nb-dice-wrap {
   perspective: 3 * $diceSize;
@@ -9,6 +9,10 @@ $diceSize: 50px;
   justify-content: center;
   align-items: center;
 
+  &#nb-dice-4 {
+    flex-basis: 100%;
+  }
+  
   &.used {
     opacity: 0.4;
   }

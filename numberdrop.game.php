@@ -93,6 +93,7 @@ class NumberDrop extends Table
       'dices' => Globals::getDices(),
       'turn' => Globals::getCurrentTurn(),
       'shapes' => $this->shapes,
+      'dropShapes' => $this->dropShapes,
       'canceledNotifIds' => Log::getCanceledNotifIds(),
       'drops' => Globals::getDrops(),
     ];

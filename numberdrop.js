@@ -102,6 +102,7 @@ define([
       return (
         `
       <div id="board">
+        <div id="dice-holder"></div>
         <div id="drops-container">
           ` +
         [0, 1, 2, 3, 4]
@@ -119,7 +120,6 @@ define([
           .join('') +
         `
         </div>
-        <div id="dice-holder"></div>
       </div>
       `
       );
@@ -135,12 +135,19 @@ define([
      * Setup scoresheets
      */
     setupScoreSheets() {
+      let players = Object.values(this.gamedatas.players);
+      var nPlayers = players.length;
+      var currentPlayerNo = players.reduce((carry, player) => (player.id == this.player_id) ? player.no : carry, 0);
+
       this.forEachPlayer((player) => {
+        player.no = (player.no + nPlayers - currentPlayerNo) % nPlayers;
+
         this.place('tplScoreSheet', player, 'main-holder');
         player.scribbles.forEach((scribble) => this.addScribble(scribble));
         this.highlightScoringCombinations(player.id);
       });
     },
+
 
     /**
      * Add a scribble onto someone scoresheet
@@ -210,7 +217,7 @@ define([
       });
 
       return `
-      <div class="sheet-wrapper ${current}" id='sheet-${player.id}'>
+      <div class="sheet-wrapper ${current}" id='sheet-${player.id}' data-no='${player.no}'>
         <div class="sheet-top">
           <div class="grid-wrapper">
             <div class="nd-grid">
