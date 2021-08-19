@@ -116,10 +116,9 @@ $machinestates = [
      'descriptionmyturn' => clienttranslate('${you} must drop your drop'),
      'type' => 'private',
      'args' => 'argDropDrop',
-     'possibleactions' => ['actConstructTetromino', 'actConfirmTetromino', 'actRestart'],
+     'possibleactions' => ['actConstructTetromino', 'actConfirmTetrominoDrop'],
      'transitions' => [
-       'scoreCombination' => ST_SCORE_COMBINATION,
-       'restart' => ST_DROP_SHAPE,
+       'confirmWait' => ST_CONFIRM_TURN,
      ],
    ],
 

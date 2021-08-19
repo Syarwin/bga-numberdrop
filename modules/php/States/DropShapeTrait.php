@@ -63,6 +63,16 @@ trait DropShapeTrait
     }
 
     // Check completed lines
+    $this->checkEndOfLines($player);
+
+    // Move on to next state
+    StateMachine::nextState("scoreCombination");
+  }
+
+
+  // Check completed lines
+  function checkEndOfLines($player)
+  {
     $scoringColumns = $player->getScoringColumns();
     $board = $player->getBoard();
     for($i = 0; $i < 11; $i++){
@@ -87,18 +97,15 @@ trait DropShapeTrait
       ]);
       Notifications::scoreLine($player, $i, Scribbles::get($scribble));
     }
-
-    // Move on to next state
-    StateMachine::nextState("scoreCombination");
   }
-
 
   /**
    * Same function as in js : convert a tetromino to array of blocks
    */
-  function getShapeBlocks($tetromino)
+  function getShapeBlocks($tetromino, $drop = false)
   {
-    $shape = $this->shapes[$tetromino['shape']][$tetromino['rotation']];
+    $shapes = $drop? $this->dropShapes : $this->shapes;
+    $shape = $shapes[$tetromino['shape']][$tetromino['rotation']];
     $n = count($shape);
 
     $res = [];
@@ -110,7 +117,7 @@ trait DropShapeTrait
           $res[] = [
             'row' => $i,
             'col' => $j,
-            'n' => $tetromino['numbers'][$id],
+            'n' => $drop? 'X' : $tetromino['numbers'][$id],
           ];
         }
       }

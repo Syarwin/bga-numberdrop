@@ -17,7 +17,7 @@ class Drops
     foreach ($dropIds as $id) {
       $drops[] = [
         'id' => $id,
-        'status' => false,
+        'status' => 0,
       ];
     }
     Globals::setDrops($drops);
@@ -57,5 +57,12 @@ class Drops
     }
 
     return $targets;
+  }
+
+  public function trigger($drop)
+  {
+    $drops = Globals::getDrops();
+    $drops[$drop]['status'] = 1;
+    Globals::setDrops($drops);
   }
 }

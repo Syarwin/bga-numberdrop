@@ -32,12 +32,13 @@ define([
 
   return declare('bgagame.numberdrop', [customgame.game, numberdrop.shapeConstructor, numberdrop.scoreCombination], {
     constructor() {
-      this._activeStates = [];
+      this._activeStates = ['dropDrop'];
       this._notifications = [
         ['throwDices', 2500],
         ['scoreCombination', 1500],
         ['scoreLine', 1500],
         ['clearTurn', 10],
+        ['dropTriggered', 1000],
       ];
       this._listeningCells = [];
 
@@ -60,7 +61,6 @@ define([
 
       this.setupScoreSheets();
       this.setupBoard();
-      this.setupDices();
       this.addDarkModeSwitch();
       this.updateTurnNumber();
       if (!this.isReadOnly()) {
@@ -90,12 +90,18 @@ define([
     setupBoard() {
       this.place('tplBoard', {}, 'main-holder');
 
+      // Setup dices
+      this.setupDices();
+
       // Add drop tiles
       this.gamedatas.drops.forEach((drop, i) => {
-        dojo.place(`
-          <div class='drop-tile ${drop.status? "flipped" : ""}' id='drop-tile-${i}' data-id='${drop.id}'></div>
-        `, `drop-tile-holder-${i}`);
-      })
+        if (drop.status != 2) {
+          dojo.place(`<div class='drop-tile' id='drop-tile-${i}' data-id='${drop.id}'></div>`, `drop-tile-holder-${i}`);
+          if (drop.status == 1) {
+            this.triggerDrop(i);
+          }
+        }
+      });
     },
 
     tplBoard() {
@@ -125,6 +131,17 @@ define([
       );
     },
 
+    triggerDrop(drop) {
+      this.slide('drop-tile-' + drop, 'dice-holder', { clearPos: false }).then(() => {
+        $('dice-holder').classList.add('inactive');
+      });
+    },
+
+    notif_dropTriggered(n) {
+      debug('Notif: drop triggeded', n);
+      this.triggerDrop(n.args.drop);
+    },
+
     /**************************************
      **************************************
      ************ Scoresheets *************
@@ -137,7 +154,7 @@ define([
     setupScoreSheets() {
       let players = Object.values(this.gamedatas.players);
       var nPlayers = players.length;
-      var currentPlayerNo = players.reduce((carry, player) => (player.id == this.player_id) ? player.no : carry, 0);
+      var currentPlayerNo = players.reduce((carry, player) => (player.id == this.player_id ? player.no : carry), 0);
 
       this.forEachPlayer((player) => {
         player.no = (player.no + nPlayers - currentPlayerNo) % nPlayers;
@@ -147,7 +164,6 @@ define([
         this.highlightScoringCombinations(player.id);
       });
     },
-
 
     /**
      * Add a scribble onto someone scoresheet
@@ -166,6 +182,10 @@ define([
       // 0 => circled stuff
       else if (scribble.number == 0) {
         cell.setAttribute('data-circled', scribble.turn);
+      }
+      // -1 => X
+      else if (scribble.number == -1) {
+        cell.setAttribute(cell, 'X', scribble.turn);
       }
     },
 

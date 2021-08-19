@@ -28,7 +28,11 @@ trait NewTurnTrait
     Globals::setDices($result);
     Notifications::throwDices($result, $turn);
 
-    if(in_array('*', $result) && Drops::getNextActiveDrop() != null){
+    // Check drop
+    $drop = Drops::getNextActiveDrop();
+    if(in_array('*', $result) && $drop != null){
+      Notifications::dropTriggered($drop);
+      Drops::trigger($drop);
       StateMachine::initPrivateStates(ST_DROP_PLAYER_TURN);
       $this->gamestate->setPlayersMultiactive(Drops::getTargets(), '');
       $this->gamestate->nextState('drop');

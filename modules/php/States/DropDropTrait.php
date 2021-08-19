@@ -21,4 +21,28 @@ trait DropDropTrait
       'tetromino' => Globals::getTetrominos()[$player->getId()] ?? null,
     ];
   }
+
+
+  function actConfirmTetrominoDrop()
+  {
+    $player = Players::getCurrent();
+    $args = $this->argDropDrop($player);
+    $tetromino = $args['tetromino'];
+
+    // Write number while checking positions
+    $blocks = $this->getShapeBlocks($tetromino, true);
+    $row = $this->findLowestDropRow($player, $blocks, $tetromino['col']);
+
+    foreach($blocks as $pos){
+      $pos['row'] += $row;
+      $pos['col'] += $tetromino['col'];
+      $player->addNumber($pos['row'], $pos['col'], -1);
+    }
+
+    // Check completed lines
+    $this->checkEndOfLines($player);
+
+    // Move on to next state
+    StateMachine::nextState("confirmWait");
+  }
 }

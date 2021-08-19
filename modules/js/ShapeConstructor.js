@@ -299,10 +299,12 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     updateRemeaningDices() {
       if(this._isDrop){
         dojo.style('shape-selector', 'visibility', 'hidden');
+        dojo.style('control-clear', 'visibility', 'hidden');
         return;
       }
 
       dojo.style('shape-selector', 'visibility', 'visible');
+      dojo.style('control-clear', 'visibility', 'visible');
       dojo.query('#dice-holder .nb-dice-wrap').removeClass('used');
 
       let dices = this.gamedatas.dices.slice(0, 4);

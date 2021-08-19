@@ -68,6 +68,13 @@ class action_numberdrop extends APP_GameAction
     $this->game->actConfirmTetromino();
     self::ajaxResponse();
   }
+  public function actConfirmTetrominoDrop()
+  {
+    self::setAjaxMode();
+    $this->game->actConfirmTetrominoDrop();
+    self::ajaxResponse();
+  }
+  
 
   public function actPassScoreCombination()
   {
