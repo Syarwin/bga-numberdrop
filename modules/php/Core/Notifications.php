@@ -50,6 +50,14 @@ class Notifications
     ]);
   }
 
+  public static function finishDrop($drop, $scribbles)
+  {
+    self::notifyAll('finishDrop', '', [
+      'drop' => $drop,
+      'scribbles' => $scribbles->toArray(),
+    ]);
+  }
+
   public static function scoreCombination($player, $type, $size, $scribbles)
   {
     $msg =

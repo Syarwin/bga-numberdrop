@@ -36,7 +36,7 @@ trait DropDropTrait
     foreach($blocks as $pos){
       $pos['row'] += $row;
       $pos['col'] += $tetromino['col'];
-      $player->addNumber($pos['row'], $pos['col'], -1);
+      $player->addNumber($pos['row'], $pos['col'], CROSS);
     }
 
     // Check completed lines

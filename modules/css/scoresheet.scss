@@ -216,6 +216,7 @@
               align-items: center;
               background: url('img/combination-columns.png');
               background-size: 200% 600%;
+              box-shadow: none;
 
               @for $i from 1 to 6 {
                 &:nth-child(#{$i}) {
@@ -289,7 +290,7 @@
             .sheet-bonus-cell {
               background-position-x: 100%;
 
-              &::before {
+              &::after {
                 content: '>>>>>';
                 position: absolute;
                 left: -153%;
@@ -313,6 +314,10 @@
                     }
                   }
                 }
+              }
+
+              &[data-n]::after {
+                display: none;
               }
 
               &:last-child {

@@ -39,6 +39,7 @@ define([
         ['scoreLine', 1500],
         ['clearTurn', 10],
         ['dropTriggered', 1000],
+        ['finishDrop', 1000],
       ];
       this._listeningCells = [];
 
@@ -142,6 +143,14 @@ define([
       this.triggerDrop(n.args.drop);
     },
 
+    notif_finishDrop(n){
+      debug("Notif: finish drop", n);
+      dojo.destroy('drop-tile-' + n.args.drop);
+      $('dice-holder').classList.remove('inactive');
+
+      n.args.scribbles.forEach(scribble => this.addScribble(scribble) );
+    },
+
     /**************************************
      **************************************
      ************ Scoresheets *************
@@ -185,7 +194,7 @@ define([
       }
       // -1 => X
       else if (scribble.number == -1) {
-        cell.setAttribute(cell, 'X', scribble.turn);
+        this.setCellContent(cell, '☓', scribble.turn);
       }
     },
 
@@ -225,7 +234,7 @@ define([
           [0, 1, 2, 3, 4, 5]
             .map(
               (i) => `
-              <div class="sheet-bonus-cell" id="cell-${player.id}-${i}-${type}">
+              <div class="sheet-bonus-cell nd-cell" id="cell-${player.id}-${i}-${type}">
                 <svg viewBox="100 0 700 512" class="scribble-circle hidden"><use class="scribble-path" href="#scribble-circle-svg" /></svg>
               </div>`,
             )
@@ -518,6 +527,7 @@ define([
      */
     notif_throwDices(n) {
       debug('Notif: rolling dies', n);
+      $('dice-holder').classList.remove('inactive');
       n.args.dices.forEach((value, i) => {
         this.rotateDice(i, value);
       });

@@ -65,4 +65,23 @@ class Drops
     $drops[$drop]['status'] = 1;
     Globals::setDrops($drops);
   }
+
+  public function finish($drop)
+  {
+    $drops = Globals::getDrops();
+    $drops[$drop]['status'] = 2;
+    Globals::setDrops($drops);
+  }
+
+
+  public function getTriggered()
+  {
+    foreach (Globals::getDrops() as $i => $drop) {
+      if ($drop['status'] == 1) {
+        return $i;
+      }
+    }
+
+    return null;
+  }
 }

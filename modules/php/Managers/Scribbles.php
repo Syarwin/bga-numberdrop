@@ -19,8 +19,9 @@ class Scribbles extends \NUMDROP\Helpers\DB_Manager
     return $row;
   }
 
-  public function addNumber($pId, $row, $col, $n, $turn = null)
+  public function addNumber($player, $row, $col, $n, $turn = null)
   {
+    $pId = is_int($player) ? $player : $player->getId();
     $turn = $turn ?? Globals::getCurrentTurn();
     return self::DB()->insert([
       'player_id' => $pId,
@@ -36,15 +37,8 @@ class Scribbles extends \NUMDROP\Helpers\DB_Manager
    */
   public function useCell($player, $cell)
   {
-    $pId = is_int($player) ? $player : $player->getId();
     $turn = Globals::getCurrentTurn();
-    return self::DB()->insert([
-      'player_id' => $pId,
-      'row' => $cell['row'],
-      'col' => $cell['col'],
-      'number' => CIRCLE,
-      'turn' => $turn,
-    ]);
+    self::addNumber($player, $cell['row'], $cell['col'], CIRCLE, $turn);
   }
 
   /**

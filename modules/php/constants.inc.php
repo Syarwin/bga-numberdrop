@@ -43,7 +43,7 @@ define('ST_END_GAME', 99);
  */
 define('CIRCLE', 0); // 0 will be used as a "false" number to circle stuff
 define('CROSS', -1);
-define('CROSSED', 2);
+define('CROSSED', 2); // Useful to determine if a drop is circled or crossed
 
 define('COL_END_LINES', 10);
 define('COL_SAME', 11);

@@ -598,7 +598,8 @@ html.darkmode {
             justify-content: center;
             align-items: center;
             background: url("img/combination-columns.png");
-            background-size: 200% 600%; }
+            background-size: 200% 600%;
+            box-shadow: none; }
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical .sheet-bonus-grid .sheet-bonus-cell:nth-child(1),
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence .sheet-bonus-grid .sheet-bonus-cell:nth-child(1),
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:nth-child(1) {
@@ -683,9 +684,9 @@ html.darkmode {
           .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell,
           .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell {
             background-position-x: 100%; }
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::before,
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::before,
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::before {
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after,
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after,
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after {
               content: '>>>>>';
               position: absolute;
               left: -153%;
@@ -699,13 +700,17 @@ html.darkmode {
               font-size: 10px;
               font-weight: bold;
               letter-spacing: -1.5px; }
-              .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::before.animate,
-              .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::before.animate,
-              .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::before.animate {
+              .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after.animate,
+              .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after.animate,
+              .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after.animate {
                 animation: textShine 1.5s linear infinite; }
 @keyframes textShine {
   to {
     background-position: -200%; } }
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell[data-n]::after,
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell[data-n]::after,
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell[data-n]::after {
+              display: none; }
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:last-child,
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:last-child,
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:last-child {
@@ -905,7 +910,7 @@ html.darkmode {
     border: 1px solid #9b9797;
     width: 180px;
     position: relative; }
-    #board #dice-holder.inactive::before {
+    #board #dice-holder::before {
       content: '';
       display: block;
       position: absolute;
@@ -915,7 +920,11 @@ html.darkmode {
       bottom: 0;
       background: rgba(0, 0, 0, 0.7);
       border-radius: 10px;
-      z-index: 2; }
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.7s; }
+    #board #dice-holder.inactive::before {
+      opacity: 1; }
     #board #dice-holder .drop-tile {
       z-index: 3; }
   #board #drops-container {
