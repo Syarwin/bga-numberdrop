@@ -224,7 +224,7 @@ define([
       }
 
       let combinations = '';
-      ['identical', 'sequence', 'drop'].forEach((type) => {
+      ['identical', 'sequence', 'drop', 'bonus'].forEach((type) => {
         combinations +=
           `
         <div class="sheet-bonus-${type}">
@@ -232,6 +232,7 @@ define([
           <div class="sheet-bonus-grid">
           ` +
           [0, 1, 2, 3, 4, 5]
+            .filter(i => i == 0 || type != 'bonus')
             .map(
               (i) => `
               <div class="sheet-bonus-cell nd-cell" id="cell-${player.id}-${i}-${type}">
@@ -272,6 +273,17 @@ define([
           <div class="sheet-player-name" style="color:#${player.color}">
             <span class="robot"></span> ${player.name}
           </div>
+
+          <div class="sheet-player-scores">
+            <div id="score-endoflines-${player.id}"></div>
+            <span>+</span>
+            <div id="score-identical-${player.id}"></div>
+            <span>+</span>
+            <div id="score-endoflines-${player.id}"></div>
+            <span>+</span>
+            <div id="score-bonus-${player.id}"></div>
+            <span>=</span>
+            <div id="score-total-${player.id}"></div>
         </div>
       </div>
       `;

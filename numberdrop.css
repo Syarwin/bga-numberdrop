@@ -462,7 +462,8 @@ html.darkmode {
     margin-left: 10px;
     display: grid;
     grid-gap: 1px;
-    border-collapse: collapse; }
+    border-collapse: collapse;
+    position: relative; }
     .sheet-wrapper .sheet-top .end-of-lines .nd-cell {
       background: none !important; }
       .sheet-wrapper .sheet-top .end-of-lines .nd-cell::before {
@@ -473,6 +474,23 @@ html.darkmode {
         height: 40px;
         stroke: black;
         position: absolute; }
+    .sheet-wrapper .sheet-top .end-of-lines::after {
+      content: '⌄⌄⌄⌄';
+      position: absolute;
+      height: 67px;
+      left: 0px;
+      bottom: -32px;
+      background: linear-gradient(to bottom, #aaa4a4 25%, #22a9bf 40%, #2fc5dd 60%, #aaa4a4 75%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-fill-color: transparent;
+      background-size: auto 200%;
+      writing-mode: vertical-rl;
+      font-family: 'Press Start 2P';
+      letter-spacing: -20px;
+      font-size: 31px;
+      font-weight: bold; }
   .sheet-wrapper .sheet-top .nd-cell {
     width: 36px;
     height: 36px;
@@ -562,10 +580,12 @@ html.darkmode {
     .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus {
       display: flex;
       flex-flow: row;
-      justify-content: space-around; }
+      justify-content: flex-start;
+      position: relative; }
       .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-header {
-        width: 100px;
-        height: 50px;
+        width: 75px;
+        height: 43px;
+        margin: 0 auto;
         background: url("img/column-headers.png");
         background-size: 400% 100%;
         background-repeat: no-repeat; }
@@ -575,21 +595,32 @@ html.darkmode {
         background-position: 33.33% 0%; }
       .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-header {
         background-position: 66.66% 0%; }
+      .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus .sheet-bonus-header {
+        background-position: 100% 0%; }
       .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical,
       .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence,
-      .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop {
+      .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop,
+      .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus {
         display: flex;
-        flex-flow: column; }
+        flex-flow: column;
+        width: 74px; }
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-drop,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-drop {
+          margin-left: 53px; }
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical .sheet-bonus-grid,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence .sheet-bonus-grid,
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid {
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus .sheet-bonus-grid {
           border: 1px dashed gray;
-          margin: 0px 20px;
+          margin: 0px 11px;
           padding-bottom: 7px;
           position: relative; }
           .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical .sheet-bonus-grid .sheet-bonus-cell,
           .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence .sheet-bonus-grid .sheet-bonus-cell,
-          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell {
+          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell,
+          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus .sheet-bonus-grid .sheet-bonus-cell {
             position: relative;
             width: 30px;
             height: 30px;
@@ -602,60 +633,73 @@ html.darkmode {
             box-shadow: none; }
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical .sheet-bonus-grid .sheet-bonus-cell:nth-child(1),
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence .sheet-bonus-grid .sheet-bonus-cell:nth-child(1),
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:nth-child(1) {
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:nth-child(1),
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus .sheet-bonus-grid .sheet-bonus-cell:nth-child(1) {
               background-position-y: 0%; }
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical .sheet-bonus-grid .sheet-bonus-cell:nth-child(2),
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence .sheet-bonus-grid .sheet-bonus-cell:nth-child(2),
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:nth-child(2) {
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:nth-child(2),
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus .sheet-bonus-grid .sheet-bonus-cell:nth-child(2) {
               background-position-y: 20%; }
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical .sheet-bonus-grid .sheet-bonus-cell:nth-child(3),
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence .sheet-bonus-grid .sheet-bonus-cell:nth-child(3),
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:nth-child(3) {
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:nth-child(3),
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus .sheet-bonus-grid .sheet-bonus-cell:nth-child(3) {
               background-position-y: 40%; }
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical .sheet-bonus-grid .sheet-bonus-cell:nth-child(4),
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence .sheet-bonus-grid .sheet-bonus-cell:nth-child(4),
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:nth-child(4) {
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:nth-child(4),
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus .sheet-bonus-grid .sheet-bonus-cell:nth-child(4) {
               background-position-y: 60%; }
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical .sheet-bonus-grid .sheet-bonus-cell:nth-child(5),
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence .sheet-bonus-grid .sheet-bonus-cell:nth-child(5),
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:nth-child(5) {
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:nth-child(5),
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus .sheet-bonus-grid .sheet-bonus-cell:nth-child(5) {
               background-position-y: 80%; }
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical .sheet-bonus-grid .sheet-bonus-cell svg,
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence .sheet-bonus-grid .sheet-bonus-cell svg,
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell svg {
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell svg,
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus .sheet-bonus-grid .sheet-bonus-cell svg {
               width: 50px;
               height: 50px;
               stroke: black;
               position: absolute; }
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical .sheet-bonus-grid .sheet-bonus-cell:last-child,
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence .sheet-bonus-grid .sheet-bonus-cell:last-child,
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:last-child {
-              background: none;
-              width: 40px;
-              height: 20px;
-              margin: 0px;
-              background: #eee;
-              position: absolute;
-              bottom: -10px;
-              left: 10px; }
-              .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical .sheet-bonus-grid .sheet-bonus-cell:last-child::before,
-              .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence .sheet-bonus-grid .sheet-bonus-cell:last-child::before,
-              .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:last-child::before {
-                content: '+10';
-                color: #b7b7b7;
-                font-weight: bold;
-                font-family: 'Press Start 2P';
-                font-size: 13px; }
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-identical .sheet-bonus-grid::after, .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-sequence .sheet-bonus-grid::after,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical:not(.sheet-bonus-bonus) .sheet-bonus-grid .sheet-bonus-cell:last-child,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence:not(.sheet-bonus-bonus) .sheet-bonus-grid .sheet-bonus-cell:last-child,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop:not(.sheet-bonus-bonus) .sheet-bonus-grid .sheet-bonus-cell:last-child,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus:not(.sheet-bonus-bonus) .sheet-bonus-grid .sheet-bonus-cell:last-child {
+          background: none;
+          width: 33px;
+          height: 20px;
+          margin: 0px;
+          background: #eee;
+          position: absolute;
+          bottom: -12px;
+          left: 7px; }
+          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical:not(.sheet-bonus-bonus) .sheet-bonus-grid .sheet-bonus-cell:last-child::before,
+          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence:not(.sheet-bonus-bonus) .sheet-bonus-grid .sheet-bonus-cell:last-child::before,
+          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop:not(.sheet-bonus-bonus) .sheet-bonus-grid .sheet-bonus-cell:last-child::before,
+          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus:not(.sheet-bonus-bonus) .sheet-bonus-grid .sheet-bonus-cell:last-child::before {
+            content: '+10';
+            color: #b7b7b7;
+            font-weight: bold;
+            font-family: 'Press Start 2P';
+            font-size: 10px; }
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-identical .sheet-bonus-grid::after, .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-sequence .sheet-bonus-grid::after, .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-bonus .sheet-bonus-grid::after,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-identical .sheet-bonus-grid::after,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-sequence .sheet-bonus-grid::after,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-bonus .sheet-bonus-grid::after,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-identical .sheet-bonus-grid::after,
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-sequence .sheet-bonus-grid::after {
-          content: '⌄⌄⌄⌄⌄⌄⌄';
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-sequence .sheet-bonus-grid::after,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-bonus .sheet-bonus-grid::after,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-identical .sheet-bonus-grid::after,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-sequence .sheet-bonus-grid::after,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-bonus .sheet-bonus-grid::after {
+          content: '⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄';
           position: absolute;
-          height: 105px;
-          left: 10px;
-          bottom: -93px;
+          height: 131px;
+          left: 8px;
+          bottom: -123px;
           background: linear-gradient(to bottom, #aaa4a4 25%, #22a9bf 40%, #2fc5dd 60%, #aaa4a4 75%);
           -webkit-background-clip: text;
           background-clip: text;
@@ -667,29 +711,37 @@ html.darkmode {
           letter-spacing: -20px;
           font-size: 31px;
           font-weight: bold; }
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-identical.animate .sheet-bonus-grid::after, .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-sequence.animate .sheet-bonus-grid::after,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-identical.animate .sheet-bonus-grid::after, .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-sequence.animate .sheet-bonus-grid::after, .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-bonus.animate .sheet-bonus-grid::after,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-identical.animate .sheet-bonus-grid::after,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-sequence.animate .sheet-bonus-grid::after,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-bonus.animate .sheet-bonus-grid::after,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-identical.animate .sheet-bonus-grid::after,
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-sequence.animate .sheet-bonus-grid::after {
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-sequence.animate .sheet-bonus-grid::after,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-bonus.animate .sheet-bonus-grid::after,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-identical.animate .sheet-bonus-grid::after,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-sequence.animate .sheet-bonus-grid::after,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-bonus.animate .sheet-bonus-grid::after {
           animation: textShineVert 1.5s linear infinite; }
 @keyframes textShineVert {
   to {
     background-position: 0% -200%; } }
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-drop .sheet-bonus-grid,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop .sheet-bonus-grid,
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid {
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-drop .sheet-bonus-grid {
           border: none; }
           .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell,
           .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell,
-          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell {
+          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell,
+          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell {
             background-position-x: 100%; }
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after,
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after,
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after {
-              content: '>>>>>';
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after,
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after {
+              content: '>>>>>>>>';
               position: absolute;
-              left: -153%;
+              left: -245%;
               background: linear-gradient(to right, #aaa4a4 25%, #22a9bf 40%, #2fc5dd 60%, #aaa4a4 75%);
               -webkit-background-clip: text;
               background-clip: text;
@@ -702,24 +754,40 @@ html.darkmode {
               letter-spacing: -1.5px; }
               .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after.animate,
               .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after.animate,
-              .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after.animate {
+              .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after.animate,
+              .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after.animate {
                 animation: textShine 1.5s linear infinite; }
 @keyframes textShine {
   to {
     background-position: -200%; } }
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell[data-n]::after,
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell[data-n]::after,
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell[data-n]::after {
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell[data-n]::after,
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell[data-n]::after {
               display: none; }
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:last-child,
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:last-child,
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:last-child {
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:last-child,
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:last-child {
               display: none; }
+      .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-bonus {
+        position: absolute;
+        top: 257px;
+        left: 144px; }
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-bonus .sheet-bonus-grid {
+          padding-bottom: 0px; }
+          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-bonus .sheet-bonus-grid::after {
+            content: '⌄⌄⌄';
+            height: 55px;
+            bottom: -42px; }
+          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-bonus .sheet-bonus-grid .sheet-bonus-cell {
+            background-position: 0% 100%; }
   .sheet-wrapper .sheet-bottom {
+    width: 100%;
     height: 75px;
     align-items: center; }
     .sheet-wrapper .sheet-bottom .sheet-player-name {
-      width: 300px;
+      width: 315px;
       text-align: center;
       font-family: 'Press Start 2P';
       font-weight: bold;
@@ -731,9 +799,27 @@ html.darkmode {
         height: 54px;
         background-size: 100% 100%;
         vertical-align: middle; }
+    .sheet-wrapper .sheet-bottom .sheet-player-scores {
+      display: flex;
+      margin: auto 0 5px; }
+      .sheet-wrapper .sheet-bottom .sheet-player-scores div {
+        width: 40px;
+        height: 30px;
+        border-bottom: 1px dashed blue;
+        margin: 0px 9px; }
+        .sheet-wrapper .sheet-bottom .sheet-player-scores div:last-of-type {
+          margin-right: 0px; }
+      .sheet-wrapper .sheet-bottom .sheet-player-scores span {
+        display: inline-block;
+        width: 14px;
+        font-family: 'Press Start 2P';
+        font-weight: bold;
+        font-size: 15px;
+        line-height: 40px;
+        color: #b7b7b7; }
 
 .shape-constructor {
-  height: 250px;
+  height: 225px;
   visibility: hidden; }
   .shape-constructor.active {
     visibility: visible; }

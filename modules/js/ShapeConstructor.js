@@ -161,7 +161,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           } else {
             // Shape block, make it active and put corresponding chosen number
             cell.classList.add('active');
-            cell.setAttribute('data-n', this._isDrop? 'X' : this._tetromino.numbers[shape[i][y]]);
+            cell.setAttribute('data-n', this._isDrop? '☓' : this._tetromino.numbers[shape[i][y]]);
           }
         }
       }
@@ -365,7 +365,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
         let cell = this.getCell(pos);
         if (this._isDrop) {
-          this.setCellContent(cell, 'X', this.gamedatas.turn);
+          this.setCellContent(cell, '☓', this.gamedatas.turn);
           cell.classList.add('active');
         } else {
           this.setCellContent(cell, this._tetromino.numbers[pos.n], this.gamedatas.turn);
