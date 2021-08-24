@@ -95,7 +95,33 @@ trait DropShapeTrait
         'row' => $i,
         'col' => COL_END_LINES,
       ]);
-      Notifications::scoreLine($player, $i, Scribbles::get($scribble));
+      $scores = $player->getScores();
+      Notifications::scoreLine($player, $i, Scribbles::get($scribble), $scores);
+    }
+
+    // Negative bonus ?
+    for($i = 11; $i < 14; $i++){
+      if($scoringColumns[COL_END_LINES][$i])
+        continue;
+
+      // Is the line not empty
+      $empty = true;
+      for($j = 0; $j < 7; $j++){
+        if($board[$i][$j] !== null){
+          $empty = false;
+          break;
+        }
+      }
+      if($empty)
+        continue;
+
+      // Create scribble and notify
+      $scribble = Scribbles::useCell($player, [
+        'row' => $i,
+        'col' => COL_END_LINES,
+      ]);
+      $scores = $player->getScores();
+      Notifications::scoreNegativeLine($player, $i, Scribbles::get($scribble), $scores);
     }
   }
 

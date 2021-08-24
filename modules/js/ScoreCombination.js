@@ -43,6 +43,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * The player may score a new combination
      */
     onEnteringStateScoreCombination(args) {
+      this.displayBasicInfo(args);
       this.addPrimaryActionButton('nbtPassScoreCombination', _('Pass'), () =>
         this.takeAction('actPassScoreCombination'),
       );
@@ -191,6 +192,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       debug('Notif: scoring a combination', n);
       n.args.scribbles.forEach((scribble) => this.addScribble(scribble));
       this.highlightScoringCombinations(this.player_id);
+      this.gamedatas.players[this.player_id].scores = n.args.scores;
+      this.updateScores();
     },
 
 
@@ -200,6 +203,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     notif_scoreLine(n) {
       debug('Notif: scoring a line', n);
       this.addScribble(n.args.scribble);
+      this.gamedatas.players[this.player_id].scores = n.args.scores;
+      this.updateScores();
     },
   });
 });

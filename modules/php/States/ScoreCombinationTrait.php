@@ -123,7 +123,8 @@ trait ScoreCombinationTrait
     }
 
     // Notifications
-    Notifications::scoreCombination($player, $type, $cSize, Scribbles::get($scribbles));
+    $scores = $player->getScores();
+    Notifications::scoreCombination($player, $type, $cSize, Scribbles::get($scribbles), $scores);
     // TODO : updateScore
 
     // Move on to next state

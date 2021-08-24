@@ -53,7 +53,12 @@ trait ConfirmWaitTrait
       Notifications::finishDrop($drop, Scribbles::get($scribbles));
     }
 
-    // TODO
+    // Update scribbles
+    $scribbles = Scribbles::getLastAdded();
+    // Update scores
+    Globals::incCurrentTurn();
+    $scores = Players::getAll()->map(function($player){ return $player->updateScore(); });
+    Notifications::updatePlayersData($scribbles, $scores);
 
     $newState = $this->isEndOfGame() ? 'endGame' : 'newTurn';
     $this->gamestate->nextState($newState);

@@ -38,7 +38,7 @@ class Scribbles extends \NUMDROP\Helpers\DB_Manager
   public function useCell($player, $cell)
   {
     $turn = Globals::getCurrentTurn();
-    self::addNumber($player, $cell['row'], $cell['col'], CIRCLE, $turn);
+    return self::addNumber($player, $cell['row'], $cell['col'], CIRCLE, $turn);
   }
 
   /**
@@ -59,6 +59,15 @@ class Scribbles extends \NUMDROP\Helpers\DB_Manager
       return $query->get()->toArray();
     }
   }
+
+  /**
+   * Get all the scribbles added this turn
+   */
+  public function getLastAdded()
+  {
+    return self::DB()->where('turn', Globals::getCurrentTurn())->get();
+  }
+
 
   /**
    * Useful to know if the player have something to cancel or not

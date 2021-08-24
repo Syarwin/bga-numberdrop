@@ -136,6 +136,23 @@
           }
         }
       }
+
+      &[data-dim='2'] {
+        grid-template-columns: repeat(2, auto);
+        grid-template-rows: repeat(2, auto);
+
+        @for $i from 0 to 4 {
+          #shape-constructor-cell-3-#{$i},
+          #shape-constructor-cell-2-#{$i} {
+            display: none;
+          }
+
+          #shape-constructor-cell-#{$i}-3,
+          #shape-constructor-cell-#{$i}-2 {
+            display: none;
+          }
+        }
+      }
     }
   }
 }

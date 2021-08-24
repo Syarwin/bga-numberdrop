@@ -12,9 +12,16 @@ trait EndOfGameTrait
 {
   function isEndOfGame()
   {
+    foreach (Players::getAll() as $player) {
+      $scoringColumns = $player->getScoringColumns();
+      for ($i = 11; $i < 14; $i++) {
+        if ($scoringColumns[COL_END_LINES][$i]) {
+          return true;
+        }
+      }
+    }
     return false;
   }
-
 
   /*
    *
@@ -22,6 +29,6 @@ trait EndOfGameTrait
   function stComputeScores()
   {
     // TODO
-    $this->gamestate->nextState("endGame");
+    $this->gamestate->nextState('endGame');
   }
 }

@@ -29,6 +29,13 @@ define([
   let DARK_MODE = 100;
   let DARK_MODE_DISABLED = 1;
   let DARK_MODE_ENABLED = 2;
+  const SCORING_COLS = {
+    10: 'endoflines',
+    11: 'identical',
+    12: 'sequence',
+    14: 'bonus',
+    total: 'total',
+  };
 
   return declare('bgagame.numberdrop', [customgame.game, numberdrop.shapeConstructor, numberdrop.scoreCombination], {
     constructor() {
@@ -40,6 +47,7 @@ define([
         ['clearTurn', 10],
         ['dropTriggered', 1000],
         ['finishDrop', 1000],
+        ['updatePlayersData', 1500],
       ];
       this._listeningCells = [];
 
@@ -61,6 +69,7 @@ define([
       dojo.place("<div id='numberdrop-topbar'></div>", 'topbar', 'after');
 
       this.setupScoreSheets();
+      this.setupScores();
       this.setupBoard();
       this.addDarkModeSwitch();
       this.updateTurnNumber();
@@ -143,12 +152,12 @@ define([
       this.triggerDrop(n.args.drop);
     },
 
-    notif_finishDrop(n){
-      debug("Notif: finish drop", n);
+    notif_finishDrop(n) {
+      debug('Notif: finish drop', n);
       dojo.destroy('drop-tile-' + n.args.drop);
       $('dice-holder').classList.remove('inactive');
 
-      n.args.scribbles.forEach(scribble => this.addScribble(scribble) );
+      n.args.scribbles.forEach((scribble) => this.addScribble(scribble));
     },
 
     /**************************************
@@ -232,7 +241,7 @@ define([
           <div class="sheet-bonus-grid">
           ` +
           [0, 1, 2, 3, 4, 5]
-            .filter(i => i == 0 || type != 'bonus')
+            .filter((i) => i == 0 || type != 'bonus')
             .map(
               (i) => `
               <div class="sheet-bonus-cell nd-cell" id="cell-${player.id}-${i}-${type}">
@@ -279,7 +288,7 @@ define([
             <span>+</span>
             <div id="score-identical-${player.id}"></div>
             <span>+</span>
-            <div id="score-endoflines-${player.id}"></div>
+            <div id="score-sequence-${player.id}"></div>
             <span>+</span>
             <div id="score-bonus-${player.id}"></div>
             <span>=</span>
@@ -307,6 +316,7 @@ define([
           11: 'identical',
           12: 'sequence',
           13: 'drop',
+          14: 'bonus',
         };
         col = cols[col];
       }
@@ -337,6 +347,41 @@ define([
     },
     clearCellContent(cell) {
       this.setCellContent(cell, '', '', false);
+    },
+
+    /*********************
+     ******* Scores ******
+     *********************/
+    setupScores() {
+      this._scoresCounters = {};
+      this.forEachPlayer((player) => {
+        this._scoresCounters[player.id] = {};
+        Object.keys(SCORING_COLS).forEach((col) => {
+          this._scoresCounters[player.id][col] = new ebg.counter();
+          this._scoresCounters[player.id][col].create(`score-${SCORING_COLS[col]}-${player.id}`);
+        });
+      });
+      this.updateScores();
+    },
+
+    updateScores() {
+      this.forEachPlayer((player) => {
+        Object.keys(SCORING_COLS).forEach((col) => {
+          this._scoresCounters[player.id][col].toValue(player.scores[col]);
+        });
+
+        if (this.scoreCtrl[player.id]) {
+          this.scoreCtrl[player.id].toValue(player.scores.total);
+        }
+      });
+    },
+
+    notif_updatePlayersData(n) {
+      debug('Notif: update players data after resynch');
+
+      this.forEachPlayer((player) => (player.scores = n.args.scores[player.id]));
+      this.updateScores();
+      n.args.scribbles.forEach((scribble) => this.addScribble(scribble));
     },
 
     /**************************************

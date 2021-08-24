@@ -326,7 +326,7 @@
                 content: '>>>>>>>>';
                 position: absolute;
                 left: -245%;
-                
+
                 background: linear-gradient(to right, #aaa4a4 25%, #22a9bf 40%, #2fc5dd 60%, #aaa4a4 75%);
                 -webkit-background-clip: text;
                 background-clip: text;
@@ -409,8 +409,13 @@
       div {
         width: 40px;
         height: 30px;
-        border-bottom: 1px dashed blue;
+        border-bottom: 1px dashed #5ac0ec;
         margin: 0px 9px;
+        font-family: 'Press Start 2P';
+        font-size: 15px;
+        text-align: center;
+        line-height: 41px;
+
         &:last-of-type {
           margin-right: 0px;
         }

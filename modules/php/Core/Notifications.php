@@ -58,7 +58,7 @@ class Notifications
     ]);
   }
 
-  public static function scoreCombination($player, $type, $size, $scribbles)
+  public static function scoreCombination($player, $type, $size, $scribbles, $scores)
   {
     $msg =
       $type == COL_SAME
@@ -69,10 +69,11 @@ class Notifications
       'player' => $player,
       'size' => $size,
       'scribbles' => $scribbles->toArray(),
+      'scores' => $scores,
     ]);
   }
 
-  public static function scoreLine($player, $line, $scribble)
+  public static function scoreLine($player, $line, $scribble, $scores)
   {
     self::notify(
       $player,
@@ -80,6 +81,22 @@ class Notifications
       clienttranslate('${player_name} scores 2 points for completing the line : ${i}'),
       [
         'player' => $player,
+        'scores' => $scores,
+        'i' => $line,
+        'scribble' => $scribble,
+      ]
+    );
+  }
+
+  public static function scoreNegativeLine($player, $line, $scribble, $scores)
+  {
+    self::notify(
+      $player,
+      'scoreLine',
+      clienttranslate('${player_name} scores -5 points for reaching the line : ${i}'),
+      [
+        'player' => $player,
+        'scores' => $scores,
         'i' => $line,
         'scribble' => $scribble,
       ]
@@ -92,6 +109,14 @@ class Notifications
       'player' => $player,
       'turn' => Globals::getCurrentTurn(),
       'notifIds' => $notifIds,
+    ]);
+  }
+
+  public static function updatePlayersData($scribbles, $scores)
+  {
+    self::notifyAll('updatePlayersData', '', [
+      'scribbles' => $scribbles->toArray(),
+      'scores' => $scores,
     ]);
   }
 

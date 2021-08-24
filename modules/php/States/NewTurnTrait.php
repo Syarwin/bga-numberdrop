@@ -14,7 +14,7 @@ trait NewTurnTrait
   public function stNewTurn()
   {
     // Increase turn counters
-    $turn = Globals::incCurrentTurn();
+    $turn = Globals::getCurrentTurn();
     Globals::setTetrominos([]);
 
     // Throw the dices
@@ -30,7 +30,7 @@ trait NewTurnTrait
 
     // Check drop
     $drop = Drops::getNextActiveDrop();
-    if(in_array('*', $result) && $drop != null){
+    if(in_array('*', $result) && !is_null($drop)){
       Notifications::dropTriggered($drop);
       Drops::trigger($drop);
       StateMachine::initPrivateStates(ST_DROP_PLAYER_TURN);

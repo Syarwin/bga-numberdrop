@@ -86,6 +86,7 @@ class Player extends \NUMDROP\Helpers\DB_Manager implements \JsonSerializable
       'name' => $this->name,
       'color' => $this->color,
       'score' => $this->score,
+      'scores' => $this->getScores(),
       'scribbles' => $this->getScribbles(),
     ];
     return $data;
@@ -119,6 +120,9 @@ class Player extends \NUMDROP\Helpers\DB_Manager implements \JsonSerializable
     return $result;
   }
 
+  /**
+   * Compute the board the player
+   */
   public function getBoard()
   {
     $board = [];
@@ -133,6 +137,60 @@ class Player extends \NUMDROP\Helpers\DB_Manager implements \JsonSerializable
     }
 
     return $board;
+  }
+
+  /**
+   * Compute the scores of the player
+   */
+  public function getScores()
+  {
+    $scoringColumns = $this->getScoringColumns();
+    $scores = [
+      COL_END_LINES => 0,
+      COL_SAME => 0,
+      COL_SEQUENCE => 0,
+      COL_BONUS => 0,
+      'total' => 0,
+    ];
+
+    // End of lines
+    for($i = 0; $i < 14; $i++){
+      if($scoringColumns[COL_END_LINES][$i])
+        $scores[COL_END_LINES] += ($i < 11)? 2 : -5;
+    }
+
+    // Sequences/identical
+    foreach([COL_SAME, COL_SEQUENCE] as $col){
+      $all = true;
+      for($i = 0; $i < 5; $i++){
+        if($scoringColumns[$col][$i]){
+          $scores[$col] += $i + 3;
+        } else {
+          $all = false;
+        }
+      }
+
+      if($all){
+        $scores[$col] += 10;
+      }
+    }
+
+    // Bonus
+    if($scoringColumns[COL_BONUS][0]){
+      $scores[COL_BONUS] += 8;
+    }
+
+    // Total
+    $scores['total'] = $scores[COL_END_LINES] + $scores[COL_SAME] + $scores[COL_SEQUENCE] + $scores[COL_BONUS];
+    return $scores;
+  }
+
+  public function updateScore()
+  {
+    $newScore = $this->getScores();
+    $this->score = $newScore['total'];
+    self::DB()->update(['player_score' => $this->score], $this->id);
+    return $newScore;
   }
 
   /*

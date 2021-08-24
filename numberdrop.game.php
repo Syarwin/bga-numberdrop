@@ -113,6 +113,9 @@ class NumberDrop extends Table
     Preferences::set($this->getCurrentPId(), $pref, $value);
   }
 
+  function test(){
+    var_dump(NUMDROP\Managers\Drops::getNextActiveDrop());
+  }
   ///////////////////////////
   //// DEBUG FUNCTIONS //////
   ///////////////////////////

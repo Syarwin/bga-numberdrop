@@ -4,6 +4,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       pId = pId || this.player_id;
       let constructor = document.querySelector('#sheet-' + pId + ' .sheet-top .shape-constructor');
       constructor.classList.toggle('active', visible);
+      dojo.style('shape-selector', 'visibility', 'inherit');
+      dojo.style('control-clear', 'visibility', 'inherit');
     },
 
     /**
@@ -50,6 +52,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      ************ Drop Shape ***********
      ***********************************/
     onEnteringStateDropShape(args) {
+      this.displayBasicInfo(args);
       this._isDrop = false;
       this.toggleShapeConstructor(true);
       let shapeDice = args.dices[4];
@@ -124,6 +127,11 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Update shape constructor
      */
     updateShapeConstructor(takeAction = true) {
+      // Make sure the shape fit in the grid
+      if (this._tetromino.shape != null) {
+        this.replaceTetrominoInsideGrid();
+      }
+
       // Send the tetromino to server
       if (takeAction) {
         this.takeAction('actConstructTetromino', {
@@ -142,9 +150,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         return;
       }
 
-      // Make sure the shape fit in the grid
-      this.replaceTetrominoInsideGrid();
-
       // Update the shape constructor grid
       let shape = this.getCurrentShape();
       let n = shape.length;
@@ -161,7 +166,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           } else {
             // Shape block, make it active and put corresponding chosen number
             cell.classList.add('active');
-            cell.setAttribute('data-n', this._isDrop? '☓' : this._tetromino.numbers[shape[i][y]]);
+            cell.setAttribute('data-n', this._isDrop ? '☓' : this._tetromino.numbers[shape[i][y]]);
           }
         }
       }
@@ -171,12 +176,11 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
       // Handle action button
       dojo.destroy('btnConfirmTetromino');
-      if (this._isDrop){
+      if (this._isDrop) {
         this.addActionButton('btnConfirmTetromino', _('Confirm drop drop'), () =>
           this.takeAction('actConfirmTetrominoDrop'),
         );
-      }
-      else if(!this._tetromino.numbers.includes('')) {
+      } else if (!this._tetromino.numbers.includes('')) {
         this.addActionButton('btnConfirmTetromino', _('Confirm tetromino drop'), () =>
           this.takeAction('actConfirmTetromino'),
         );
@@ -297,7 +301,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Update remaining dices
      */
     updateRemeaningDices() {
-      if(this._isDrop){
+      if (this._isDrop) {
         dojo.style('shape-selector', 'visibility', 'hidden');
         dojo.style('control-clear', 'visibility', 'hidden');
         return;
@@ -355,6 +359,17 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       let row = this.findLowestDropRow();
       if (row == 12) {
         // Only happens if too far right/left
+        return;
+      }
+
+      // Check if the height fit
+      let fit = this.getCurrentShapeBlocks().reduce((check, pos) => {
+        return check && pos.row + row < 14;
+      }, true);
+      if (!fit) {
+        // Only happens with the vertical I shape
+        this._tetromino.rotation += 1;
+        this.updateShapeConstructor();
         return;
       }
 
