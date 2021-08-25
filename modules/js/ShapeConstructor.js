@@ -266,7 +266,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       // Create a new dial with correct enabled numbers
       let html = '<div id="shape-constructor-dial">';
       let possibleNumbers = this.updateRemeaningDices();
-      for (let i = 1; i < 8; i++) {
+      for (let i = 0; i < 10; i++) {
         let status = possibleNumbers.includes(i) ? 'active' : 'disabled';
         html += `<div id="shape-constructor-dial-${i}" class="${status}">${i}</div>`;
       }
@@ -277,7 +277,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       possibleNumbers.push(''); // add clear button
 
       possibleNumbers.forEach((i) => {
-        let eltId = i == '' ? 'clear' : 'dial-' + i;
+        let eltId = i === '' ? 'clear' : 'dial-' + i;
         dojo.connect($('shape-constructor-' + eltId), 'click', (evt) => {
           evt.stopPropagation();
           this.clearDial();
@@ -320,7 +320,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         dojo.addClass('nb-dice-' + pos, 'used');
       });
 
-      if (dices.includes('*')) return [1, 2, 3, 4, 5, 6, 7];
+      if (dices.includes('*')) return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
       else return dices.filter((value) => value != 'X').map((val) => parseInt(val));
     },
 
