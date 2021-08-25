@@ -130,7 +130,7 @@ trait DropShapeTrait
    */
   function getShapeBlocks($tetromino, $block = false)
   {
-    $shapes = $block? $this-$blockShapes : $this->shapes;
+    $shapes = $block? $this->blockShapes : $this->shapes;
     $shape = $shapes[$tetromino['shape']][$tetromino['rotation']];
     $n = count($shape);
 

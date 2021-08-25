@@ -44,12 +44,12 @@ trait ConfirmWaitTrait
     // Any block to finish ?
     $block = Blocks::getTriggered();
     if ($block !== null) {
-      Blocks::finish( block);
+      Blocks::finish($block);
       $scribbles = [];
       foreach (Players::getAll() as $player) {
-        $scribbles[] = Scribbles::addNumber($player,  block, COL_BLOCK, CROSS);
+        $scribbles[] = Scribbles::addNumber($player, $block, COL_BLOCK, CROSS);
       }
-      Notifications::finishDrop($block, Scribbles::get($scribbles));
+      Notifications::finishBlock($block, Scribbles::get($scribbles));
     }
 
     // Update scribbles

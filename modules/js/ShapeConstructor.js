@@ -119,7 +119,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     },
 
     getCurrentShape() {
-      let shapes = this.gamedatas[this._isBlock ? 'dropShapes' : 'shapes'];
+      let shapes = this.gamedatas[this._isBlock ? 'blockShapes' : 'shapes'];
       return shapes[this._tetromino.shape][this._tetromino.rotation];
     },
 
@@ -415,7 +415,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      **************************************/
     onEnteringStateDropBlock(args) {
       this.toggleShapeConstructor(true);
-      let shapeDice = args.drop;
+      let shapeDice = args.block;
       let defaultTetromino = () => ({
         shape: shapeDice,
         rotation: 0,

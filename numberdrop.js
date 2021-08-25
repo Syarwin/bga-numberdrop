@@ -51,9 +51,8 @@ define([
       ];
       this._listeningCells = [];
 
-      // TODO
       // Fix mobile viewport (remove CSS zoom)
-      // this.default_viewport = 'width=1000';
+      this.default_viewport = 'width=875';
     },
 
     /**
