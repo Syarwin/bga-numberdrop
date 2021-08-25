@@ -50,7 +50,7 @@ trait ScoreCombinationTrait
     $board = $player->getBoard();
     $combinations = Globals::getCombinations();
     $combination = $combinations[$player->getId()];
-
+    
     // Check the cells
     foreach ($combination as $cell) {
       $number = $board[$cell['row']][$cell['col']]['number'] ?? null;
@@ -115,10 +115,10 @@ trait ScoreCombinationTrait
     $scoringColumns[$col][$row] = true;
 
     // Check unlocked DROP
-    if ($scoringColumns[COL_SAME][$row] && $scoringColumns[COL_SEQUENCE][$row] && $scoringColumns[COL_DROP][$row] === false) {
+    if ($scoringColumns[COL_SAME][$row] && $scoringColumns[COL_SEQUENCE][$row] && $scoringColumns[COL_BLOCK][$row] === false) {
       $scribbles[] = Scribbles::useCell($player, [
         'row' => $row,
-        'col' => COL_DROP,
+        'col' => COL_BLOCK,
       ]);
     }
 

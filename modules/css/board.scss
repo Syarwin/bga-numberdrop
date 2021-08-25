@@ -34,12 +34,12 @@
       opacity: 1;
     }
 
-    .drop-tile {
+    .block-tile {
       z-index: 3;
     }
   }
 
-  #drops-container {
+  #blocks-container {
     display: flex;
     flex-flow: column;
     background-color: #00bdd0;
@@ -49,19 +49,19 @@
     border-radius: 15px;
     box-shadow: 2px 2px 4px -2px black;
 
-    .drop {
+    .block {
       display: flex;
       background-color: #8fd1e2;
       margin: 2px;
       height: 70px;
       clip-path: polygon(100% 0%, 100% 100%, 15% 100%, 0% 0%);
 
-      .drop-header {
+      .block-header {
         width: 85px;
         height: 70px;
         position: relative;
 
-        .drop-header-bg {
+        .block-header-bg {
           position: absolute;
           width: 70px;
           height: 45px;
@@ -74,7 +74,7 @@
           filter: brightness(100);
         }
 
-        .drop-header-letter {
+        .block-header-letter {
           background: url('img/combination-columns.png');
           background-size: 200% 600%;
           background-position-x: 100%;
@@ -87,12 +87,12 @@
       }
 
       @for $i from 1 to 6 {
-        &:nth-child(#{$i}) .drop-header .drop-header-letter {
+        &:nth-child(#{$i}) .block-header .block-header-letter {
           background-position-y: ($i - 1) * 20%;
         }
       }
 
-      .drop-tile-holder {
+      .block-tile-holder {
         width: 70px;
         height: 70px;
         position: relative;
@@ -101,7 +101,7 @@
   }
 }
 
-.drop-tile {
+.block-tile {
   width: 70px;
   height: 70px;
   background: url('img/drops-multi.jpg');
@@ -119,7 +119,7 @@
   flex-direction: column;
   width: 390px;
 
-  #drops-container {
+  #blocks-container {
     display: flex;
     background-color: #00bdd0;
     height: 160px;
@@ -127,17 +127,17 @@
     border-radius: 15px;
     box-shadow: 2px 2px 4px -2px black;
 
-    .drop {
+    .block {
       background-color: #8fd1e2;
       margin: 2px;
       width: 70px;
       clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 10%);
 
-      .drop-header {
+      .block-header {
         height: 85px;
         position: relative;
 
-        .drop-header-bg {
+        .block-header-bg {
           position: absolute;
           width: 70px;
           height: 45px;
@@ -149,7 +149,7 @@
           filter: brightness(100);
         }
 
-        .drop-header-letter {
+        .block-header-letter {
           background: url('img/combination-columns.png');
           background-size: 200% 600%;
           background-position-x: 100%;
@@ -162,17 +162,17 @@
       }
 
       @for $i from 1 to 6 {
-        &:nth-child(#{$i}) .drop-header .drop-header-letter {
+        &:nth-child(#{$i}) .block-header .block-header-letter {
           background-position-y: ($i - 1) * 20%;
         }
       }
 
-      .drop-tile-holder {
+      .block-tile-holder {
         width: 70px;
         height: 70px;
         position: relative;
 
-        .drop-tile {
+        .block-tile {
           width: 70px;
           height: 70px;
           background: url('img/drops-multi.jpg');

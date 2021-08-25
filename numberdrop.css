@@ -593,25 +593,25 @@ html.darkmode {
         background-position: 0% 0%; }
       .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence .sheet-bonus-header {
         background-position: 33.33% 0%; }
-      .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-header {
+      .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block .sheet-bonus-header {
         background-position: 66.66% 0%; }
       .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus .sheet-bonus-header {
         background-position: 100% 0%; }
       .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical,
       .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence,
-      .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop,
+      .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block,
       .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus {
         display: flex;
         flex-flow: column;
         width: 74px; }
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-drop,
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop,
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop,
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-drop {
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-block,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-block,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block.sheet-bonus-block,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-block {
           margin-left: 53px; }
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical .sheet-bonus-grid,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence .sheet-bonus-grid,
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block .sheet-bonus-grid,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus .sheet-bonus-grid {
           border: 1px dashed gray;
           margin: 0px 11px;
@@ -619,7 +619,7 @@ html.darkmode {
           position: relative; }
           .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical .sheet-bonus-grid .sheet-bonus-cell,
           .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence .sheet-bonus-grid .sheet-bonus-cell,
-          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell,
+          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell,
           .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus .sheet-bonus-grid .sheet-bonus-cell {
             position: relative;
             width: 30px;
@@ -633,32 +633,32 @@ html.darkmode {
             box-shadow: none; }
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical .sheet-bonus-grid .sheet-bonus-cell:nth-child(1),
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence .sheet-bonus-grid .sheet-bonus-cell:nth-child(1),
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:nth-child(1),
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell:nth-child(1),
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus .sheet-bonus-grid .sheet-bonus-cell:nth-child(1) {
               background-position-y: 0%; }
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical .sheet-bonus-grid .sheet-bonus-cell:nth-child(2),
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence .sheet-bonus-grid .sheet-bonus-cell:nth-child(2),
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:nth-child(2),
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell:nth-child(2),
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus .sheet-bonus-grid .sheet-bonus-cell:nth-child(2) {
               background-position-y: 20%; }
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical .sheet-bonus-grid .sheet-bonus-cell:nth-child(3),
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence .sheet-bonus-grid .sheet-bonus-cell:nth-child(3),
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:nth-child(3),
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell:nth-child(3),
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus .sheet-bonus-grid .sheet-bonus-cell:nth-child(3) {
               background-position-y: 40%; }
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical .sheet-bonus-grid .sheet-bonus-cell:nth-child(4),
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence .sheet-bonus-grid .sheet-bonus-cell:nth-child(4),
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:nth-child(4),
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell:nth-child(4),
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus .sheet-bonus-grid .sheet-bonus-cell:nth-child(4) {
               background-position-y: 60%; }
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical .sheet-bonus-grid .sheet-bonus-cell:nth-child(5),
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence .sheet-bonus-grid .sheet-bonus-cell:nth-child(5),
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:nth-child(5),
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell:nth-child(5),
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus .sheet-bonus-grid .sheet-bonus-cell:nth-child(5) {
               background-position-y: 80%; }
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical .sheet-bonus-grid .sheet-bonus-cell svg,
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence .sheet-bonus-grid .sheet-bonus-cell svg,
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell svg,
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell svg,
             .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus .sheet-bonus-grid .sheet-bonus-cell svg {
               width: 50px;
               height: 50px;
@@ -666,7 +666,7 @@ html.darkmode {
               position: absolute; }
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical:not(.sheet-bonus-bonus) .sheet-bonus-grid .sheet-bonus-cell:last-child,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence:not(.sheet-bonus-bonus) .sheet-bonus-grid .sheet-bonus-cell:last-child,
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop:not(.sheet-bonus-bonus) .sheet-bonus-grid .sheet-bonus-cell:last-child,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block:not(.sheet-bonus-bonus) .sheet-bonus-grid .sheet-bonus-cell:last-child,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus:not(.sheet-bonus-bonus) .sheet-bonus-grid .sheet-bonus-cell:last-child {
           background: none;
           width: 33px;
@@ -678,7 +678,7 @@ html.darkmode {
           left: 7px; }
           .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical:not(.sheet-bonus-bonus) .sheet-bonus-grid .sheet-bonus-cell:last-child::before,
           .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence:not(.sheet-bonus-bonus) .sheet-bonus-grid .sheet-bonus-cell:last-child::before,
-          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop:not(.sheet-bonus-bonus) .sheet-bonus-grid .sheet-bonus-cell:last-child::before,
+          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block:not(.sheet-bonus-bonus) .sheet-bonus-grid .sheet-bonus-cell:last-child::before,
           .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus:not(.sheet-bonus-bonus) .sheet-bonus-grid .sheet-bonus-cell:last-child::before {
             content: '+10';
             color: #b7b7b7;
@@ -689,9 +689,9 @@ html.darkmode {
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-identical .sheet-bonus-grid::after,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-sequence .sheet-bonus-grid::after,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-bonus .sheet-bonus-grid::after,
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-identical .sheet-bonus-grid::after,
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-sequence .sheet-bonus-grid::after,
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-bonus .sheet-bonus-grid::after,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block.sheet-bonus-identical .sheet-bonus-grid::after,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block.sheet-bonus-sequence .sheet-bonus-grid::after,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block.sheet-bonus-bonus .sheet-bonus-grid::after,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-identical .sheet-bonus-grid::after,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-sequence .sheet-bonus-grid::after,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-bonus .sheet-bonus-grid::after {
@@ -715,9 +715,9 @@ html.darkmode {
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-identical.animate .sheet-bonus-grid::after,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-sequence.animate .sheet-bonus-grid::after,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-bonus.animate .sheet-bonus-grid::after,
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-identical.animate .sheet-bonus-grid::after,
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-sequence.animate .sheet-bonus-grid::after,
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-bonus.animate .sheet-bonus-grid::after,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block.sheet-bonus-identical.animate .sheet-bonus-grid::after,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block.sheet-bonus-sequence.animate .sheet-bonus-grid::after,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block.sheet-bonus-bonus.animate .sheet-bonus-grid::after,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-identical.animate .sheet-bonus-grid::after,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-sequence.animate .sheet-bonus-grid::after,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-bonus.animate .sheet-bonus-grid::after {
@@ -725,20 +725,20 @@ html.darkmode {
 @keyframes textShineVert {
   to {
     background-position: 0% -200%; } }
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-drop .sheet-bonus-grid,
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop .sheet-bonus-grid,
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid,
-        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-drop .sheet-bonus-grid {
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-block .sheet-bonus-grid,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-block .sheet-bonus-grid,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block.sheet-bonus-block .sheet-bonus-grid,
+        .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-block .sheet-bonus-grid {
           border: none; }
-          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell,
-          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell,
-          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell,
-          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell {
+          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell,
+          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell,
+          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block.sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell,
+          .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell {
             background-position-x: 100%; }
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after,
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after,
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after,
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after {
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell::after,
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell::after,
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block.sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell::after,
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell::after {
               content: '>>>>>>>>';
               position: absolute;
               left: -245%;
@@ -752,23 +752,23 @@ html.darkmode {
               font-size: 10px;
               font-weight: bold;
               letter-spacing: -1.5px; }
-              .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after.animate,
-              .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after.animate,
-              .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after.animate,
-              .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell::after.animate {
+              .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell::after.animate,
+              .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell::after.animate,
+              .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block.sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell::after.animate,
+              .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell::after.animate {
                 animation: textShine 1.5s linear infinite; }
 @keyframes textShine {
   to {
     background-position: -200%; } }
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell[data-n]::after,
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell[data-n]::after,
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell[data-n]::after,
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell[data-n]::after {
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell[data-n]::after,
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell[data-n]::after,
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block.sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell[data-n]::after,
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell[data-n]::after {
               display: none; }
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:last-child,
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:last-child,
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-drop.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:last-child,
-            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-drop .sheet-bonus-grid .sheet-bonus-cell:last-child {
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell:last-child,
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell:last-child,
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-block.sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell:last-child,
+            .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-block .sheet-bonus-grid .sheet-bonus-cell:last-child {
               display: none; }
       .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-bonus {
         position: absolute;
@@ -1042,9 +1042,9 @@ html.darkmode {
       transition: opacity 0.7s; }
     #board #dice-holder.inactive::before {
       opacity: 1; }
-    #board #dice-holder .drop-tile {
+    #board #dice-holder .block-tile {
       z-index: 3; }
-  #board #drops-container {
+  #board #blocks-container {
     display: flex;
     flex-flow: column;
     background-color: #00bdd0;
@@ -1053,17 +1053,17 @@ html.darkmode {
     padding: 10px 10px;
     border-radius: 15px;
     box-shadow: 2px 2px 4px -2px black; }
-    #board #drops-container .drop {
+    #board #blocks-container .block {
       display: flex;
       background-color: #8fd1e2;
       margin: 2px;
       height: 70px;
       clip-path: polygon(100% 0%, 100% 100%, 15% 100%, 0% 0%); }
-      #board #drops-container .drop .drop-header {
+      #board #blocks-container .block .block-header {
         width: 85px;
         height: 70px;
         position: relative; }
-        #board #drops-container .drop .drop-header .drop-header-bg {
+        #board #blocks-container .block .block-header .block-header-bg {
           position: absolute;
           width: 70px;
           height: 45px;
@@ -1073,7 +1073,7 @@ html.darkmode {
           background-size: 400% 100%;
           background-position: 66.66% 0%;
           filter: brightness(100); }
-        #board #drops-container .drop .drop-header .drop-header-letter {
+        #board #blocks-container .block .block-header .block-header-letter {
           background: url("img/combination-columns.png");
           background-size: 200% 600%;
           background-position-x: 100%;
@@ -1082,57 +1082,57 @@ html.darkmode {
           position: absolute;
           top: 30px;
           left: 30px; }
-      #board #drops-container .drop:nth-child(1) .drop-header .drop-header-letter {
+      #board #blocks-container .block:nth-child(1) .block-header .block-header-letter {
         background-position-y: 0%; }
-      #board #drops-container .drop:nth-child(2) .drop-header .drop-header-letter {
+      #board #blocks-container .block:nth-child(2) .block-header .block-header-letter {
         background-position-y: 20%; }
-      #board #drops-container .drop:nth-child(3) .drop-header .drop-header-letter {
+      #board #blocks-container .block:nth-child(3) .block-header .block-header-letter {
         background-position-y: 40%; }
-      #board #drops-container .drop:nth-child(4) .drop-header .drop-header-letter {
+      #board #blocks-container .block:nth-child(4) .block-header .block-header-letter {
         background-position-y: 60%; }
-      #board #drops-container .drop:nth-child(5) .drop-header .drop-header-letter {
+      #board #blocks-container .block:nth-child(5) .block-header .block-header-letter {
         background-position-y: 80%; }
-      #board #drops-container .drop .drop-tile-holder {
+      #board #blocks-container .block .block-tile-holder {
         width: 70px;
         height: 70px;
         position: relative; }
 
-.drop-tile {
+.block-tile {
   width: 70px;
   height: 70px;
   background: url("img/drops-multi.jpg");
   background-size: 500% 100%; }
-  .drop-tile[data-id='0'] {
+  .block-tile[data-id='0'] {
     background-position-x: 0%; }
-  .drop-tile[data-id='1'] {
+  .block-tile[data-id='1'] {
     background-position-x: 25%; }
-  .drop-tile[data-id='2'] {
+  .block-tile[data-id='2'] {
     background-position-x: 50%; }
-  .drop-tile[data-id='3'] {
+  .block-tile[data-id='3'] {
     background-position-x: 75%; }
-  .drop-tile[data-id='4'] {
+  .block-tile[data-id='4'] {
     background-position-x: 100%; }
 
 #board.horizontal {
   display: flex;
   flex-direction: column;
   width: 390px; }
-  #board.horizontal #drops-container {
+  #board.horizontal #blocks-container {
     display: flex;
     background-color: #00bdd0;
     height: 160px;
     padding: 10px 10px;
     border-radius: 15px;
     box-shadow: 2px 2px 4px -2px black; }
-    #board.horizontal #drops-container .drop {
+    #board.horizontal #blocks-container .block {
       background-color: #8fd1e2;
       margin: 2px;
       width: 70px;
       clip-path: polygon(100% 0%, 100% 100%, 0% 100%, 0% 10%); }
-      #board.horizontal #drops-container .drop .drop-header {
+      #board.horizontal #blocks-container .block .block-header {
         height: 85px;
         position: relative; }
-        #board.horizontal #drops-container .drop .drop-header .drop-header-bg {
+        #board.horizontal #blocks-container .block .block-header .block-header-bg {
           position: absolute;
           width: 70px;
           height: 45px;
@@ -1141,7 +1141,7 @@ html.darkmode {
           background-size: 400% 100%;
           background-position: 66.66% 0%;
           filter: brightness(100); }
-        #board.horizontal #drops-container .drop .drop-header .drop-header-letter {
+        #board.horizontal #blocks-container .block .block-header .block-header-letter {
           background: url("img/combination-columns.png");
           background-size: 200% 600%;
           background-position-x: 100%;
@@ -1150,34 +1150,34 @@ html.darkmode {
           position: absolute;
           top: 40px;
           left: 20px; }
-      #board.horizontal #drops-container .drop:nth-child(1) .drop-header .drop-header-letter {
+      #board.horizontal #blocks-container .block:nth-child(1) .block-header .block-header-letter {
         background-position-y: 0%; }
-      #board.horizontal #drops-container .drop:nth-child(2) .drop-header .drop-header-letter {
+      #board.horizontal #blocks-container .block:nth-child(2) .block-header .block-header-letter {
         background-position-y: 20%; }
-      #board.horizontal #drops-container .drop:nth-child(3) .drop-header .drop-header-letter {
+      #board.horizontal #blocks-container .block:nth-child(3) .block-header .block-header-letter {
         background-position-y: 40%; }
-      #board.horizontal #drops-container .drop:nth-child(4) .drop-header .drop-header-letter {
+      #board.horizontal #blocks-container .block:nth-child(4) .block-header .block-header-letter {
         background-position-y: 60%; }
-      #board.horizontal #drops-container .drop:nth-child(5) .drop-header .drop-header-letter {
+      #board.horizontal #blocks-container .block:nth-child(5) .block-header .block-header-letter {
         background-position-y: 80%; }
-      #board.horizontal #drops-container .drop .drop-tile-holder {
+      #board.horizontal #blocks-container .block .block-tile-holder {
         width: 70px;
         height: 70px;
         position: relative; }
-        #board.horizontal #drops-container .drop .drop-tile-holder .drop-tile {
+        #board.horizontal #blocks-container .block .block-tile-holder .block-tile {
           width: 70px;
           height: 70px;
           background: url("img/drops-multi.jpg");
           background-size: 500% 100%; }
-          #board.horizontal #drops-container .drop .drop-tile-holder .drop-tile[data-id='0'] {
+          #board.horizontal #blocks-container .block .block-tile-holder .block-tile[data-id='0'] {
             background-position-x: 0%; }
-          #board.horizontal #drops-container .drop .drop-tile-holder .drop-tile[data-id='1'] {
+          #board.horizontal #blocks-container .block .block-tile-holder .block-tile[data-id='1'] {
             background-position-x: 25%; }
-          #board.horizontal #drops-container .drop .drop-tile-holder .drop-tile[data-id='2'] {
+          #board.horizontal #blocks-container .block .block-tile-holder .block-tile[data-id='2'] {
             background-position-x: 50%; }
-          #board.horizontal #drops-container .drop .drop-tile-holder .drop-tile[data-id='3'] {
+          #board.horizontal #blocks-container .block .block-tile-holder .block-tile[data-id='3'] {
             background-position-x: 75%; }
-          #board.horizontal #drops-container .drop .drop-tile-holder .drop-tile[data-id='4'] {
+          #board.horizontal #blocks-container .block .block-tile-holder .block-tile[data-id='4'] {
             background-position-x: 100%; }
 
 /*# sourceMappingURL=numberdrop.css.map */

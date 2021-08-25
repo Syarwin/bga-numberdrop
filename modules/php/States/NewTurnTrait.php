@@ -4,7 +4,7 @@ use NUMDROP\Core\Globals;
 use NUMDROP\Core\Notifications;
 use NUMDROP\Core\StateMachine;
 use NUMDROP\Managers\Players;
-use NUMDROP\Managers\Drops;
+use NUMDROP\Managers\Blocks;
 
 trait NewTurnTrait
 {
@@ -28,14 +28,14 @@ trait NewTurnTrait
     Globals::setDices($result);
     Notifications::throwDices($result, $turn);
 
-    // Check drop
-    $drop = Drops::getNextActiveDrop();
-    if(in_array('*', $result) && !is_null($drop)){
-      Notifications::dropTriggered($drop);
-      Drops::trigger($drop);
-      StateMachine::initPrivateStates(ST_DROP_PLAYER_TURN);
-      $this->gamestate->setPlayersMultiactive(Drops::getTargets(), '');
-      $this->gamestate->nextState('drop');
+    // Check block
+    $block = Blocks::getNextActiveBlock();
+    if(in_array('*', $result) && !is_null($block)){
+      Notifications::blockTriggered($block);
+      Blocks::trigger($block);
+      StateMachine::initPrivateStates(ST_BLOCK_PLAYER_TURN);
+      $this->gamestate->setPlayersMultiactive(Blocks::getTargets(), '');
+      $this->gamestate->nextState('block');
     } else {
       $ids = Players::getAll()->getIds();
       $this->gamestate->setPlayersMultiactive($ids, '');

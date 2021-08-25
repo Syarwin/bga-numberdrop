@@ -8,7 +8,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
   const COL_SAME = 11;
   const COL_SEQUENCE = 12;
-  const COL_DROP = 13;
+  const COL_BLOCK = 13;
   const COL_BONUS = 14;
 
   return declare('numberdrop.scoreCombination', null, {

@@ -53,7 +53,7 @@ $machinestates = [
     'updateGameProgression' => true,
     'action' => 'stNewTurn',
     'transitions' => [
-      'drop' => ST_DROP_PLAYER_TURN,
+      'block' => ST_BLOCK_PLAYER_TURN,
       'play' => ST_PLAYER_TURN,
     ],
   ],
@@ -101,22 +101,22 @@ $machinestates = [
   /****************************
    ******* DROP a DROP ********
    ****************************/
-   ST_DROP_PLAYER_TURN => [
+   ST_BLOCK_PLAYER_TURN => [
      'name' => 'playerTurn',
      'description' => clienttranslate('Waiting for other players to end their turn.'),
      'descriptionmyturn' => '', // Won't be displayed anyway
      'type' => 'multipleactiveplayer',
-     'parallel' => ST_DROP_DROP, // Allow to have parallel flow for each player
+     'parallel' => ST_DROP_BLOCK, // Allow to have parallel flow for each player
      'args' => 'argPlayerTurn',
      'transitions' => ['applyTurns' => ST_APPLY_TURNS],
    ],
 
-   ST_DROP_DROP => [
-     'name' => 'dropDrop',
-     'descriptionmyturn' => clienttranslate('${you} must drop your drop'),
+   ST_DROP_BLOCK => [
+     'name' => 'dropBlock',
+     'descriptionmyturn' => clienttranslate('${you} must drop the block'),
      'type' => 'private',
-     'args' => 'argDropDrop',
-     'possibleactions' => ['actConstructTetromino', 'actConfirmTetrominoDrop'],
+     'args' => 'argDropBlock',
+     'possibleactions' => ['actConstructTetromino', 'actConfirmTetrominoBlock'],
      'transitions' => [
        'confirmWait' => ST_CONFIRM_TURN,
      ],

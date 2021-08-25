@@ -4,7 +4,7 @@ use NUMDROP\Core\Globals;
 use NUMDROP\Core\Notifications;
 use NUMDROP\Core\StateMachine;
 use NUMDROP\Managers\Players;
-use NUMDROP\Managers\Drops;
+use NUMDROP\Managers\Blocks;
 use NUMDROP\Managers\Scribbles;
 
 /*
@@ -17,7 +17,6 @@ trait ConfirmWaitTrait
     StateMachine::checkAction('actRestart');
     $player = Players::getCurrent();
     $player->restartTurn();
-    // TODO : $player->updateScores();
 
     $this->gamestate->setPlayersMultiactive([$player->getId()], '');
     StateMachine::nextState('restart');
@@ -42,15 +41,15 @@ trait ConfirmWaitTrait
    */
   function stApplyTurn()
   {
-    // Any drop to finish ?
-    $drop = Drops::getTriggered();
-    if ($drop !== null) {
-      Drops::finish($drop);
+    // Any block to finish ?
+    $block = Blocks::getTriggered();
+    if ($block !== null) {
+      Blocks::finish( block);
       $scribbles = [];
       foreach (Players::getAll() as $player) {
-        $scribbles[] = Scribbles::addNumber($player, $drop, COL_DROP, CROSS);
+        $scribbles[] = Scribbles::addNumber($player,  block, COL_BLOCK, CROSS);
       }
-      Notifications::finishDrop($drop, Scribbles::get($scribbles));
+      Notifications::finishDrop($block, Scribbles::get($scribbles));
     }
 
     // Update scribbles

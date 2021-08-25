@@ -28,8 +28,8 @@ define('ST_DROP_SHAPE', 20);
 define('ST_SCORE_COMBINATION', 21);
 
 // Drop
-define('ST_DROP_PLAYER_TURN', 30);
-define('ST_DROP_DROP', 31);
+define('ST_BLOCK_PLAYER_TURN', 30);
+define('ST_DROP_BLOCK', 31);
 
 define('ST_CONFIRM_TURN', 40);
 define('ST_WAIT_OTHERS', 41);
@@ -43,10 +43,10 @@ define('ST_END_GAME', 99);
  */
 define('CIRCLE', 0); // 0 will be used as a "false" number to circle stuff
 define('CROSS', -1);
-define('CROSSED', 2); // Useful to determine if a drop is circled or crossed
+define('CROSSED', 2); // Useful to determine if a block is circled or crossed
 
 define('COL_END_LINES', 10);
 define('COL_SAME', 11);
 define('COL_SEQUENCE', 12);
-define('COL_DROP', 13);
+define('COL_BLOCK', 13);
 define('COL_BONUS', 14);

@@ -39,14 +39,14 @@ define([
 
   return declare('bgagame.numberdrop', [customgame.game, numberdrop.shapeConstructor, numberdrop.scoreCombination], {
     constructor() {
-      this._activeStates = ['dropDrop'];
+      this._activeStates = ['dropBlock', 'dropShape'];
       this._notifications = [
         ['throwDices', 2500],
         ['scoreCombination', 1500],
         ['scoreLine', 1500],
         ['clearTurn', 10],
-        ['dropTriggered', 1000],
-        ['finishDrop', 1000],
+        ['blockTriggered', 1000],
+        ['finishBlock', 1000],
         ['updatePlayersData', 1500],
       ];
       this._listeningCells = [];
@@ -103,12 +103,12 @@ define([
       // Setup dices
       this.setupDices();
 
-      // Add drop tiles
-      this.gamedatas.drops.forEach((drop, i) => {
-        if (drop.status != 2) {
-          dojo.place(`<div class='drop-tile' id='drop-tile-${i}' data-id='${drop.id}'></div>`, `drop-tile-holder-${i}`);
-          if (drop.status == 1) {
-            this.triggerDrop(i);
+      // Add block tiles
+      this.gamedatas.blocks.forEach((block, i) => {
+        if (block.status != 2) {
+          dojo.place(`<div class='block-tile' id='block-tile-${i}' data-id='${block.id}'></div>`, `block-tile-holder-${i}`);
+          if (block.status == 1) {
+            this.triggerBlock(i);
           }
         }
       });
@@ -119,17 +119,17 @@ define([
         `
       <div id="board">
         <div id="dice-holder"></div>
-        <div id="drops-container">
+        <div id="blocks-container">
           ` +
         [0, 1, 2, 3, 4]
           .map(
             (i) => `
-              <div id="drop-${i}" class="drop">
-                <div class="drop-header">
-                  <div class="drop-header-bg"></div>
-                  <div class="drop-header-letter"></div>
+              <div id="block-${i}" class="block">
+                <div class="block-header">
+                  <div class="block-header-bg"></div>
+                  <div class="block-header-letter"></div>
                 </div>
-                <div id='drop-tile-holder-${i}' class="drop-tile-holder"></div>
+                <div id='block-tile-holder-${i}' class="block-tile-holder"></div>
               </div>
             `,
           )
@@ -141,20 +141,20 @@ define([
       );
     },
 
-    triggerDrop(drop) {
-      this.slide('drop-tile-' + drop, 'dice-holder', { clearPos: false }).then(() => {
+    triggerBlock(block) {
+      this.slide('block-tile-' + block, 'dice-holder', { clearPos: false }).then(() => {
         $('dice-holder').classList.add('inactive');
       });
     },
 
-    notif_dropTriggered(n) {
-      debug('Notif: drop triggeded', n);
-      this.triggerDrop(n.args.drop);
+    notif_blockTriggered(n) {
+      debug('Notif: block triggeded', n);
+      this.triggerBlock(n.args.block);
     },
 
-    notif_finishDrop(n) {
-      debug('Notif: finish drop', n);
-      dojo.destroy('drop-tile-' + n.args.drop);
+    notif_finishBlock(n) {
+      debug('Notif: finish block', n);
+      dojo.destroy('block-tile-' + n.args.block);
       $('dice-holder').classList.remove('inactive');
 
       n.args.scribbles.forEach((scribble) => this.addScribble(scribble));
@@ -233,7 +233,7 @@ define([
       }
 
       let combinations = '';
-      ['identical', 'sequence', 'drop', 'bonus'].forEach((type) => {
+      ['identical', 'sequence', 'block', 'bonus'].forEach((type) => {
         combinations +=
           `
         <div class="sheet-bonus-${type}">
@@ -315,7 +315,7 @@ define([
         let cols = {
           11: 'identical',
           12: 'sequence',
-          13: 'drop',
+          13: 'block',
           14: 'bonus',
         };
         col = cols[col];
@@ -491,9 +491,12 @@ define([
 
       [...grid.querySelectorAll(`[data-circled="${n.args.turn}"]`)].forEach((cell) => {
         cell.removeAttribute('data-circled');
+        cell.classList.remove('border-0', 'border-1', 'border-2', 'border-3');
       });
-      //      this.cancelLogs(n.args.notifIds);
+      this.cancelLogs(n.args.notifIds);
       this.highlightScoringCombinations(this.player_id);
+      this.gamedatas.players[this.player_id].scores = n.args.scores;
+      this.updateScores();
     },
 
     onEnteringStateWaitOthers(args) {

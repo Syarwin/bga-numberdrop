@@ -33,7 +33,7 @@ $swdNamespaceAutoload = function ($class) {
 spl_autoload_register($swdNamespaceAutoload, true, true);
 
 use NUMDROP\Managers\Players;
-use NUMDROP\Managers\Drops;
+use NUMDROP\Managers\Blocks;
 use NUMDROP\Core\Globals;
 use NUMDROP\Core\Preferences;
 use NUMDROP\Core\Stats;
@@ -44,7 +44,7 @@ class NumberDrop extends Table
   use NUMDROP\States\StartingNumberTrait;
   use NUMDROP\States\NewTurnTrait;
   use NUMDROP\States\DropShapeTrait;
-  use NUMDROP\States\DropDropTrait;
+  use NUMDROP\States\DropBlockTrait;
   use NUMDROP\States\ScoreCombinationTrait;
   use NUMDROP\States\ConfirmWaitTrait;
   use NUMDROP\States\EndOfGameTrait;
@@ -73,7 +73,7 @@ class NumberDrop extends Table
   protected function setupNewGame($players, $options = [])
   {
     Players::setupNewGame($players, $options);
-    Drops::setupNewGame($players, $options);
+    Blocks::setupNewGame($players, $options);
     Stats::setupNewGame();
     Globals::setupNewGame($players, $options);
     Preferences::setupNewGame($players, $this->player_preferences);
@@ -93,9 +93,9 @@ class NumberDrop extends Table
       'dices' => Globals::getDices(),
       'turn' => Globals::getCurrentTurn(),
       'shapes' => $this->shapes,
-      'dropShapes' => $this->dropShapes,
+      'blockShapes' => $this->blockShapes,
       'canceledNotifIds' => Log::getCanceledNotifIds(),
-      'drops' => Globals::getDrops(),
+      'blocks' => Globals::getBlocks(),
     ];
   }
 
@@ -104,8 +104,9 @@ class NumberDrop extends Table
    */
   function getGameProgression()
   {
-    // TODO
-    return 50;
+    $maxTurn = 77 / 4;
+    $turn = Globals::getCurrentTurn();
+    return ($turn / $maxTurn) * 100;
   }
 
   function actChangePreference($pref, $value)
@@ -113,9 +114,6 @@ class NumberDrop extends Table
     Preferences::set($this->getCurrentPId(), $pref, $value);
   }
 
-  function test(){
-    var_dump(NUMDROP\Managers\Drops::getNextActiveDrop());
-  }
   ///////////////////////////
   //// DEBUG FUNCTIONS //////
   ///////////////////////////

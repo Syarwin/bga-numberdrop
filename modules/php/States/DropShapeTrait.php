@@ -128,9 +128,9 @@ trait DropShapeTrait
   /**
    * Same function as in js : convert a tetromino to array of blocks
    */
-  function getShapeBlocks($tetromino, $drop = false)
+  function getShapeBlocks($tetromino, $block = false)
   {
-    $shapes = $drop? $this->dropShapes : $this->shapes;
+    $shapes = $block? $this-$blockShapes : $this->shapes;
     $shape = $shapes[$tetromino['shape']][$tetromino['rotation']];
     $n = count($shape);
 
@@ -143,7 +143,7 @@ trait DropShapeTrait
           $res[] = [
             'row' => $i,
             'col' => $j,
-            'n' => $drop? 'X' : $tetromino['numbers'][$id],
+            'n' => $block? 'X' : $tetromino['numbers'][$id],
           ];
         }
       }
@@ -155,7 +155,6 @@ trait DropShapeTrait
 
   /**
    * Same function as in js : given current shape and col, find lowest row before it's blocked
-   * TODO : seems buggy for the L-shape when not touching the floor
    */
   function findLowestDropRow($player, $tetrominoBlocks, $column) {
     $board = $player->getBoard();
@@ -165,7 +164,7 @@ trait DropShapeTrait
       foreach($tetrominoBlocks as $pos){
         $pos['row'] += $i;
         $pos['col'] += $column;
-        if($board[$pos['row']][$pos['col']] ?? null !== null){
+        if($pos['row'] < 0 || $board[$pos['row']][$pos['col']] ?? null !== null){
           $collision = true;
         }
       }

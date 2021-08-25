@@ -41,19 +41,19 @@ class Notifications
     ]);
   }
 
-  public static function dropTriggered($drop)
+  public static function blockTriggered($block)
   {
     $letters = ['A', 'B', 'C', 'D', 'E'];
-    self::notifyAll('dropTriggered', clienttranslate('Drop ${letter} is triggered!'), [
-      'letter' => $letters[$drop],
-      'drop' => $drop,
+    self::notifyAll('blockTriggered', clienttranslate('Block ${letter} is triggered!'), [
+      'letter' => $letters[$block],
+      'block' => $block,
     ]);
   }
 
-  public static function finishDrop($drop, $scribbles)
+  public static function finishBlock($block, $scribbles)
   {
-    self::notifyAll('finishDrop', '', [
-      'drop' => $drop,
+    self::notifyAll('finishBlock', '', [
+      'block' => $block,
       'scribbles' => $scribbles->toArray(),
     ]);
   }
@@ -78,11 +78,11 @@ class Notifications
     self::notify(
       $player,
       'scoreLine',
-      clienttranslate('${player_name} scores 2 points for completing the line : ${i}'),
+      clienttranslate('${player_name} scores 2 points for completing the line n°${i}'),
       [
         'player' => $player,
         'scores' => $scores,
-        'i' => $line,
+        'i' => $line + 1,
         'scribble' => $scribble,
       ]
     );
@@ -93,22 +93,23 @@ class Notifications
     self::notify(
       $player,
       'scoreLine',
-      clienttranslate('${player_name} scores -5 points for reaching the line : ${i}'),
+      clienttranslate('${player_name} scores -5 points for reaching the line n°${i}'),
       [
         'player' => $player,
         'scores' => $scores,
-        'i' => $line,
+        'i' => $line + 1,
         'scribble' => $scribble,
       ]
     );
   }
 
-  public static function clearTurn($player, $notifIds)
+  public static function clearTurn($player, $notifIds, $scores)
   {
     self::notify($player, 'clearTurn', clienttranslate('${player_name} restart their turn'), [
       'player' => $player,
       'turn' => Globals::getCurrentTurn(),
       'notifIds' => $notifIds,
+      'scores' => $scores,
     ]);
   }
 

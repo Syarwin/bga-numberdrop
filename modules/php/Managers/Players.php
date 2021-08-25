@@ -31,14 +31,6 @@ class Players extends \NUMDROP\Helpers\DB_Manager
     $query->values($values);
     Game::get()->reattributeColorsBasedOnPreferences($players, $gameInfos['player_colors']);
     Game::get()->reloadPlayersBasicInfos();
-
-/*
-    $player = Players::getAll()->first();
-    Scribbles::useCell($player, [
-      'row' => 1,
-      'col' => COL_DROP,
-    ]);
-*/
   }
 
   public function getActiveId()

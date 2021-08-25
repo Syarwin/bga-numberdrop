@@ -58,7 +58,14 @@ trait StartingNumberTrait
     foreach(Players::getAll() as $pId => $player){
       $player->addNumber(0, $choices[$pId], $player->getNo());
     }
-    // TODO Notifications::startingNumbers($choices);
+
+    // Update scribbles
+    $scribbles = Scribbles::getLastAdded();
+    // Update scores
+    Globals::incCurrentTurn();
+    $scores = Players::getAll()->map(function($player){ return $player->updateScore(); });
+    Notifications::updatePlayersData($scribbles, $scores);
+
     $this->gamestate->nextState();
   }
 }

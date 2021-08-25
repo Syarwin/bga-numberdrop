@@ -53,7 +53,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      ***********************************/
     onEnteringStateDropShape(args) {
       this.displayBasicInfo(args);
-      this._isDrop = false;
+      this._isBlock = false;
       this.toggleShapeConstructor(true);
       let shapeDice = args.dices[4];
       let defaultTetromino = () => ({
@@ -119,7 +119,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
     },
 
     getCurrentShape() {
-      let shapes = this.gamedatas[this._isDrop ? 'dropShapes' : 'shapes'];
+      let shapes = this.gamedatas[this._isBlock ? 'dropShapes' : 'shapes'];
       return shapes[this._tetromino.shape][this._tetromino.rotation];
     },
 
@@ -166,7 +166,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
           } else {
             // Shape block, make it active and put corresponding chosen number
             cell.classList.add('active');
-            cell.setAttribute('data-n', this._isDrop ? '☓' : this._tetromino.numbers[shape[i][y]]);
+            cell.setAttribute('data-n', this._isBlock ? '☓' : this._tetromino.numbers[shape[i][y]]);
           }
         }
       }
@@ -176,9 +176,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
       // Handle action button
       dojo.destroy('btnConfirmTetromino');
-      if (this._isDrop) {
-        this.addActionButton('btnConfirmTetromino', _('Confirm drop drop'), () =>
-          this.takeAction('actConfirmTetrominoDrop'),
+      if (this._isBlock) {
+        this.addActionButton('btnConfirmTetromino', _('Confirm block drop'), () =>
+          this.takeAction('actConfirmTetrominoBlock'),
         );
       } else if (!this._tetromino.numbers.includes('')) {
         this.addActionButton('btnConfirmTetromino', _('Confirm tetromino drop'), () =>
@@ -301,7 +301,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      * Update remaining dices
      */
     updateRemeaningDices() {
-      if (this._isDrop) {
+      if (this._isBlock) {
         dojo.style('shape-selector', 'visibility', 'hidden');
         dojo.style('control-clear', 'visibility', 'hidden');
         return;
@@ -379,7 +379,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         pos.col += this._tetromino.col;
 
         let cell = this.getCell(pos);
-        if (this._isDrop) {
+        if (this._isBlock) {
           this.setCellContent(cell, '☓', this.gamedatas.turn);
           cell.classList.add('active');
         } else {
@@ -413,7 +413,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
      ************ Drop DROP *************
      **************************************
      **************************************/
-    onEnteringStateDropDrop(args) {
+    onEnteringStateDropBlock(args) {
       this.toggleShapeConstructor(true);
       let shapeDice = args.drop;
       let defaultTetromino = () => ({
@@ -422,7 +422,7 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         flip: 0,
         col: 2,
       });
-      this._isDrop = true;
+      this._isBlock = true;
 
       // Init with DB entry if player already started building it, otherwise default
       this._tetromino = args.tetromino != null ? args.tetromino : defaultTetromino();

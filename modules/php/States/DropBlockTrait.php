@@ -5,29 +5,29 @@ use NUMDROP\Core\Notifications;
 use NUMDROP\Core\StateMachine;
 use NUMDROP\Managers\Players;
 use NUMDROP\Managers\Scribbles;
-use NUMDROP\Managers\Drops;
+use NUMDROP\Managers\Blocks;
 
-trait DropDropTrait
+trait DropBlockTrait
 {
   /*
    * The arg depends on the private state of each player
    */
-  function argDropDrop($player)
+  function argDropBlock($player)
   {
-    $drop = Drops::getNextActiveDrop();
-    $dropId = Globals::getDrops()[$drop]['id'];
+    $block = Blocks::getNextActiveBlock();
+    $blockId = Globals::getBlocks()[$block]['id'];
     return [
-      'drop' => $dropId,
+      'block' => $blockId,
       'tetromino' => Globals::getTetrominos()[$player->getId()] ?? null,
     ];
   }
 
-  function actConfirmTetrominoDrop()
+  function actConfirmTetrominoBlock()
   {
     $player = Players::getCurrent();
-    $args = $this->argDropDrop($player);
+    $args = $this->argDropBlock($player);
     $tetromino = $args['tetromino'] ?? [
-      'shape' => $args['drop'],
+      'shape' => $args['block'],
       'rotation' => 0,
       'flip' => 0,
       'col' => 2,

@@ -214,7 +214,7 @@
         .sheet-bonus-sequence .sheet-bonus-header {
           background-position: 33.33% 0%;
         }
-        .sheet-bonus-drop .sheet-bonus-header {
+        .sheet-bonus-block .sheet-bonus-header {
           background-position: 66.66% 0%;
         }
         .sheet-bonus-bonus .sheet-bonus-header {
@@ -223,12 +223,12 @@
 
         .sheet-bonus-identical,
         .sheet-bonus-sequence,
-        .sheet-bonus-drop,
+        .sheet-bonus-block,
         .sheet-bonus-bonus {
           display: flex;
           flex-flow: column;
           width: 74px;
-          &.sheet-bonus-drop {
+          &.sheet-bonus-block {
             margin-left: 53px;
           }
 
@@ -317,7 +317,7 @@
             }
           }
 
-          &.sheet-bonus-drop .sheet-bonus-grid {
+          &.sheet-bonus-block .sheet-bonus-grid {
             border: none;
             .sheet-bonus-cell {
               background-position-x: 100%;
