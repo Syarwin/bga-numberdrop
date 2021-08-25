@@ -98,9 +98,9 @@
       &::after {
         content: '⌄⌄⌄⌄';
         position: absolute;
-        height: 67px;
-        left: 0px;
-        bottom: -32px;
+        height: 45px;
+        left: 9px;
+        bottom: -31px;
 
         background: linear-gradient(to bottom, #aaa4a4 25%, #22a9bf 40%, #2fc5dd 60%, #aaa4a4 75%);
         -webkit-background-clip: text;
@@ -111,9 +111,8 @@
         writing-mode: vertical-rl;
 
         font-family: 'Press Start 2P';
-        letter-spacing: -20px;
-        font-size: 31px;
-        font-weight: bold;
+        letter-spacing: -2px;
+        font-size: 13px;
       }
     }
 
@@ -289,9 +288,9 @@
             .sheet-bonus-grid::after {
               content: '⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄';
               position: absolute;
-              height: 131px;
-              left: 8px;
-              bottom: -123px;
+              height: 112px;
+              left: 17px;
+              bottom: -124px;
 
               background: linear-gradient(to bottom, #aaa4a4 25%, #22a9bf 40%, #2fc5dd 60%, #aaa4a4 75%);
               -webkit-background-clip: text;
@@ -302,9 +301,8 @@
               writing-mode: vertical-rl;
 
               font-family: 'Press Start 2P';
-              letter-spacing: -20px;
-              font-size: 31px;
-              font-weight: bold;
+              letter-spacing: -2px;
+              font-size: 13px;
             }
 
             &.animate .sheet-bonus-grid::after {
@@ -362,15 +360,15 @@
         .sheet-bonus-bonus.sheet-bonus-bonus {
           position: absolute;
           top: 257px;
-          left: 144px;
+          left: 146px;
 
           .sheet-bonus-grid {
             padding-bottom: 0px;
             &::after {
               content: '⌄⌄⌄';
-              height: 55px;
-              bottom: -42px;
-                        }
+              height: 35px;
+              bottom: -41px;
+            }
             .sheet-bonus-cell {
               background-position: 0% 100%;
             }

@@ -477,9 +477,9 @@ html.darkmode {
     .sheet-wrapper .sheet-top .end-of-lines::after {
       content: '⌄⌄⌄⌄';
       position: absolute;
-      height: 67px;
-      left: 0px;
-      bottom: -32px;
+      height: 45px;
+      left: 9px;
+      bottom: -31px;
       background: linear-gradient(to bottom, #aaa4a4 25%, #22a9bf 40%, #2fc5dd 60%, #aaa4a4 75%);
       -webkit-background-clip: text;
       background-clip: text;
@@ -488,9 +488,8 @@ html.darkmode {
       background-size: auto 200%;
       writing-mode: vertical-rl;
       font-family: 'Press Start 2P';
-      letter-spacing: -20px;
-      font-size: 31px;
-      font-weight: bold; }
+      letter-spacing: -2px;
+      font-size: 13px; }
   .sheet-wrapper .sheet-top .nd-cell {
     width: 36px;
     height: 36px;
@@ -697,9 +696,9 @@ html.darkmode {
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-bonus .sheet-bonus-grid::after {
           content: '⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄';
           position: absolute;
-          height: 131px;
-          left: 8px;
-          bottom: -123px;
+          height: 112px;
+          left: 17px;
+          bottom: -124px;
           background: linear-gradient(to bottom, #aaa4a4 25%, #22a9bf 40%, #2fc5dd 60%, #aaa4a4 75%);
           -webkit-background-clip: text;
           background-clip: text;
@@ -708,9 +707,8 @@ html.darkmode {
           background-size: auto 200%;
           writing-mode: vertical-rl;
           font-family: 'Press Start 2P';
-          letter-spacing: -20px;
-          font-size: 31px;
-          font-weight: bold; }
+          letter-spacing: -2px;
+          font-size: 13px; }
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-identical.animate .sheet-bonus-grid::after, .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-sequence.animate .sheet-bonus-grid::after, .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-identical.sheet-bonus-bonus.animate .sheet-bonus-grid::after,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-identical.animate .sheet-bonus-grid::after,
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-sequence.sheet-bonus-sequence.animate .sheet-bonus-grid::after,
@@ -773,13 +771,13 @@ html.darkmode {
       .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-bonus {
         position: absolute;
         top: 257px;
-        left: 144px; }
+        left: 146px; }
         .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-bonus .sheet-bonus-grid {
           padding-bottom: 0px; }
           .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-bonus .sheet-bonus-grid::after {
             content: '⌄⌄⌄';
-            height: 55px;
-            bottom: -42px; }
+            height: 35px;
+            bottom: -41px; }
           .sheet-wrapper .sheet-top .sheet-right-column .sheet-bonus .sheet-bonus-bonus.sheet-bonus-bonus .sheet-bonus-grid .sheet-bonus-cell {
             background-position: 0% 100%; }
   .sheet-wrapper .sheet-bottom {

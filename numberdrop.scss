@@ -23,7 +23,6 @@
   font-display: swap;
 }
 
-
 .no-transition {
   transition: none !important;
 }
@@ -96,8 +95,6 @@ html {
   justify-content: space-evenly;
 }
 
-
-
 /* Cancelled notification messages */
 
 .log.cancel {
@@ -114,7 +111,6 @@ html {
 .log.cancel.roundedbox {
   background-color: #ef9a9a;
 }
-
 
 @import 'modules/css/dice';
 @import 'modules/css/darkmode';
