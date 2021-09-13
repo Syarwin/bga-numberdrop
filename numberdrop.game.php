@@ -153,6 +153,13 @@ class NumberDrop extends Table
    */
   public function upgradeTableDb($from_version)
   {
+    if($from_version <= 2108252342){
+      $sql = "UPDATE `DBPREFIX_scribbles` SET number = -2 WHERE number = -1";
+      self::applyDbUpgradeToAllDB( $sql );
+
+      $sql = "UPDATE `DBPREFIX_scribbles` SET number = -1 WHERE number = 0";
+      self::applyDbUpgradeToAllDB( $sql );
+    }
   }
 
   /////////////////////////////////////////////////////////////

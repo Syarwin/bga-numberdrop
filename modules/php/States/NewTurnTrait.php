@@ -24,13 +24,12 @@ trait NewTurnTrait
       $r = bga_rand(0,5);
       $result[] = $dice[$r];
     }
-    $result[0] = '*'; // TODO : remove
     Globals::setDices($result);
     Notifications::throwDices($result, $turn);
 
     // Check block
     $block = Blocks::getNextActiveBlock();
-    if(in_array('*', $result) && !is_null($block)){
+    if(in_array('*', $result) && !is_null($block) && !empty(Blocks::getTargets())){
       Notifications::blockTriggered($block);
       Blocks::trigger($block);
       StateMachine::initPrivateStates(ST_BLOCK_PLAYER_TURN);

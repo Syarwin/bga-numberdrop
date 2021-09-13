@@ -177,14 +177,16 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       // Handle action button
       dojo.destroy('btnConfirmTetromino');
       if (this._isBlock) {
-        this.addActionButton('btnConfirmTetromino', _('Confirm block drop'), () =>
-          this.takeAction('actConfirmTetrominoBlock'),
-        );
+        this.addActionButton('btnConfirmTetromino', _('Confirm block drop'), () => {
+          if (this._isTetrominoFitting) this.takeAction('actConfirmTetrominoBlock');
+        });
       } else if (!this._tetromino.numbers.includes('')) {
-        this.addActionButton('btnConfirmTetromino', _('Confirm tetromino drop'), () =>
-          this.takeAction('actConfirmTetromino'),
-        );
+        this.addActionButton('btnConfirmTetromino', _('Confirm tetromino drop'), () => {
+          if (this._isTetrominoFitting) this.takeAction('actConfirmTetromino');
+        });
       }
+
+      dojo.attr('btnConfirmTetromino', 'disabled', this._isTetrominoFitting ? '' : 'disabled');
     },
 
     /**
@@ -366,11 +368,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       let fit = this.getCurrentShapeBlocks().reduce((check, pos) => {
         return check && pos.row + row < 14;
       }, true);
-      if (!fit) {
-        // Only happens with the vertical I shape
-        this._tetromino.rotation += 1;
-        this.updateShapeConstructor();
-        return;
+      this._isTetrominoFitting = fit;
+      if ($('btnConfirmTetromino')) {
+        dojo.attr('btnConfirmTetromino', 'disabled', this._isTetrominoFitting ? '' : 'disabled');
       }
 
       // Draw tetromino shadow
@@ -379,6 +379,8 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         pos.col += this._tetromino.col;
 
         let cell = this.getCell(pos);
+        if (cell == null) return;
+
         if (this._isBlock) {
           this.setCellContent(cell, '☓', this.gamedatas.turn);
           cell.classList.add('active');

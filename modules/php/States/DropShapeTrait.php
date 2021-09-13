@@ -164,7 +164,7 @@ trait DropShapeTrait
       foreach($tetrominoBlocks as $pos){
         $pos['row'] += $i;
         $pos['col'] += $column;
-        if($pos['row'] < 0 || $board[$pos['row']][$pos['col']] ?? null !== null){
+        if($pos['row'] < 0 || ($pos['row'] < 14 && $board[$pos['row']][$pos['col']] ?? null !== null)){
           $collision = true;
         }
       }

@@ -11,6 +11,11 @@ define('DARK_MODE', 100);
 define('DARK_MODE_DISABLED', 1);
 define('DARK_MODE_ENABLED', 2);
 
+define('CONFIRM', 101);
+define('CONFIRM_TIMER', 1);
+define('CONFIRM_ENABLED', 2);
+define('CONFIRM_DISABLED', 3);
+
 /*
  * State constants
  */
@@ -41,8 +46,9 @@ define('ST_END_GAME', 99);
 /**
  * Others
  */
-define('CIRCLE', 0); // 0 will be used as a "false" number to circle stuff
-define('CROSS', -1);
+define('CIRCLE', -1); // -1 will be used as a "false" number to circle stuff
+define('CROSS', -2); // -2 will be used as a "false" number to cross stuff
+
 define('CROSSED', 2); // Useful to determine if a block is circled or crossed
 
 define('COL_END_LINES', 10);

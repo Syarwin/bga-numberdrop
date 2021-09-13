@@ -8,7 +8,7 @@ use NUMDROP\Managers\Scribbles;
 trait StartingNumberTrait
 {
   /**
-   * Fetch for each player its starting number = player's no (TODO : can be directly )
+   * Fetch for each player its starting number = player's no
    */
   public function argsStartingNumber()
   {

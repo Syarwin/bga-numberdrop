@@ -12,7 +12,7 @@ $diceSize: 45px;
   &#nb-dice-4 {
     flex-basis: 100%;
   }
-  
+
   &.used {
     opacity: 0.4;
   }
@@ -28,7 +28,8 @@ $diceSize: 45px;
       position: absolute;
       width: $diceSize;
       height: $diceSize;
-      background: #cd5397d9;
+//      background: #cd5397d9;
+      background: #cd5397ff;
       border: 1px solid black;
       display: flex;
       justify-content: center;
@@ -62,35 +63,44 @@ $diceSize: 45px;
   }
 
   &#nb-dice-4 .nb-dice div {
-    background: rgba(70, 182, 217, 0.91);
+//    background: rgba(70, 182, 217, 0.91);
+    background: rgba(70, 182, 217, 1);
   }
+}
 
-  span.tetromino {
-    display: inline-block;
-    width: 1.5em;
-    height: 1.5em;
-    background-repeat: no-repeat;
-    background-position: center center;
 
-    &.tetromino-I {
-      background-image: url('img/tetromino-I.svg');
-      background-size: 80% auto;
-    }
-    &.tetromino-L {
-      background-image: url('img/tetromino-L.svg');
-      background-size: auto 75%;
-    }
-    &.tetromino-O {
-      background-image: url('img/tetromino-O.svg');
-      background-size: 60% auto;
-    }
-    &.tetromino-S {
-      background-image: url('img/tetromino-S.svg');
-      background-size: auto 75%;
-    }
-    &.tetromino-T {
-      background-image: url('img/tetromino-T.svg');
-      background-size: 80% auto;
-    }
+span.tetromino {
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  &.tetromino-I {
+    background-image: url('img/tetromino-I.svg');
+    background-size: 80% auto;
   }
+  &.tetromino-L {
+    background-image: url('img/tetromino-L.svg');
+    background-size: auto 75%;
+  }
+  &.tetromino-O {
+    background-image: url('img/tetromino-O.svg');
+    background-size: 60% auto;
+  }
+  &.tetromino-S {
+    background-image: url('img/tetromino-S.svg');
+    background-size: auto 75%;
+  }
+  &.tetromino-T {
+    background-image: url('img/tetromino-T.svg');
+    background-size: 80% auto;
+  }
+}
+
+
+.dice-content {
+  display: block;
+  font-weight: bold;
+  font-size: 20px;
 }

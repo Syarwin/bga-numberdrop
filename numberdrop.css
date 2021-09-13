@@ -29,15 +29,21 @@ html {
   box-shadow: none !important;
   -webkit-box-shadow: none !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-  margin-bottom: 0px !important; }
-  #topbar #tableinfos {
-    font-family: 'Press Start 2P';
-    font-size: 10px;
-    top: 8px; }
-  #topbar #its_your_turn {
-    font-family: 'Press Start 2P';
-    font-size: 17px;
-    top: 23px; }
+  margin-bottom: 0px !important;
+  /*
+    #tableinfos {
+      font-family: 'Press Start 2P';
+      font-size: 10px;
+      top: 8px;
+    }
+  */
+  /*
+    #its_your_turn {
+      font-family: 'Press Start 2P';
+      font-size: 17px;
+      top: 23px;
+    }
+  */ }
 
 #numberdrop-topbar {
   width: 100%;
@@ -48,10 +54,7 @@ html {
 #page-title {
   background-color: white !important;
   box-shadow: none !important;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  font-family: 'Press Start 2P';
-  font-size: 87%;
-  font-weight: normal; }
+  border: 1px solid rgba(0, 0, 0, 0.3); }
 
 #right-side {
   margin-top: 0px !important; }
@@ -76,6 +79,10 @@ html {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly; }
+
+#generalactions a[disabled="disabled"] {
+  opacity: 0.5;
+  cursor: not-allowed; }
 
 /* Cancelled notification messages */
 .log.cancel {
@@ -112,7 +119,7 @@ html {
       position: absolute;
       width: 45px;
       height: 45px;
-      background: #cd5397d9;
+      background: #cd5397ff;
       border: 1px solid black;
       display: flex;
       justify-content: center;
@@ -136,28 +143,34 @@ html {
       .nb-dice-wrap .nb-dice div.dice-front {
         transform: translateZ(22.5px); }
   .nb-dice-wrap#nb-dice-4 .nb-dice div {
-    background: rgba(70, 182, 217, 0.91); }
-  .nb-dice-wrap span.tetromino {
-    display: inline-block;
-    width: 1.5em;
-    height: 1.5em;
-    background-repeat: no-repeat;
-    background-position: center center; }
-    .nb-dice-wrap span.tetromino.tetromino-I {
-      background-image: url("img/tetromino-I.svg");
-      background-size: 80% auto; }
-    .nb-dice-wrap span.tetromino.tetromino-L {
-      background-image: url("img/tetromino-L.svg");
-      background-size: auto 75%; }
-    .nb-dice-wrap span.tetromino.tetromino-O {
-      background-image: url("img/tetromino-O.svg");
-      background-size: 60% auto; }
-    .nb-dice-wrap span.tetromino.tetromino-S {
-      background-image: url("img/tetromino-S.svg");
-      background-size: auto 75%; }
-    .nb-dice-wrap span.tetromino.tetromino-T {
-      background-image: url("img/tetromino-T.svg");
-      background-size: 80% auto; }
+    background: #46b6d9; }
+
+span.tetromino {
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  background-repeat: no-repeat;
+  background-position: center center; }
+  span.tetromino.tetromino-I {
+    background-image: url("img/tetromino-I.svg");
+    background-size: 80% auto; }
+  span.tetromino.tetromino-L {
+    background-image: url("img/tetromino-L.svg");
+    background-size: auto 75%; }
+  span.tetromino.tetromino-O {
+    background-image: url("img/tetromino-O.svg");
+    background-size: 60% auto; }
+  span.tetromino.tetromino-S {
+    background-image: url("img/tetromino-S.svg");
+    background-size: auto 75%; }
+  span.tetromino.tetromino-T {
+    background-image: url("img/tetromino-T.svg");
+    background-size: 80% auto; }
+
+.dice-content {
+  display: block;
+  font-weight: bold;
+  font-size: 20px; }
 
 #darkmode-switch .checkbox {
   opacity: 0;
@@ -508,9 +521,7 @@ html.darkmode {
     .sheet-wrapper .sheet-top .nd-cell[data-row='13'] {
       box-shadow: 0 0 0 1px #f2247b; }
     .sheet-wrapper .sheet-top .nd-cell[data-row='11'] {
-      border-bottom: 2px solid #f2247b;
-      position: relative;
-      z-index: 2; }
+      border-bottom: 2px solid #f2247b; }
     .sheet-wrapper .sheet-top .nd-cell::before {
       content: attr(data-n);
       font-family: 'Press Start 2P';
@@ -959,7 +970,7 @@ html.darkmode {
   position: absolute;
   top: 27px;
   left: 27px;
-  z-index: 2;
+  z-index: 3;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 4px;
@@ -1037,7 +1048,8 @@ html.darkmode {
       border-radius: 10px;
       z-index: 2;
       opacity: 0;
-      transition: opacity 0.7s; }
+      transition: opacity 0.7s;
+      pointer-events: none; }
     #board #dice-holder.inactive::before {
       opacity: 1; }
     #board #dice-holder .block-tile {

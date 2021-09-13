@@ -12,6 +12,14 @@ use NUMDROP\Managers\Scribbles;
  */
 trait ConfirmWaitTrait
 {
+  function stConfirmTurn($player)
+  {
+    if ($player->getPref(CONFIRM) == CONFIRM_DISABLED) {
+      StateMachine::nextState('confirm');
+      return true; // Acknowledge we changed the state to make sure it won't send the args for this one
+    }
+  }
+
   function actCancelTurn()
   {
     StateMachine::checkAction('actRestart');
@@ -56,7 +64,9 @@ trait ConfirmWaitTrait
     $scribbles = Scribbles::getLastAdded();
     // Update scores
     Globals::incCurrentTurn();
-    $scores = Players::getAll()->map(function($player){ return $player->updateScore(); });
+    $scores = Players::getAll()->map(function ($player) {
+      return $player->updateScore();
+    });
     Notifications::updatePlayersData($scribbles, $scores);
 
     $newState = $this->isEndOfGame() ? 'endGame' : 'newTurn';

@@ -29,6 +29,12 @@ define([
   let DARK_MODE = 100;
   let DARK_MODE_DISABLED = 1;
   let DARK_MODE_ENABLED = 2;
+
+  const CONFIRM = 101;
+  const CONFIRM_TIMER = 1;
+  const CONFIRM_ENABLED = 2;
+  const CONFIRM_DISABLED = 3;
+
   const SCORING_COLS = {
     10: 'endoflines',
     11: 'identical',
@@ -50,6 +56,7 @@ define([
         ['updatePlayersData', 1500],
       ];
       this._listeningCells = [];
+      this._isTetrominoFitting = false;
 
       // Fix mobile viewport (remove CSS zoom)
       this.default_viewport = 'width=875';
@@ -105,7 +112,10 @@ define([
       // Add block tiles
       this.gamedatas.blocks.forEach((block, i) => {
         if (block.status != 2) {
-          dojo.place(`<div class='block-tile' id='block-tile-${i}' data-id='${block.id}'></div>`, `block-tile-holder-${i}`);
+          dojo.place(
+            `<div class='block-tile' id='block-tile-${i}' data-id='${block.id}'></div>`,
+            `block-tile-holder-${i}`,
+          );
           if (block.status == 1) {
             this.triggerBlock(i);
           }
@@ -192,16 +202,16 @@ define([
         return;
       }
 
-      // > 0 number => this is a number in the grid of the player
-      if (scribble.number > 0) {
+      // >= 0 number => this is a number in the grid of the player
+      if (scribble.number >= 0) {
         this.setCellContent(cell, scribble.number, scribble.turn);
       }
-      // 0 => circled stuff
-      else if (scribble.number == 0) {
+      // -1 => circled stuff
+      else if (scribble.number == -1) {
         cell.setAttribute('data-circled', scribble.turn);
       }
-      // -1 => X
-      else if (scribble.number == -1) {
+      // -2 => X
+      else if (scribble.number == -2) {
         this.setCellContent(cell, '☓', scribble.turn);
       }
     },
@@ -378,7 +388,10 @@ define([
     notif_updatePlayersData(n) {
       debug('Notif: update players data after resynch');
 
-      this.forEachPlayer((player) => (player.scores = n.args.scores[player.id]));
+      this.forEachPlayer((player) => {
+        player.scores = n.args.scores[player.id];
+        this.highlightScoringCombinations(player.id);
+      });
       this.updateScores();
       n.args.scribbles.forEach((scribble) => this.addScribble(scribble));
     },
@@ -457,7 +470,9 @@ define([
     displayBasicInfo(args) {
       // Add an UNDO button if there is something to cancel
       if (args.cancelable && !$('buttonCancelTurn')) {
-        this.addSecondaryActionButton('buttonCancelTurn', _('Restart turn'), () => this.takeAction('actRestart'));
+        this.addSecondaryActionButton('buttonCancelTurn', _('Restart turn'), () =>
+          this.takeAction('actRestart', {}, false),
+        );
       }
     },
 
@@ -470,14 +485,11 @@ define([
       this.displayBasicInfo(args);
       this.addPrimaryActionButton('buttonConfirmAction', _('Confirm'), () => this.takeAction('actConfirmTurn'));
 
-      /*
       // Launch timer on button depending on pref
       var pref = 1;
-      if(this.prefs[CONFIRM].value == CONFIRM_DISABLED) pref = 0;
-      if(this.prefs[CONFIRM].value == CONFIRM_ENABLED) pref = 2;
-      debug(this.prefs, pref)
-      this.startActionTimer('buttonConfirmAction', 10, pref);
-*/
+      if (this.prefs[CONFIRM].value == CONFIRM_DISABLED) pref = 0;
+      if (this.prefs[CONFIRM].value == CONFIRM_ENABLED) pref = 2;
+      this.startActionTimer('buttonConfirmAction', 7, pref);
     },
 
     notif_clearTurn(n) {
@@ -510,7 +522,12 @@ define([
      * Create the dices and initialize them to their value
      */
     setupDices() {
-      let dices = ['1*3457', '12*456', '234*67', '123567'];
+      let dices = [
+        ['1', '*', '3', '4', '5', '7'],
+        ['1', '2', '*', '4', '5', '6'],
+        ['2', '3', '4', '*', '6', '7'],
+        ['1', '2', '3', '5', '6', '7'],
+      ];
       let shapeDice = ['*'];
       ['I', 'O', 'T', 'L', 'S'].forEach((shape) => {
         shapeDice.push(`<span class="tetromino tetromino-${shape}"></span>`);
@@ -520,6 +537,10 @@ define([
       // Create the dice
       dices.forEach((dice, i) => {
         this.place('tplDice', { id: i, values: dice }, 'dice-holder');
+        this.addTooltipHtml(
+          'nb-dice-content-' + i,
+          _('Die values :') + "<div class='dice-content'>" + dice.join(', ') + '</div>',
+        );
       });
       dojo.place('nb-dice-4', 'dice-holder', 'first'); // Put the shape dice first
 
@@ -535,7 +556,7 @@ define([
     tplDice(dice) {
       return `
       <div class="nb-dice-wrap" id="nb-dice-${dice.id}">
-          <div class="nb-dice">
+          <div class="nb-dice" id="nb-dice-content-${dice.id}">
               <div class="dice-front">${dice.values[0]}</div>
               <div class="dice-back">${dice.values[1]}</div>
               <div class="dice-top">${dice.values[2]}</div>
@@ -632,6 +653,23 @@ define([
       );
 
       this.toggleDarkMode(this.prefs[DARK_MODE].value == DARK_MODE_ENABLED);
+    },
+
+    /*
+     * Overwrite to allow private args
+     */
+    format_string_recursive(log, args) {
+      try {
+        if (log && args) {
+          if (args._private && args._private.n) {
+            args.n = args._private.n;
+          }
+        }
+      } catch (e) {
+        console.error(log, args, 'Exception thrown', e.stack);
+      }
+
+      return this.inherited(arguments);
     },
   });
 });
