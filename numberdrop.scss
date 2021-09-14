@@ -23,6 +23,18 @@
   font-display: swap;
 }
 
+@font-face {
+    font-family: 'Diamond Girl';
+    src: url('img/fonts/DiamondGirl.woff2') format('woff2'),
+        url('img/fonts/DiamondGirl.woff') format('woff'),
+        url('img/fonts/DiamondGirl.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
 .no-transition {
   transition: none !important;
 }
@@ -58,7 +70,7 @@ html {
   width: 100%;
   height: 4px;
   margin-bottom: 8px;
-  background: #58bae4;
+  background: #0099C5;
 }
 
 #page-title {

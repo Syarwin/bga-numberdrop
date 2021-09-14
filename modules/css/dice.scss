@@ -28,14 +28,16 @@ $diceSize: 45px;
       position: absolute;
       width: $diceSize;
       height: $diceSize;
-//      background: #cd5397d9;
-      background: #cd5397ff;
-      border: 1px solid black;
+      //      background: #cd5397d9;
+      background: #d90084;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 28px;
+      font-family: 'Diamond Girl';
+      color: white;
+      font-size: 32px;
       font-weight: bold;
+      text-shadow: 0px 0px 7px #ffffff94;
 
       &.dice-back {
         transform: translateZ(-$diceSize/2) rotateY(180deg);
@@ -59,45 +61,44 @@ $diceSize: 45px;
       &.dice-front {
         transform: translateZ($diceSize/2);
       }
+
+      .star {
+        font-size: 55px;
+        margin-top: 18px;
+      }
     }
   }
 
   &#nb-dice-4 .nb-dice div {
-//    background: rgba(70, 182, 217, 0.91);
+    //    background: rgba(70, 182, 217, 0.91);
     background: rgba(70, 182, 217, 1);
   }
 }
-
 
 span.tetromino {
   display: inline-block;
   width: 1.5em;
   height: 1.5em;
   background-repeat: no-repeat;
-  background-position: center center;
+  background-image: url('img/tetromino.png');
+  background-size: 500% 100%;
 
   &.tetromino-I {
-    background-image: url('img/tetromino-I.svg');
-    background-size: 80% auto;
+    background-position: 0% 0%;
   }
   &.tetromino-L {
-    background-image: url('img/tetromino-L.svg');
-    background-size: auto 75%;
+    background-position: 25% 0%;
   }
   &.tetromino-O {
-    background-image: url('img/tetromino-O.svg');
-    background-size: 60% auto;
+    background-position: 75% 0%;
   }
   &.tetromino-S {
-    background-image: url('img/tetromino-S.svg');
-    background-size: auto 75%;
+    background-position: 50% 0%;
   }
   &.tetromino-T {
-    background-image: url('img/tetromino-T.svg');
-    background-size: 80% auto;
+    background-position: 100% 0%;
   }
 }
-
 
 .dice-content {
   display: block;

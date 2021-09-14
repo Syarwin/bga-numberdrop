@@ -186,7 +186,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
         });
       }
 
-      dojo.attr('btnConfirmTetromino', 'disabled', this._isTetrominoFitting ? '' : 'disabled');
+      if($('btnConfirmTetromino')){
+        dojo.attr('btnConfirmTetromino', 'disabled', this._isTetrominoFitting ? '' : 'disabled');
+      }
     },
 
     /**

@@ -43,7 +43,7 @@
   .sheet-top {
     .grid-wrapper {
       padding: 16px;
-      width: 272px;
+      width: 267px;
       background: white;
       background-clip: padding-box;
       border: 5px solid transparent;
@@ -59,14 +59,13 @@
         z-index: -1;
         margin: -5px;
         border-radius: inherit;
-        background: linear-gradient(to bottom, #f2247b, #00bdd0);
+        background: linear-gradient(to bottom, #d90084, #0099c5);
       }
 
       .nd-grid {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
         border-collapse: collapse;
-        grid-gap: 1px;
       }
     }
 
@@ -75,7 +74,6 @@
       padding: 21px 0px;
       margin-left: 10px;
       display: grid;
-      grid-gap: 1px;
       border-collapse: collapse;
       position: relative;
 
@@ -83,6 +81,7 @@
         background: none !important;
 
         &::before {
+          font-family: 'Press Start 2P';
           font-size: 13px;
           color: #b7b7b7;
         }
@@ -117,41 +116,47 @@
     }
 
     .nd-cell {
-      width: 36px;
-      height: 36px;
-      border: 1px solid transparent;
-      box-shadow: 0 0 0 1px #5ac0ec;
+      width: 37px;
+      height: 37px;
+      border-bottom: 1px solid #0099c5;
+      border-right: 1px solid #0099c5;
       display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
 
-      &.active {
-        background: #d5d5d5;
+      &[data-col='0'],
+      &[data-col='10'] {
+        border-left: 1px solid #0099c5;
+      }
+      &[data-row='13'] {
+        border-top: 1px solid #d90084;
       }
 
       @for $i from 11 to 14 {
         &[data-row='#{$i}'] {
-          box-shadow: 0 0 0 1px #f2247b;
+          border-color: #d90084;
         }
       }
 
       &[data-row='11'] {
-        border-bottom: 2px solid #f2247b;
-//        position: relative;
-//        z-index: 2;
+        border-bottom: 2px solid #d90084;
+      }
+
+      &.active {
+        background: #d5d5d5;
       }
 
       &::before {
         content: attr(data-n);
-        font-family: 'Press Start 2P';
+        font-family: 'Diamond Girl';
+        font-size: 32px;
         font-weight: bold;
-        font-size: 20px;
       }
 
       &.selected {
         background-color: rgba(0, 253, 253, 0.68);
-        color: #cc1fa9;
+        color: #d90084;
       }
 
       &.selectable {
@@ -173,7 +178,7 @@
         }
       }
 
-      &.border-0 {
+      &[data-row="13"].border-0 {
         border-top: 1px solid black;
       }
       &.border-1 {
@@ -182,7 +187,7 @@
       &.border-2 {
         border-bottom: 1px solid black;
       }
-      &.border-3 {
+      &[data-col="0"].border-3 {
         border-left: 1px solid black;
       }
     }
@@ -247,7 +252,7 @@
               align-items: center;
               background: url('img/combination-columns.png');
               background-size: 200% 600%;
-              box-shadow: none;
+              border: none;
 
               @for $i from 1 to 6 {
                 &:nth-child(#{$i}) {
@@ -359,7 +364,7 @@
 
         .sheet-bonus-bonus.sheet-bonus-bonus {
           position: absolute;
-          top: 257px;
+          top: 250px;
           left: 146px;
 
           .sheet-bonus-grid {
@@ -384,11 +389,18 @@
     align-items: center;
 
     .sheet-player-name {
-      width: 315px;
+      width: 307px;
       text-align: center;
-      font-family: 'Press Start 2P';
-      font-weight: bold;
-      font-size: 20px;
+
+      .letter {
+        font-family: 'Press Start 2P';
+        font-weight: bold;
+        font-size: 24px;
+        text-transform: uppercase;
+        text-decoration: underline #0099c5;
+        margin: 0px 5px;
+        vertical-align: middle;
+      }
 
       span.robot {
         display: inline-block;
@@ -397,6 +409,7 @@
         height: 54px;
         background-size: 100% 100%;
         vertical-align: middle;
+        margin-right: 10px;
       }
     }
 

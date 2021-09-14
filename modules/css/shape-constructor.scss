@@ -62,6 +62,7 @@
       div {
         background-repeat: no-repeat;
         background-position: center center;
+        border: 1px solid #0099c5;
 
         &#control-rotate-left {
           background-image: url('img/rotate-left.svg');
@@ -109,6 +110,7 @@
       margin: 0px auto;
 
       .nd-cell {
+        border: none;
         box-shadow: 0 0 0 1px #b9bcbd;
         position: relative;
 

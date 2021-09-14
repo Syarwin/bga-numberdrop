@@ -33,6 +33,11 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
             );
             if (neighbour.length == 0) {
               cellElt.classList.add('border-' + dirIndex);
+
+              let cellNeighbour = this.getCell(parseInt(cell.row) + dir[0], parseInt(cell.col) + dir[1], pId);
+              if (cellNeighbour != null) {
+                cellNeighbour.classList.add('border-' + ((dirIndex + 2) % 4));
+              }
             }
           });
         });
@@ -195,7 +200,6 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       this.gamedatas.players[this.player_id].scores = n.args.scores;
       this.updateScores();
     },
-
 
     /**
      * Received when the player finish a line

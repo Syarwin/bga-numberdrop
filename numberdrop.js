@@ -190,6 +190,15 @@ define([
         player.scribbles.forEach((scribble) => this.addScribble(scribble));
         this.highlightScoringCombinations(player.id);
       });
+
+      if(!this.isSpectator){
+        this.addTooltip('control-rotate-left', _('Rotate the tetromino in the anti-clockwise direction'), '');
+        this.addTooltip('control-rotate-right', _('Rotate the tetromino in the clockwise direction'), '');
+        this.addTooltip('control-flip-horizontal', _('Mirror the tetromino along the horizontal axis'), '');
+        this.addTooltip('control-move-left', _('Move the tetromino one column to the left'), '');
+        this.addTooltip('control-move-right', _('Move the tetromino one column to the right'), '');
+        this.addTooltip('control-clear', _('Clear the tetromino to start building it again from scratch'), '');
+      }
     },
 
     /**
@@ -289,7 +298,10 @@ define([
 
         <div class="sheet-bottom">
           <div class="sheet-player-name" style="color:#${player.color}">
-            <span class="robot"></span> ${player.name}
+            <span class="robot"></span>
+            <span class="letter">${player.name[0]}</span>
+            <span class="letter">${player.name[1]}</span>
+            <span class="letter">${player.name[2]}</span>
           </div>
 
           <div class="sheet-player-scores">
@@ -390,10 +402,13 @@ define([
 
       this.forEachPlayer((player) => {
         player.scores = n.args.scores[player.id];
-        this.highlightScoringCombinations(player.id);
       });
       this.updateScores();
+      
       n.args.scribbles.forEach((scribble) => this.addScribble(scribble));
+      this.forEachPlayer((player) => {
+        this.highlightScoringCombinations(player.id);
+      });
     },
 
     /**************************************
@@ -523,12 +538,12 @@ define([
      */
     setupDices() {
       let dices = [
-        ['1', '*', '3', '4', '5', '7'],
-        ['1', '2', '*', '4', '5', '6'],
-        ['2', '3', '4', '*', '6', '7'],
+        ['1', '<span class="star">*</span>', '3', '4', '5', '7'],
+        ['1', '2', '<span class="star">*</span>', '4', '5', '6'],
+        ['2', '3', '4', '<span class="star">*</span>', '6', '7'],
         ['1', '2', '3', '5', '6', '7'],
       ];
-      let shapeDice = ['*'];
+      let shapeDice = ['<span class="star">*</span>'];
       ['I', 'O', 'T', 'L', 'S'].forEach((shape) => {
         shapeDice.push(`<span class="tetromino tetromino-${shape}"></span>`);
       });
