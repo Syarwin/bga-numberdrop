@@ -50,7 +50,7 @@ trait ScoreCombinationTrait
     $board = $player->getBoard();
     $combinations = Globals::getCombinations();
     $combination = $combinations[$player->getId()];
-    
+
     // Check the cells
     foreach ($combination as $cell) {
       $number = $board[$cell['row']][$cell['col']]['number'] ?? null;
@@ -119,6 +119,12 @@ trait ScoreCombinationTrait
       $scribbles[] = Scribbles::useCell($player, [
         'row' => $row,
         'col' => COL_BLOCK,
+      ]);
+
+      // Allow to see on DROP board the current status of DROPs
+      $scribbles[] = Scribbles::useCell($player, [
+        'row' => $row,
+        'col' => COL_BLOCK_STATUS,
       ]);
     }
 

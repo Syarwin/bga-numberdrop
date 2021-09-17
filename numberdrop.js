@@ -74,9 +74,9 @@ define([
       debug('SETUP', gamedatas);
       dojo.place("<div id='numberdrop-topbar'></div>", 'topbar', 'after');
 
+      this.setupBoard();
       this.setupScoreSheets();
       this.setupScores();
-      this.setupBoard();
       this.addDarkModeSwitch();
       this.updateTurnNumber();
       if (!this.isReadOnly()) {
@@ -137,6 +137,7 @@ define([
                 <div class="block-header">
                   <div class="block-header-bg"></div>
                   <div class="block-header-letter"></div>
+                  <svg viewBox="100 0 700 512" class="scribble-circle hidden"><use class="scribble-path" href="#scribble-circle-svg" /></svg>
                 </div>
                 <div id='block-tile-holder-${i}' class="block-tile-holder"></div>
               </div>
@@ -332,7 +333,7 @@ define([
         row = row.row;
       }
 
-      if (col > 10) {
+      if (col > 10 && col < 20) {
         let cols = {
           11: 'identical',
           12: 'sequence',
@@ -343,7 +344,7 @@ define([
       }
 
       pId = pId || this.player_id;
-      return $(`cell-${pId}-${row}-${col}`);
+      return col == 20? $(`block-${row}`) : $(`cell-${pId}-${row}-${col}`);
     },
 
     getCellObj(cell) {
@@ -404,7 +405,7 @@ define([
         player.scores = n.args.scores[player.id];
       });
       this.updateScores();
-      
+
       n.args.scribbles.forEach((scribble) => this.addScribble(scribble));
       this.forEachPlayer((player) => {
         this.highlightScoringCombinations(player.id);

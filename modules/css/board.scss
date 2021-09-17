@@ -43,7 +43,7 @@
   #blocks-container {
     display: flex;
     flex-flow: column;
-    background-color: #0099C5;
+    background-color: #0099c5;
     height: 370px;
     width: 160px;
     padding: 10px 10px;
@@ -85,6 +85,16 @@
           top: 30px;
           left: 30px;
         }
+      }
+
+      &[data-n='☓'] .block-header::before {
+        content: '☓';
+        font-family: 'Diamond Girl';
+        font-size: 45px;
+        position: absolute;
+        z-index: 3;
+        left: 27px;
+        top: 10px;
       }
 
       @for $i from 1 to 6 {

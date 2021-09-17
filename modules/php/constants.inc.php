@@ -56,3 +56,5 @@ define('COL_SAME', 11);
 define('COL_SEQUENCE', 12);
 define('COL_BLOCK', 13);
 define('COL_BONUS', 14);
+
+define('COL_BLOCK_STATUS', 20);

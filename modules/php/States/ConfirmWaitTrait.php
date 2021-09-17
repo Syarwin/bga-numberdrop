@@ -52,24 +52,37 @@ trait ConfirmWaitTrait
     // Any block to finish ?
     $block = Blocks::getTriggered();
     if ($block !== null) {
-      Blocks::finish($block);
-      $scribbles = [];
-      foreach (Players::getAll() as $player) {
-        $scribbles[] = Scribbles::addNumber($player, $block, COL_BLOCK, CROSS);
-      }
-      Notifications::finishBlock($block, Scribbles::get($scribbles));
+      $this->disableBlock($block);
     }
 
     // Update scribbles
     $scribbles = Scribbles::getLastAdded();
     // Update scores
-    Globals::incCurrentTurn();
+    $turn = Globals::incCurrentTurn();
     $scores = Players::getAll()->map(function ($player) {
       return $player->updateScore();
     });
     Notifications::updatePlayersData($scribbles, $scores);
 
+    // Are there any blocks that are defended by everyone ?
+    $uselessBlocks = Blocks::getUselessBlocks();
+    foreach($uselessBlocks as $block){
+      $this->disableBlock($block, $turn - 1);
+    }
+
+
     $newState = $this->isEndOfGame() ? 'endGame' : 'newTurn';
     $this->gamestate->nextState($newState);
+  }
+
+  function disableBlock($block, $turn = null)
+  {
+    Blocks::finish($block);
+    $scribbles = [];
+    foreach (Players::getAll() as $player) {
+      $scribbles[] = Scribbles::addNumber($player, $block, COL_BLOCK, CROSS, $turn);
+    }
+    $scribbles[] = Scribbles::addNumber(null, $block, COL_BLOCK_STATUS, CROSS, $turn);
+    Notifications::finishBlock($block, Scribbles::get($scribbles));
   }
 }

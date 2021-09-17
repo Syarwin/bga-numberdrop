@@ -38,6 +38,25 @@ class Blocks
     return $blockMin == 10 ? null : $blockMin;
   }
 
+  public function getUselessBlocks()
+  {
+    $blocks = [];
+    foreach ([0, 1, 2, 3, 4] as $blockId) {
+      $useless = true;
+      foreach (Players::getAll() as $player) {
+        $columns = $player->getScoringColumns();
+        if ($columns[COL_BLOCK][$blockId] !== true) {
+          $useless = false;
+        }
+      }
+      if ($useless) {
+        $blocks[] = $blockId;
+      }
+    }
+
+    return $blocks;
+  }
+
   public function getTargets()
   {
     $blockId = self::getNextActiveBlock();
@@ -65,7 +84,6 @@ class Blocks
     $blocks[$block]['status'] = 2;
     Globals::setBlocks($blocks);
   }
-
 
   public function getTriggered()
   {

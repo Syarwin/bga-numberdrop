@@ -10,7 +10,9 @@
 }
 
 [data-circled] {
-  .scribble-path {
+  .scribble-path,
+  .scribble-circle {
+    display: block;
     visibility: visible;
     animation: drawScribble 2s cubic-bezier(0.215, 0.61, 0.355, 1);
     animation-fill-mode: forwards;

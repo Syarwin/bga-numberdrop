@@ -486,7 +486,6 @@ html.darkmode {
       background: none !important; }
       .sheet-wrapper .sheet-top .end-of-lines .nd-cell::before {
         font-family: 'Press Start 2P';
-        letter-spacing: -2px;
         font-size: 13px;
         color: #b7b7b7; }
       .sheet-wrapper .sheet-top .end-of-lines .nd-cell svg {
@@ -1025,7 +1024,9 @@ html.darkmode {
     stroke-linecap: round;
     visibility: hidden; }
 
-[data-circled] .scribble-path {
+[data-circled] .scribble-path,
+[data-circled] .scribble-circle {
+  display: block;
   visibility: visible;
   animation: drawScribble 2s cubic-bezier(0.215, 0.61, 0.355, 1);
   animation-fill-mode: forwards; }
@@ -1076,7 +1077,7 @@ html.darkmode {
   #board #blocks-container {
     display: flex;
     flex-flow: column;
-    background-color: #0099C5;
+    background-color: #0099c5;
     height: 370px;
     width: 160px;
     padding: 10px 10px;
@@ -1111,6 +1112,14 @@ html.darkmode {
           position: absolute;
           top: 30px;
           left: 30px; }
+      #board #blocks-container .block[data-n='☓'] .block-header::before {
+        content: '☓';
+        font-family: 'Diamond Girl';
+        font-size: 45px;
+        position: absolute;
+        z-index: 3;
+        left: 27px;
+        top: 10px; }
       #board #blocks-container .block:nth-child(1) .block-header .block-header-letter {
         background-position-y: 0%; }
       #board #blocks-container .block:nth-child(2) .block-header .block-header-letter {
