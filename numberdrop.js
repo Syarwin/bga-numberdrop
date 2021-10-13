@@ -53,7 +53,7 @@ define([
         ['clearTurn', 10],
         ['blockTriggered', 1000],
         ['finishBlock', 1000],
-        ['updatePlayersData', 1500],
+        ['updatePlayersData', null],
       ];
       this._listeningCells = [];
       this._isTetrominoFitting = false;
@@ -192,7 +192,7 @@ define([
         this.highlightScoringCombinations(player.id);
       });
 
-      if(!this.isSpectator){
+      if (!this.isSpectator) {
         this.addTooltip('control-rotate-left', _('Rotate the tetromino in the anti-clockwise direction'), '');
         this.addTooltip('control-rotate-right', _('Rotate the tetromino in the clockwise direction'), '');
         this.addTooltip('control-flip-horizontal', _('Mirror the tetromino along the horizontal axis'), '');
@@ -344,7 +344,7 @@ define([
       }
 
       pId = pId || this.player_id;
-      return col == 20? $(`block-${row}`) : $(`cell-${pId}-${row}-${col}`);
+      return col == 20 ? $(`block-${row}`) : $(`cell-${pId}-${row}-${col}`);
     },
 
     getCellObj(cell) {
@@ -410,6 +410,9 @@ define([
       this.forEachPlayer((player) => {
         this.highlightScoringCombinations(player.id);
       });
+
+      let nPlayers = Object.keys(this.gamedatas.players).length;
+      this.notifqueue.setSynchronousDuration(nPlayers == 1 ? 10 : 1500);
     },
 
     /**************************************
