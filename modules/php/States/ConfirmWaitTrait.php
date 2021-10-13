@@ -27,7 +27,9 @@ trait ConfirmWaitTrait
     $player->restartTurn();
 
     $this->gamestate->setPlayersMultiactive([$player->getId()], '');
-    StateMachine::nextState('restart');
+
+    $block = Blocks::getTriggered();
+    StateMachine::nextState($block === null? 'restart' : 'restartBlock');
   }
 
   function actConfirmTurn()

@@ -137,6 +137,7 @@ $machinestates = [
     'transitions' => [
       'confirm' => ST_WAIT_OTHERS,
       'restart' => ST_DROP_SHAPE,
+      'restartBlock' => ST_DROP_BLOCK,
     ],
   ],
 

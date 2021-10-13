@@ -20,8 +20,8 @@ trait NewTurnTrait
     // Throw the dices
     $dices = ['1*3457', '12*456', '234*67', '123567', 'IOTLS*'];
     $result = [];
-    foreach($dices as $dice){
-      $r = bga_rand(0,5);
+    foreach ($dices as $dice) {
+      $r = bga_rand(0, 5);
       $result[] = $dice[$r];
     }
     Globals::setDices($result);
@@ -29,20 +29,26 @@ trait NewTurnTrait
 
     // Check block
     $block = Blocks::getNextActiveBlock();
-    if(in_array('*', $result) && !is_null($block) && !empty(Blocks::getTargets())){
+    if (in_array('*', $result) && !is_null($block) && !empty(Blocks::getTargets())) {
       Notifications::blockTriggered($block);
       Blocks::trigger($block);
       StateMachine::initPrivateStates(ST_BLOCK_PLAYER_TURN);
-      $this->gamestate->setPlayersMultiactive(Blocks::getTargets(), '');
+      $ids = Blocks::getTargets();
+      foreach ($ids as $pId) {
+        self::giveExtraTime($pId);
+      }
+      $this->gamestate->setPlayersMultiactive($ids, '');
       $this->gamestate->nextState('block');
     } else {
       $ids = Players::getAll()->getIds();
+      foreach ($ids as $pId) {
+        self::giveExtraTime($pId);
+      }
       $this->gamestate->setPlayersMultiactive($ids, '');
       StateMachine::initPrivateStates(ST_PLAYER_TURN);
       $this->gamestate->nextState('play');
     }
   }
-
 
   /*
    * The arg depends on the private state of each player
@@ -59,7 +65,7 @@ trait NewTurnTrait
    */
   function argPrivatePlayerTurn($player)
   {
-    if($player->isZombie()){
+    if ($player->isZombie()) {
       return [];
     }
 
