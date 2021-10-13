@@ -47,9 +47,9 @@ $gameinfos = [
   // Each parNUMDROPaph must be wrapped with totranslate() for translation and should not contain html (plain text without formatting).
   // A good length for this text is between 100 and 150 words (about 6 to 9 lines on a standard display)
   'presentation' => [
-    totranslate('Number Drop is a Tetris style pencil and pencil game played with numbers.'),
+    totranslate('Number Drop is a Tetris style paper and pencil game played with numbers.'),
     totranslate(
-      "Players rill 4 standard 1 and 1 shape die to determine the numbers they must fill in on their score sheet and the shape they must fill in. Players also have 5 block tiles they can use to block another's stack."
+      "Players roll 4 standard dice and 1 shape die to determine the numbers they must fill in on their score sheet and the shape they must fill in. Players also have 5 block tiles they can use to block another's stack."
     ),
     totranslate('As in Tetris, the game ends when a stack reaches the top. The player with the highest score wins.'),
   ],
