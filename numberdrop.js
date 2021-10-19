@@ -54,6 +54,7 @@ define([
         ['blockTriggered', 1000],
         ['finishBlock', 1000],
         ['updatePlayersData', null],
+        ['slideDown', 800],
       ];
       this._listeningCells = [];
       this._isTetrominoFitting = false;
@@ -105,25 +106,41 @@ define([
      **************************************/
     setupBoard() {
       this.place('tplBoard', {}, 'main-holder');
+      let isSolo = Object.keys(this.gamedatas.players).length == 1;
 
       // Setup dices
       this.setupDices();
 
+      // Setup blocks
+      this.setupBlocks();
+
+      $('board').classList.toggle('solo', isSolo);
+      $('ebd-body').classList.toggle('solo', isSolo);
+    },
+
+    setupBlocks(destroy = false) {
+      let isSolo = Object.keys(this.gamedatas.players).length == 1;
+
       // Add block tiles
       this.gamedatas.blocks.forEach((block, i) => {
-        if (block.status != 2) {
+        dojo.destroy('block-tile-' + i);
+
+        block.col = block.col || 0;
+        if (block.status != 2 || (isSolo && block.col < 4)) {
           dojo.place(
             `<div class='block-tile' id='block-tile-${i}' data-id='${block.id}'></div>`,
-            `block-tile-holder-${i}`,
+            `block-tile-holder-${i}-${block.col}`,
           );
           if (block.status == 1) {
-            this.triggerBlock(i);
+            this._blockToTrigger = i;
           }
         }
       });
     },
 
     tplBoard() {
+      let isSolo = Object.keys(this.gamedatas.players).length == 1;
+      let columns = isSolo ? [0, 1, 2, 3, 4] : [0];
       return (
         `
       <div id="board">
@@ -132,14 +149,21 @@ define([
           ` +
         [0, 1, 2, 3, 4]
           .map(
-            (i) => `
+            (i) =>
+              `
               <div id="block-${i}" class="block">
                 <div class="block-header">
                   <div class="block-header-bg"></div>
                   <div class="block-header-letter"></div>
                   <svg viewBox="100 0 700 512" class="scribble-circle hidden"><use class="scribble-path" href="#scribble-circle-svg" /></svg>
                 </div>
-                <div id='block-tile-holder-${i}' class="block-tile-holder"></div>
+                <div id='block-tile-holder-${i}' class="block-tile-holder">
+                ` +
+              columns
+                .map((j) => `<div id='block-tile-holder-${i}-${j}' class="block-tile-holder-cell"></div>`)
+                .join('') +
+              `
+                </div>
               </div>
             `,
           )
@@ -164,7 +188,12 @@ define([
 
     notif_finishBlock(n) {
       debug('Notif: finish block', n);
-      dojo.destroy('block-tile-' + n.args.block);
+      if (
+        Object.keys(this.gamedatas.players).length > 1 ||
+        $('block-tile-' + n.args.block).parentNode.id == 'dice-holder'
+      ) {
+        dojo.destroy('block-tile-' + n.args.block);
+      }
       $('dice-holder').classList.remove('inactive');
 
       n.args.scribbles.forEach((scribble) => this.addScribble(scribble));
@@ -478,6 +507,7 @@ define([
     },
 
     onUpdateActivityPlaceStartingNumber(args, active) {
+      debug('Change of activity', args, active);
       if (!active) {
         dojo.empty('customActions');
       }
@@ -519,6 +549,11 @@ define([
         cell.removeAttribute('data-n');
       });
 
+      [...$('blocks-container').querySelectorAll(`[data-turn="${n.args.turn}"]`)].forEach((cell) => {
+        cell.removeAttribute('data-turn');
+        cell.removeAttribute('data-n');
+      });
+
       [...grid.querySelectorAll(`[data-circled="${n.args.turn}"]`)].forEach((cell) => {
         cell.removeAttribute('data-circled');
         cell.classList.remove('border-0', 'border-1', 'border-2', 'border-3');
@@ -527,10 +562,37 @@ define([
       this.highlightScoringCombinations(this.player_id);
       this.gamedatas.players[this.player_id].scores = n.args.scores;
       this.updateScores();
+
+      let isSolo = Object.keys(this.gamedatas.players).length == 1;
+      if (isSolo) {
+        this.gamedatas.blocks = n.args.blocks;
+        this.setupBlocks(true);
+      }
     },
 
     onEnteringStateWaitOthers(args) {
       this.displayBasicInfo(args);
+    },
+
+    /**************************************
+     **************************************
+     ************* SOLO MODE **************
+     **************************************
+     **************************************/
+    onEnteringStateSlideDown(args) {
+      args.tiles.forEach((tileId) =>
+        this.onClick('block-tile-' + tileId, () => this.takeAction('actChooseTile', { tileId })),
+      );
+    },
+
+    notif_slideDown(n) {
+      debug('Notif: sliding down a tile', n);
+      let tileId = n.args.tile;
+      dojo.query('.block-tile').removeClass('selectable');
+      this.slide('block-tile-' + tileId, 'block-tile-holder-' + tileId + '-' + n.args.col, {
+        duration: 580,
+        pos: { x: -53, y: 0 },
+      });
     },
 
     /**************************************

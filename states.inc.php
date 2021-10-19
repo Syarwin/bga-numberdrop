@@ -55,6 +55,7 @@ $machinestates = [
     'transitions' => [
       'block' => ST_BLOCK_PLAYER_TURN,
       'play' => ST_PLAYER_TURN,
+      'solo' => ST_SOLO_PLAYER_TURN,
     ],
   ],
 
@@ -81,6 +82,7 @@ $machinestates = [
     'transitions' => [
       'scoreCombination' => ST_SCORE_COMBINATION,
       'restart' => ST_DROP_SHAPE,
+      'restartSolo' => ST_SLIDE_DOWN,
     ],
   ],
 
@@ -94,33 +96,64 @@ $machinestates = [
     'transitions' => [
       'confirmWait' => ST_CONFIRM_TURN,
       'restart' => ST_DROP_SHAPE,
+      'restartSolo' => ST_SLIDE_DOWN,
     ],
   ],
-
 
   /****************************
    ******* DROP a DROP ********
    ****************************/
-   ST_BLOCK_PLAYER_TURN => [
-     'name' => 'playerTurn',
-     'description' => clienttranslate('Waiting for other players to end their turn.'),
-     'descriptionmyturn' => '', // Won't be displayed anyway
-     'type' => 'multipleactiveplayer',
-     'parallel' => ST_DROP_BLOCK, // Allow to have parallel flow for each player
-     'args' => 'argPlayerTurn',
-     'transitions' => ['applyTurns' => ST_APPLY_TURNS],
-   ],
+  ST_BLOCK_PLAYER_TURN => [
+    'name' => 'playerTurn',
+    'description' => clienttranslate('Waiting for other players to end their turn.'),
+    'descriptionmyturn' => '', // Won't be displayed anyway
+    'type' => 'multipleactiveplayer',
+    'parallel' => ST_DROP_BLOCK, // Allow to have parallel flow for each player
+    'args' => 'argPlayerTurn',
+    'transitions' => ['applyTurns' => ST_APPLY_TURNS],
+  ],
 
-   ST_DROP_BLOCK => [
-     'name' => 'dropBlock',
-     'descriptionmyturn' => clienttranslate('${you} must drop the block'),
-     'type' => 'private',
-     'args' => 'argDropBlock',
-     'possibleactions' => ['actConstructTetromino', 'actConfirmTetrominoBlock'],
-     'transitions' => [
-       'confirmWait' => ST_CONFIRM_TURN,
-     ],
-   ],
+  ST_DROP_BLOCK => [
+    'name' => 'dropBlock',
+    'descriptionmyturn' => clienttranslate('${you} must drop the block'),
+    'type' => 'private',
+    'args' => 'argDropBlock',
+    'possibleactions' => ['actConstructTetromino', 'actConfirmTetrominoBlock'],
+    'transitions' => [
+      'confirmWait' => ST_CONFIRM_TURN,
+      'restartSolo' => ST_SLIDE_DOWN,
+      'slide' => ST_SLIDE_DOWN,
+      'play' => ST_DROP_SHAPE,
+    ],
+  ],
+
+  /****************************
+   ******** SOLO MODE *********
+   ****************************/
+  ST_SOLO_PLAYER_TURN => [
+    'name' => 'playerTurn',
+    'description' => clienttranslate('Waiting for other players to end their turn.'),
+    'descriptionmyturn' => '', // Won't be displayed anyway
+    'type' => 'multipleactiveplayer',
+    'parallel' => ST_SLIDE_DOWN, // Allow to have parallel flow for each player
+    'args' => 'argPlayerTurn',
+    'transitions' => ['applyTurns' => ST_APPLY_TURNS],
+  ],
+
+  ST_SLIDE_DOWN => [
+    'name' => 'slideDown',
+    'descriptionmyturn' => clienttranslate('${you} must slide a tile'),
+    'type' => 'private',
+    'args' => 'argSlideDown',
+    'action' => 'stSlideDown',
+    'possibleactions' => ['actChooseTile'],
+    'transitions' => [
+      'play' => ST_DROP_SHAPE,
+      'tile' => ST_SLIDE_DOWN,
+      'block' => ST_DROP_BLOCK,
+      'restartSolo' => ST_SLIDE_DOWN,
+    ],
+  ],
 
   //////////////////////////
   ///// CONFIRM / END //////
@@ -138,6 +171,7 @@ $machinestates = [
       'confirm' => ST_WAIT_OTHERS,
       'restart' => ST_DROP_SHAPE,
       'restartBlock' => ST_DROP_BLOCK,
+      'restartSolo' => ST_SLIDE_DOWN,
     ],
   ],
 

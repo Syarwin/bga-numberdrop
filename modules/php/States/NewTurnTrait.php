@@ -27,6 +27,17 @@ trait NewTurnTrait
     Globals::setDices($result);
     Notifications::throwDices($result, $turn);
 
+    if(Globals::isSolo()){
+      Globals::setSoloStatus(0);
+      Globals::setBackupBlocks(Globals::getBlocks());
+      $pId = self::getActivePlayerId();
+      StateMachine::initPrivateStates(ST_SOLO_PLAYER_TURN);
+      $this->gamestate->setPlayersMultiactive([$pId], '');
+      self::giveExtraTime($pId);
+      $this->gamestate->nextState('solo');
+      return;
+    }
+
     // Check block
     $block = Blocks::getNextActiveBlock();
     if (in_array('*', $result) && !is_null($block) && !empty(Blocks::getTargets())) {

@@ -110,7 +110,8 @@ html {
   height: 90px;
   display: flex;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  flex-basis: 50%; }
   .nb-dice-wrap#nb-dice-4 {
     flex-basis: 100%; }
   .nb-dice-wrap.used {
@@ -1045,6 +1046,8 @@ html.darkmode {
   flex-direction: column;
   width: 180px;
   order: 2; }
+  #board.solo {
+    width: 250px; }
   #board #dice-holder {
     display: flex;
     flex-flow: row;
@@ -1074,6 +1077,8 @@ html.darkmode {
       opacity: 1; }
     #board #dice-holder .block-tile {
       z-index: 3; }
+  #board.solo #dice-holder {
+    width: 250px; }
   #board #blocks-container {
     display: flex;
     flex-flow: column;
@@ -1133,13 +1138,49 @@ html.darkmode {
       #board #blocks-container .block .block-tile-holder {
         width: 70px;
         height: 70px;
-        position: relative; }
+        position: relative;
+        display: flex; }
+        #board #blocks-container .block .block-tile-holder .block-tile-holder-cell {
+          width: 17.5px;
+          height: 70;
+          border-left: 1px solid white;
+          box-sizing: border-box;
+          position: relative; }
+          #board #blocks-container .block .block-tile-holder .block-tile-holder-cell:last-of-type {
+            border-right: 1px solid white; }
+          #board #blocks-container .block .block-tile-holder .block-tile-holder-cell::after {
+            content: '>';
+            position: absolute;
+            left: 3px;
+            top: 28px;
+            font-family: 'Press Start 2P';
+            font-size: 11px;
+            color: white; }
+          #board #blocks-container .block .block-tile-holder .block-tile-holder-cell:first-of-type {
+            width: 70px; }
+            #board #blocks-container .block .block-tile-holder .block-tile-holder-cell:first-of-type::after {
+              display: none; }
+          #board #blocks-container .block .block-tile-holder .block-tile-holder-cell .block-tile {
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 2; }
+  #board.solo #blocks-container {
+    width: 230px;
+    background: #d90084; }
+    #board.solo #blocks-container .block {
+      background: #e8b1d2; }
+      #board.solo #blocks-container .block .block-tile-holder {
+        width: 140px; }
 
 .block-tile {
   width: 70px;
   height: 70px;
   background: url("img/drops-multi.jpg");
-  background-size: 500% 100%; }
+  background-size: 500% 100%;
+  box-sizing: border-box; }
+  .solo .block-tile {
+    background-image: url("img/drops-solo.jpg"); }
   .block-tile[data-id='0'] {
     background-position-x: 0%; }
   .block-tile[data-id='1'] {
@@ -1150,6 +1191,9 @@ html.darkmode {
     background-position-x: 75%; }
   .block-tile[data-id='4'] {
     background-position-x: 100%; }
+  .block-tile.selectable {
+    border: 2px dashed black;
+    cursor: pointer; }
 
 #board.horizontal {
   display: flex;

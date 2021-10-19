@@ -8,6 +8,7 @@ $diceSize: 45px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-basis: 50%;
 
   &#nb-dice-4 {
     flex-basis: 100%;

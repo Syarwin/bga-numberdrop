@@ -94,7 +94,7 @@ class Player extends \NUMDROP\Helpers\DB_Manager implements \JsonSerializable
 
   public function getScribbles()
   {
-    return Scribbles::getOfPlayer($this->id);
+    return array_merge(Scribbles::getOfPlayer($this->id), Scribbles::getOfPlayer(0));
   }
 
   public function addNumber($row, $col, $n, $turn = null)
@@ -208,6 +208,7 @@ class Player extends \NUMDROP\Helpers\DB_Manager implements \JsonSerializable
     $notifIds = Log::clearTurn($this->id);
     Scribbles::clearTurn($this->id);
     $scores = $this->getScores();
-    Notifications::clearTurn($this, $notifIds, $scores);
+    $blocks = Globals::getBlocks();
+    Notifications::clearTurn($this, $notifIds, $scores, $blocks);
   }
 }

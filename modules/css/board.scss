@@ -4,6 +4,10 @@
   width: 180px;
   order: 2;
 
+  &.solo {
+    width: 250px;
+  }
+
   #dice-holder {
     display: flex;
     flex-flow: row;
@@ -38,6 +42,10 @@
     .block-tile {
       z-index: 3;
     }
+  }
+
+  &.solo #dice-holder {
+    width: 250px;
   }
 
   #blocks-container {
@@ -107,6 +115,55 @@
         width: 70px;
         height: 70px;
         position: relative;
+        display: flex;
+
+        .block-tile-holder-cell {
+          width: 17.5px;
+          height: 70;
+          border-left: 1px solid white;
+          box-sizing: border-box;
+          position: relative;
+          &:last-of-type {
+            border-right: 1px solid white;
+          }
+
+          &::after {
+            content: '>';
+            position: absolute;
+            left: 3px;
+            top: 28px;
+            font-family: 'Press Start 2P';
+            font-size: 11px;
+            color: white;
+          }
+
+          &:first-of-type {
+            width: 70px;
+            &::after {
+              display: none;
+            }
+          }
+
+          .block-tile {
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 2;
+          }
+        }
+      }
+    }
+  }
+
+  &.solo #blocks-container {
+    width: 230px;
+    background: #d90084;
+
+    .block {
+      background: #e8b1d2;
+
+      .block-tile-holder {
+        width: 140px;
       }
     }
   }
@@ -117,11 +174,20 @@
   height: 70px;
   background: url('img/drops-multi.jpg');
   background-size: 500% 100%;
+  box-sizing: border-box;
+  .solo & {
+    background-image: url('img/drops-solo.jpg');
+  }
 
   @for $i from 0 to 5 {
     &[data-id='#{$i}'] {
       background-position-x: $i * 25%;
     }
+  }
+
+  &.selectable {
+    border: 2px dashed black;
+    cursor: pointer;
   }
 }
 

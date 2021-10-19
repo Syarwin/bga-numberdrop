@@ -14,6 +14,10 @@ class Globals extends \NUMDROP\Helpers\DB_Manager
     'tetrominos' => 'obj', // Store ongoing shapes
     'combinations' => 'obj', // Store ongoing combinations
     'blocks' => 'obj', // Blocks and status of'blocks
+
+    'solo' => 'bool',
+    'soloStatus' => 'int',
+    'backupBlocks' => 'obj',
   ];
 
   protected static $table = 'global_variables';
@@ -135,5 +139,6 @@ class Globals extends \NUMDROP\Helpers\DB_Manager
   {
     Globals::setCurrentTurn(0);
     Globals::setStartingNumberChoices([]);
+    Globals::setSolo(count($players) == 1);
   }
 }

@@ -116,6 +116,18 @@ class action_numberdrop extends APP_GameAction
     self::ajaxResponse();
   }
 
+  /////////////////////////////
+  /////////// SOLO  ///////////
+  /////////////////////////////
+  public function actChooseTile()
+  {
+    self::setAjaxMode();
+    $tileId = self::getArg('tileId', AT_posint, false);
+    $this->game->actChooseTile($tileId);
+    self::ajaxResponse();
+  }
+
+
 
 
   //////////////////

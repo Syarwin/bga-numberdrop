@@ -48,6 +48,7 @@ class NumberDrop extends Table
   use NUMDROP\States\ScoreCombinationTrait;
   use NUMDROP\States\ConfirmWaitTrait;
   use NUMDROP\States\EndOfGameTrait;
+  use NUMDROP\States\SoloModeTrait;
 
   public static $instance = null;
   function __construct()

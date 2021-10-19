@@ -152,10 +152,16 @@ class Pieces extends DB_Manager
     }
 
     if (is_array($location)) {
-      $location = implode('_', $location);
+      $delim = '_';
+      foreach($location as $l){
+        if(strpos($l, '%') !== false){
+          $delim = '\\_';
+        }
+      }
+      $location = implode($delim, $location);
     }
 
-    $extra = $like ? '%' : '';
+    $extra = $like ? '%\\\\' : '';
     if (preg_match("/^[A-Za-z0-9${extra}-][A-Za-z_0-9${extra}-]*$/", $location) == 0) {
       throw new \BgaVisibleSystemException(
         "Class Pieces: location must be alphanum and underscore non empty string '$location'"
@@ -253,7 +259,7 @@ class Pieces extends DB_Manager
     $result = self::getSelectQuery()
       ->whereIn(static::$prefix . 'id', $ids)
       ->get(false);
-    if ($result->count() != count($ids) && $raiseExceptionIfNotEnough) {
+    if (count($result) != count($ids) && $raiseExceptionIfNotEnough) {
       throw new \feException('Class Pieces: getMany, some pieces have not been found !' . json_encode($ids));
     }
 
@@ -325,6 +331,11 @@ class Pieces extends DB_Manager
   public static function getInLocation($location, $state = null, $orderBy = null)
   {
     return self::getInLocationQ($location, $state, $orderBy)->get();
+  }
+
+  public static function getInLocationOrdered($location, $state = null)
+  {
+    return self::getInLocation($location, $state, [static::$prefix . 'state', 'ASC']);
   }
 
   /**
@@ -402,7 +413,7 @@ class Pieces extends DB_Manager
     $pieces = self::getTopOf($fromLocation, $nbr, false);
     $ids = $pieces->getIds();
     self::getUpdateQuery($ids, $toLocation, $state)->run();
-    $pieces = self::get($ids);
+    $pieces = self::getMany($ids);
 
     // No more pieces in deck & reshuffle is active => form another deck
     if (

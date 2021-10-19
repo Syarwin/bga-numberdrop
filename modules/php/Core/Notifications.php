@@ -103,13 +103,14 @@ class Notifications
     );
   }
 
-  public static function clearTurn($player, $notifIds, $scores)
+  public static function clearTurn($player, $notifIds, $scores, $blocks)
   {
     self::notify($player, 'clearTurn', clienttranslate('${player_name} restart their turn'), [
       'player' => $player,
       'turn' => Globals::getCurrentTurn(),
       'notifIds' => $notifIds,
       'scores' => $scores,
+      'blocks' => $blocks,
     ]);
   }
 
@@ -118,6 +119,17 @@ class Notifications
     self::notifyAll('updatePlayersData', '', [
       'scribbles' => $scribbles->toArray(),
       'scores' => $scores,
+    ]);
+  }
+
+  /*********************
+   **** SOLO MODE ****
+   *********************/
+  public static function slideDown($player, $tileId, $column)
+  {
+    self::notify($player, 'slideDown', '', [
+      'tile' => $tileId,
+      'col' => $column,
     ]);
   }
 

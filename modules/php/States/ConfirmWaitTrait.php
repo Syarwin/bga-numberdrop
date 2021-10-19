@@ -23,13 +23,21 @@ trait ConfirmWaitTrait
   function actCancelTurn()
   {
     StateMachine::checkAction('actRestart');
+    if (Globals::isSolo()) {
+      Globals::setSoloStatus(0);
+      Globals::setBlocks(Globals::getBackupBlocks());
+    }
     $player = Players::getCurrent();
     $player->restartTurn();
 
     $this->gamestate->setPlayersMultiactive([$player->getId()], '');
 
     $block = Blocks::getTriggered();
-    StateMachine::nextState($block === null? 'restart' : 'restartBlock');
+    $state = $block === null ? 'restart' : 'restartBlock';
+    if (Globals::isSolo()) {
+      $state = 'restartSolo';
+    }
+    StateMachine::nextState($state);
   }
 
   function actConfirmTurn()
@@ -68,10 +76,9 @@ trait ConfirmWaitTrait
 
     // Are there any blocks that are defended by everyone ?
     $uselessBlocks = Blocks::getUselessBlocks();
-    foreach($uselessBlocks as $block){
+    foreach ($uselessBlocks as $block) {
       $this->disableBlock($block, $turn - 1);
     }
-
 
     $newState = $this->isEndOfGame() ? 'endGame' : 'newTurn';
     $this->gamestate->nextState($newState);

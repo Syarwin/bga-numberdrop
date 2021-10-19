@@ -120,6 +120,9 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
 
     getCurrentShape() {
       let shapes = this.gamedatas[this._isBlock ? 'blockShapes' : 'shapes'];
+      if (this._isBlock && Object.keys(this.gamedatas.players).length == 1) {
+        shapes = Object.values(this.gamedatas.shapes);
+      }
       return shapes[this._tetromino.shape][this._tetromino.rotation];
     },
 
@@ -177,16 +180,16 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       // Handle action button
       dojo.destroy('btnConfirmTetromino');
       if (this._isBlock) {
-        this.addActionButton('btnConfirmTetromino', _('Confirm block drop'), () => {
+        this.addPrimaryActionButton('btnConfirmTetromino', _('Confirm block drop'), () => {
           if (this._isTetrominoFitting) this.takeAction('actConfirmTetrominoBlock');
         });
       } else if (!this._tetromino.numbers.includes('')) {
-        this.addActionButton('btnConfirmTetromino', _('Confirm tetromino drop'), () => {
+        this.addPrimaryActionButton('btnConfirmTetromino', _('Confirm tetromino drop'), () => {
           if (this._isTetrominoFitting) this.takeAction('actConfirmTetromino');
         });
       }
 
-      if($('btnConfirmTetromino')){
+      if ($('btnConfirmTetromino')) {
         dojo.attr('btnConfirmTetromino', 'disabled', this._isTetrominoFitting ? '' : 'disabled');
       }
     },

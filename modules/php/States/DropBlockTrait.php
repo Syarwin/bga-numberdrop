@@ -14,7 +14,7 @@ trait DropBlockTrait
    */
   function argDropBlock($player)
   {
-    $block = Blocks::getNextActiveBlock();
+    $block = Blocks::getTriggered();
     $blockId = Globals::getBlocks()[$block]['id'];
     return [
       'block' => $blockId,
@@ -46,7 +46,16 @@ trait DropBlockTrait
     // Check completed lines
     $this->checkEndOfLines($player);
 
-    // Move on to next state
-    StateMachine::nextState('confirmWait');
+    if(!Globals::isSolo()){
+      // Move on to next state
+      StateMachine::nextState('confirmWait');
+    } else {
+      $block = Blocks::getTriggered();
+      $this->disableBlock($block);
+
+      $state = Globals::getSoloStatus() == 1? 'slide' : 'play';
+      Globals::setTetrominos([]);
+      StateMachine::nextState($state);
+    }
   }
 }

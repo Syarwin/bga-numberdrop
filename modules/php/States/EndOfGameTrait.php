@@ -20,6 +20,17 @@ trait EndOfGameTrait
         }
       }
     }
+
+    if (Globals::isSolo()) {
+      $blocks = Globals::getBlocks();
+      foreach ($blocks as $block) {
+        if ($block['col'] < 4) {
+          return false;
+        }
+      }
+      return true;
+    }
+
     return false;
   }
 

@@ -34,18 +34,18 @@ trait DropShapeTrait
     $tetromino = $args['tetromino'];
 
     // Check shape
-    if($args['dices'][4] != '*' && $args['dices'][4] != $tetromino['shape']){
+    if ($args['dices'][4] != '*' && $args['dices'][4] != $tetromino['shape']) {
       throw new \BgaVisibleSystemException('You can\'t select that shape');
     }
 
     // Check numbers
     $diceValues = array_slice($args['dices'], 0, 4);
-    for($i = 0; $i < 4; $i++){
+    for ($i = 0; $i < 4; $i++) {
       $pos = \array_search($tetromino['numbers'][$i], $diceValues);
-      if($pos === false){
+      if ($pos === false) {
         $pos = \array_search('*', $diceValues);
       }
-      if($pos === false){
+      if ($pos === false) {
         throw new \BgaVisibleSystemException('A number of the tetromino is invalid');
       }
 
@@ -56,7 +56,7 @@ trait DropShapeTrait
     $blocks = $this->getShapeBlocks($tetromino);
     $row = $this->findLowestDropRow($player, $blocks, $tetromino['col']);
 
-    foreach($blocks as $pos){
+    foreach ($blocks as $pos) {
       $pos['row'] += $row;
       $pos['col'] += $tetromino['col'];
       $player->addNumber($pos['row'], $pos['col'], $pos['n']);
@@ -66,29 +66,30 @@ trait DropShapeTrait
     $this->checkEndOfLines($player);
 
     // Move on to next state
-    StateMachine::nextState("scoreCombination");
+    StateMachine::nextState('scoreCombination');
   }
-
 
   // Check completed lines
   function checkEndOfLines($player)
   {
     $scoringColumns = $player->getScoringColumns();
     $board = $player->getBoard();
-    for($i = 0; $i < 11; $i++){
-      if($scoringColumns[COL_END_LINES][$i])
+    for ($i = 0; $i < 11; $i++) {
+      if ($scoringColumns[COL_END_LINES][$i]) {
         continue;
+      }
 
       // Is the line full?
       $hole = false;
-      for($j = 0; $j < 7; $j++){
-        if($board[$i][$j] === null){
+      for ($j = 0; $j < 7; $j++) {
+        if ($board[$i][$j] === null) {
           $hole = true;
           break;
         }
       }
-      if($hole)
+      if ($hole) {
         continue;
+      }
 
       // Create scribble and notify
       $scribble = Scribbles::useCell($player, [
@@ -100,20 +101,22 @@ trait DropShapeTrait
     }
 
     // Negative bonus ?
-    for($i = 11; $i < 14; $i++){
-      if($scoringColumns[COL_END_LINES][$i])
+    for ($i = 11; $i < 14; $i++) {
+      if ($scoringColumns[COL_END_LINES][$i]) {
         continue;
+      }
 
       // Is the line not empty
       $empty = true;
-      for($j = 0; $j < 7; $j++){
-        if($board[$i][$j] !== null){
+      for ($j = 0; $j < 7; $j++) {
+        if ($board[$i][$j] !== null) {
           $empty = false;
           break;
         }
       }
-      if($empty)
+      if ($empty) {
         continue;
+      }
 
       // Create scribble and notify
       $scribble = Scribbles::useCell($player, [
@@ -130,20 +133,25 @@ trait DropShapeTrait
    */
   function getShapeBlocks($tetromino, $block = false)
   {
-    $shapes = $block? $this->blockShapes : $this->shapes;
-    $shape = $shapes[$tetromino['shape']][$tetromino['rotation']];
+    $shapes = $block ? $this->blockShapes : $this->shapes;
+    if (Globals::isSolo() && $block) {
+      $keys = array_keys($this->shapes);
+      $shape = $this->shapes[$keys[$tetromino['shape']]][$tetromino['rotation']];
+    } else {
+      $shape = $shapes[$tetromino['shape']][$tetromino['rotation']];
+    }
     $n = count($shape);
 
     $res = [];
-    for($i = 0; $i < $n; $i++){
-      for($j = 0; $j < $n; $j++){
-        $y = $tetromino['flip'] == 0? $j : ($n - $j - 1);
+    for ($i = 0; $i < $n; $i++) {
+      for ($j = 0; $j < $n; $j++) {
+        $y = $tetromino['flip'] == 0 ? $j : $n - $j - 1;
         $id = $shape[$i][$y];
-        if($id != ' '){
+        if ($id != ' ') {
           $res[] = [
             'row' => $i,
             'col' => $j,
-            'n' => $block? 'X' : $tetromino['numbers'][$id],
+            'n' => $block ? 'X' : $tetromino['numbers'][$id],
           ];
         }
       }
@@ -152,24 +160,24 @@ trait DropShapeTrait
     return $res;
   }
 
-
   /**
    * Same function as in js : given current shape and col, find lowest row before it's blocked
    */
-  function findLowestDropRow($player, $tetrominoBlocks, $column) {
+  function findLowestDropRow($player, $tetrominoBlocks, $column)
+  {
     $board = $player->getBoard();
 
     for ($i = 11; $i > -3; $i--) {
       $collision = false;
-      foreach($tetrominoBlocks as $pos){
+      foreach ($tetrominoBlocks as $pos) {
         $pos['row'] += $i;
         $pos['col'] += $column;
-        if($pos['row'] < 0 || ($pos['row'] < 14 && $board[$pos['row']][$pos['col']] ?? null !== null)){
+        if ($pos['row'] < 0 || ($pos['row'] < 14 && $board[$pos['row']][$pos['col']] ?? null !== null)) {
           $collision = true;
         }
       }
 
-      if($collision){
+      if ($collision) {
         return $i + 1;
       }
     }

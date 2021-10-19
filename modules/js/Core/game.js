@@ -54,6 +54,7 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
     onLoadingComplete() {
       debug('Loading complete');
       if (this.canceledNotifFeature) this.cancelLogs(this.gamedatas.canceledNotifIds);
+      if (this._blockToTrigger !== undefined) this.triggerBlock(this._blockToTrigger);
     },
 
     /*

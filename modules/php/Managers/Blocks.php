@@ -18,6 +18,7 @@ class Blocks
       $blocks[] = [
         'id' => $id,
         'status' => 0,
+        'col' => 0,
       ];
     }
     Globals::setBlocks($blocks);
@@ -94,5 +95,34 @@ class Blocks
     }
 
     return null;
+  }
+
+  public function getSelectableTiles()
+  {
+    $t = [];
+    $target = null;
+    if (Globals::getSoloStatus() == 1) {
+      $dice = Globals::getDices();
+      if ($dice[4] != '*') {
+        $keys = ['S', 'O', 'T', 'I', 'L'];
+        $target = array_search($dice[4], $keys);
+      }
+    }
+
+    foreach (Globals::getBlocks() as $i => $block) {
+      if ($block['col'] < 4 && (is_null($target) || $target == $block['id'])) {
+        $t[] = $i;
+      }
+    }
+
+    return $t;
+  }
+
+  public function slideDown($tileId)
+  {
+    $blocks = Globals::getBlocks();
+    $blocks[$tileId]['col']++;
+    Globals::setBlocks($blocks);
+    return $blocks[$tileId];
   }
 }
