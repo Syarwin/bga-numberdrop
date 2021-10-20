@@ -103,6 +103,15 @@ class Blocks
     $target = null;
     if (Globals::getSoloStatus() == 1) {
       $dice = Globals::getDices();
+      $i = 0;
+      foreach ($dice as $die) {
+        $i += $die == '*' ? 1 : 0;
+      }
+
+      if ($i == 0) {
+        return [];
+      }
+
       if ($dice[4] != '*') {
         $keys = ['S', 'O', 'T', 'I', 'L'];
         $target = array_search($dice[4], $keys);
