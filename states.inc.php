@@ -185,6 +185,8 @@ $machinestates = [
     'possibleactions' => ['actRestart'],
     'transitions' => [
       'restart' => ST_DROP_SHAPE,
+      'restartBlock' => ST_DROP_BLOCK,
+      'restartSolo' => ST_SLIDE_DOWN,
     ],
   ],
 

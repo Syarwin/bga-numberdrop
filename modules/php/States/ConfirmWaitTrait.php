@@ -24,6 +24,7 @@ trait ConfirmWaitTrait
   {
     StateMachine::checkAction('actRestart');
     if (Globals::isSolo()) {
+      Globals::setTetrominos([]);
       Globals::setSoloStatus(0);
       Globals::setBlocks(Globals::getBackupBlocks());
     }
