@@ -1,5 +1,7 @@
 <?php
+
 namespace NUMDROP\Managers;
+
 use NUMDROP\Core\Game;
 use NUMDROP\Core\Globals;
 
@@ -7,9 +9,10 @@ use NUMDROP\Core\Globals;
  * Players manager : allows to easily access players ...
  *  a player is an instance of Player class
  */
+
 class Blocks
 {
-  public function setupNewGame($players, $options)
+  public static function setupNewGame($players, $options)
   {
     $blockIds = [0, 1, 2, 3, 4];
     shuffle($blockIds);
@@ -24,7 +27,7 @@ class Blocks
     Globals::setBlocks($blocks);
   }
 
-  public function getNextActiveBlock()
+  public static function getNextActiveBlock()
   {
     $blockMin = 10;
     foreach (Players::getAll() as $player) {
@@ -39,7 +42,7 @@ class Blocks
     return $blockMin == 10 ? null : $blockMin;
   }
 
-  public function getUselessBlocks()
+  public static function getUselessBlocks()
   {
     $blocks = [];
     foreach ([0, 1, 2, 3, 4] as $blockId) {
@@ -58,7 +61,7 @@ class Blocks
     return $blocks;
   }
 
-  public function getTargets()
+  public static function getTargets()
   {
     $blockId = self::getNextActiveBlock();
     $targets = [];
@@ -72,21 +75,21 @@ class Blocks
     return $targets;
   }
 
-  public function trigger($block)
+  public static function trigger($block)
   {
     $blocks = Globals::getBlocks();
     $blocks[$block]['status'] = 1;
     Globals::setBlocks($blocks);
   }
 
-  public function finish($block)
+  public static function finish($block)
   {
     $blocks = Globals::getBlocks();
     $blocks[$block]['status'] = 2;
     Globals::setBlocks($blocks);
   }
 
-  public function getTriggered()
+  public static function getTriggered()
   {
     foreach (Globals::getBlocks() as $i => $block) {
       if ($block['status'] == 1) {
@@ -97,7 +100,7 @@ class Blocks
     return null;
   }
 
-  public function getSelectableTiles()
+  public static function getSelectableTiles()
   {
     $t = [];
     $target = null;
@@ -127,7 +130,7 @@ class Blocks
     return $t;
   }
 
-  public function slideDown($tileId)
+  public static function slideDown($tileId)
   {
     $blocks = Globals::getBlocks();
     $blocks[$tileId]['col']++;

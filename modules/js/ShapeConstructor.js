@@ -181,11 +181,13 @@ define(['dojo', 'dojo/_base/declare'], (dojo, declare) => {
       dojo.destroy('btnConfirmTetromino');
       if (this._isBlock) {
         this.addPrimaryActionButton('btnConfirmTetromino', _('Confirm block drop'), () => {
-          if (this._isTetrominoFitting) this.takeAction('actConfirmTetrominoBlock');
+          if (this._isTetrominoFitting)
+            this.takeAction('actConfirmTetrominoBlock', { tetromino: JSON.stringify(this._tetromino) });
         });
       } else if (!this._tetromino.numbers.includes('')) {
         this.addPrimaryActionButton('btnConfirmTetromino', _('Confirm tetromino drop'), () => {
-          if (this._isTetrominoFitting) this.takeAction('actConfirmTetromino');
+          if (this._isTetrominoFitting)
+            this.takeAction('actConfirmTetromino', { tetromino: JSON.stringify(this._tetromino) });
         });
       }
 

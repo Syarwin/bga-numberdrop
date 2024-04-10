@@ -1,5 +1,7 @@
 <?php
+
 namespace NUMDROP\States;
+
 use NUMDROP\Core\Globals;
 use NUMDROP\Core\Notifications;
 use NUMDROP\Core\StateMachine;
@@ -22,8 +24,9 @@ trait DropBlockTrait
     ];
   }
 
-  function actConfirmTetrominoBlock()
+  function actConfirmTetrominoBlock($tetromino)
   {
+    $this->actConstructTetromino($tetromino);
     $player = Players::getCurrent();
     $args = $this->argDropBlock($player);
     $tetromino = $args['tetromino'] ?? [
@@ -46,14 +49,14 @@ trait DropBlockTrait
     // Check completed lines
     $this->checkEndOfLines($player);
 
-    if(!Globals::isSolo()){
+    if (!Globals::isSolo()) {
       // Move on to next state
       StateMachine::nextState('confirmWait');
     } else {
       $block = Blocks::getTriggered();
       $this->disableBlock($block);
 
-      $state = Globals::getSoloStatus() == 1? 'slide' : 'play';
+      $state = Globals::getSoloStatus() == 1 ? 'slide' : 'play';
       Globals::setTetrominos([]);
       StateMachine::nextState($state);
     }

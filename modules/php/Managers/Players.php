@@ -1,5 +1,7 @@
 <?php
+
 namespace NUMDROP\Managers;
+
 use NUMDROP\Core\Game;
 use NUMDROP\Core\Globals;
 
@@ -7,6 +9,7 @@ use NUMDROP\Core\Globals;
  * Players manager : allows to easily access players ...
  *  a player is an instance of Player class
  */
+
 class Players extends \NUMDROP\Helpers\DB_Manager
 {
   protected static $table = 'player';
@@ -16,7 +19,7 @@ class Players extends \NUMDROP\Helpers\DB_Manager
     return new \NUMDROP\Models\Player($row);
   }
 
-  public function setupNewGame($players, $options)
+  public static function setupNewGame($players, $options)
   {
     // Create players
     $gameInfos = Game::get()->getGameinfos();
@@ -33,17 +36,17 @@ class Players extends \NUMDROP\Helpers\DB_Manager
     Game::get()->reloadPlayersBasicInfos();
   }
 
-  public function getActiveId()
+  public static function getActiveId()
   {
     return Game::get()->getActivePlayerId();
   }
 
-  public function getCurrentId()
+  public static function getCurrentId()
   {
     return Game::get()->getCurrentPId();
   }
 
-  public function getAll()
+  public static function getAll()
   {
     return self::DB()->get(false);
   }
@@ -51,7 +54,7 @@ class Players extends \NUMDROP\Helpers\DB_Manager
   /*
    * get : returns the Player object for the given player ID
    */
-  public function get($pId = null)
+  public static function get($pId = null)
   {
     $pId = $pId ?: self::getActiveId();
     return self::DB()
@@ -59,17 +62,17 @@ class Players extends \NUMDROP\Helpers\DB_Manager
       ->getSingle();
   }
 
-  public function getActive()
+  public static function getActive()
   {
     return self::get();
   }
 
-  public function getCurrent()
+  public static function getCurrent()
   {
     return self::get(self::getCurrentId());
   }
 
-  public function getNextId($player)
+  public static function getNextId($player)
   {
     $pId = is_int($player) ? $player : $player->getId();
     $table = Game::get()->getNextPlayerTable();
@@ -79,7 +82,7 @@ class Players extends \NUMDROP\Helpers\DB_Manager
   /*
    * Return the number of players
    */
-  public function count()
+  public static function count()
   {
     return self::DB()->count();
   }
@@ -87,7 +90,7 @@ class Players extends \NUMDROP\Helpers\DB_Manager
   /*
    * getUiData : get all ui data of all players
    */
-  public function getUiData($pId)
+  public static function getUiData($pId)
   {
     return self::getAll()->map(function ($player) use ($pId) {
       return $player->jsonSerialize($pId);

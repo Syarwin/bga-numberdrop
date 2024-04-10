@@ -1,4 +1,5 @@
 <?php
+
 /**
  *------
  * BGA framework: © Gregory Isabelli <gisabelli@boardgamearena.com> & Emmanuel Colin <ecolin@boardgamearena.com>
@@ -154,12 +155,12 @@ class NumberDrop extends Table
    */
   public function upgradeTableDb($from_version)
   {
-    if($from_version <= 2108252342){
+    if ($from_version <= 2108252342) {
       $sql = "UPDATE `DBPREFIX_scribbles` SET number = -2 WHERE number = -1";
-      self::applyDbUpgradeToAllDB( $sql );
+      self::applyDbUpgradeToAllDB($sql);
 
       $sql = "UPDATE `DBPREFIX_scribbles` SET number = -1 WHERE number = 0";
-      self::applyDbUpgradeToAllDB( $sql );
+      self::applyDbUpgradeToAllDB($sql);
     }
   }
 
@@ -170,7 +171,7 @@ class NumberDrop extends Table
   // Exposing protected method getCurrentPlayerId
   public static function getCurrentPId()
   {
-    return self::getCurrentPlayerId();
+    return self::get()->getCurrentPlayerId();
   }
 
   // Exposing protected method translation

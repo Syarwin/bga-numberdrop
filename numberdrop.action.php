@@ -1,4 +1,5 @@
 <?php
+
 /**
  *------
  * BGA framework: © Gregory Isabelli <gisabelli@boardgamearena.com> & Emmanuel Colin <ecolin@boardgamearena.com>
@@ -65,13 +66,17 @@ class action_numberdrop extends APP_GameAction
   public function actConfirmTetromino()
   {
     self::setAjaxMode();
-    $this->game->actConfirmTetromino();
+    $tetromino = self::getArg('tetromino', AT_json, true);
+    $this->validateJSonAlphaNum($tetromino, 'tetromino');
+    $this->game->actConfirmTetromino($tetromino);
     self::ajaxResponse();
   }
   public function actConfirmTetrominoBlock()
   {
     self::setAjaxMode();
-    $this->game->actConfirmTetrominoBlock();
+    $tetromino = self::getArg('tetromino', AT_json, true);
+    $this->validateJSonAlphaNum($tetromino, 'tetromino');
+    $this->game->actConfirmTetrominoBlock($tetromino);
     self::ajaxResponse();
   }
 

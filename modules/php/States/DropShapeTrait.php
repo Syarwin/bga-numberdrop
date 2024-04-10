@@ -1,5 +1,7 @@
 <?php
+
 namespace NUMDROP\States;
+
 use NUMDROP\Core\Globals;
 use NUMDROP\Core\Notifications;
 use NUMDROP\Core\StateMachine;
@@ -27,8 +29,9 @@ trait DropShapeTrait
     Globals::setTetrominos($tetrominos);
   }
 
-  function actConfirmTetromino()
+  function actConfirmTetromino($tetromino)
   {
+    $this->actConstructTetromino($tetromino);
     $player = Players::getCurrent();
     $args = $this->argDropShape($player);
     $tetromino = $args['tetromino'];

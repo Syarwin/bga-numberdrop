@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `user_preferences` (
 
 
 -- Allow to handle parallele state flows
-ALTER TABLE `player` ADD `player_state` INT(10) UNSIGNED;
+-- ALTER TABLE `player` ADD `player_state` INT(10) UNSIGNED;
 
 -- Allow to keep track of canceled notifications
 ALTER TABLE `gamelog` ADD `cancel` TINYINT(1) NOT NULL DEFAULT 0;

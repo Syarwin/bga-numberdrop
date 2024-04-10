@@ -1,11 +1,14 @@
 <?php
+
 namespace NUMDROP\Managers;
+
 use NUMDROP\Core\Game;
 use NUMDROP\Core\Globals;
 
 /*
  * Scribbles manager : allows to easily access number on the board and other thing on the scoresheet
  */
+
 class Scribbles extends \NUMDROP\Helpers\DB_Manager
 {
   protected static $table = 'scribbles';
@@ -19,9 +22,9 @@ class Scribbles extends \NUMDROP\Helpers\DB_Manager
     return $row;
   }
 
-  public function addNumber($player, $row, $col, $n, $turn = null)
+  public static function addNumber($player, $row, $col, $n, $turn = null)
   {
-    $pId = is_null($player)? 0 : (is_int($player) ? $player : $player->getId());
+    $pId = is_null($player) ? 0 : (is_int($player) ? $player : $player->getId());
     $turn = $turn ?? Globals::getCurrentTurn();
     return self::DB()->insert([
       'player_id' => $pId,
@@ -35,7 +38,7 @@ class Scribbles extends \NUMDROP\Helpers\DB_Manager
   /**
    * Mark a cell as used
    */
-  public function useCell($player, $cell, $turn = null)
+  public static function useCell($player, $cell, $turn = null)
   {
     $turn = $turn ?? Globals::getCurrentTurn();
     return self::addNumber($player, $cell['row'], $cell['col'], CIRCLE, $turn);
@@ -45,7 +48,7 @@ class Scribbles extends \NUMDROP\Helpers\DB_Manager
    * Get all the scribbles of a player with a filter on ongoing scribbles if not current player
    *  => that way no-one will be able to spy onto another player by refreshing the page
    */
-  public function getOfPlayer($player)
+  public static function getOfPlayer($player)
   {
     $pId = is_int($player) ? $player : $player->getId();
     $query = self::DB()->wherePlayer($player);
@@ -63,7 +66,7 @@ class Scribbles extends \NUMDROP\Helpers\DB_Manager
   /**
    * Get all the scribbles added this turn
    */
-  public function getLastAdded()
+  public static function getLastAdded()
   {
     return self::DB()->where('turn', Globals::getCurrentTurn())->get();
   }
@@ -72,7 +75,7 @@ class Scribbles extends \NUMDROP\Helpers\DB_Manager
   /**
    * Useful to know if the player have something to cancel or not
    */
-  public function hasScribbleSomething($pId)
+  public static function hasScribbleSomething($pId)
   {
     return self::DB()
       ->wherePlayer($pId)
@@ -83,7 +86,7 @@ class Scribbles extends \NUMDROP\Helpers\DB_Manager
   /**
    * clearTurn : remove all houses written by player during this turn
    */
-  public function clearTurn($pId)
+  public static function clearTurn($pId)
   {
     self::DB()
       ->wherePlayer($pId)

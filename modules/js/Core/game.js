@@ -144,7 +144,7 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
       this.onEnteringState(state.name, this.gamedatas.gamestate);
     },
 
-    notif_newPrivateState(n) {
+    notif_newPrivateStateNumberDrop(n) {
       this.onLeavingState(this.gamedatas.gamestate.name);
       this.setupPrivateState(n.args.state, n.args.args);
     },
@@ -197,7 +197,7 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (dojo, declare) => {
      */
     setupNotifications() {
       // Private state
-      this._notifications.push(['newPrivateState', 1]);
+      this._notifications.push(['newPrivateStateNumberDrop', 1]);
 
       this._notifications.forEach((notif) => {
         var functionName = 'notif_' + notif[0];
