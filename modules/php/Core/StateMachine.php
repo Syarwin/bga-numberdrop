@@ -42,7 +42,7 @@ class StateMachine extends \APP_DbObject
     $stateId = $fetch
       ? self::getUniqueValueFromDB('SELECT ' . self::$stateField . " FROM player WHERE player_id = $mixed")
       : $mixed;
-    $states = self::getGameState()->states;
+    $states = self::getGameState()->getStatesAsArray();
     if (!array_key_exists($stateId, $states)) {
       throw new \BgaVisibleSystemException(
         "Cannot fetch private state of a player in the state machine : player $mixed, state $stateId"
@@ -58,7 +58,7 @@ class StateMachine extends \APP_DbObject
   public static function setPrivateState($ids, $stateId)
   {
     $whereIds = is_array($ids) ? 'IN (' . implode(',', $ids) . ')' : " = $ids";
-    $states = self::getGameState()->states;
+    $states = self::getGameState()->getStatesAsArray();
     if (!array_key_exists($stateId, $states)) {
       throw new \BgaVisibleSystemException(
         "Cannot find private state you want to set: state $stateId on player $whereIds"
@@ -81,7 +81,7 @@ class StateMachine extends \APP_DbObject
   public static function checkParallel($stateId = null)
   {
     $stateId = $stateId ?? self::getGamestate()->state_id();
-    $state = self::getGamestate()->states[$stateId];
+    $state = self::getGameState()->getStatesAsArray()[$stateId];
     if (!isset($state['parallel']) || $state['type'] != 'multipleactiveplayer') {
       throw new \BgaVisibleSystemException(
         "Trying to use parallel State Machine on a non-parallel state: {$state['name']}"
@@ -173,7 +173,7 @@ class StateMachine extends \APP_DbObject
     }
 
     $newStateId = $state['transitions'][$transition];
-    $states = self::getGameState()->states;
+    $states = self::getGameState()->getStatesAsArray();
     if (!isset($states[$newStateId])) {
       throw new \BgaVisibleSystemException(
         "Transition '$transition' in {$state['name']} lead to a non-existing state $newStateId"
